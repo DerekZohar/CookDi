@@ -9,10 +9,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="325dp"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:background="#FFFFFF"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         app:cardCornerRadius="10dp"
         >
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/button_custom"
             android:text="Login"
@@ -101,4 +101,14 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/create_new_account_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create new account"
+        android:textSize="25sp"
+        android:textColor="#FFF"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"/>
 </LinearLayout>
