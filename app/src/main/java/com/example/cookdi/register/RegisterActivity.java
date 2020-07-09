@@ -1,6 +1,5 @@
-package com.example.cookdi.Activities;
+package com.example.cookdi.register;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
-        findViewById(R.id.login_view).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.register_view).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 hideKeyBoard();
@@ -29,11 +28,5 @@ public class LoginActivity extends AppCompatActivity {
     public void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
-
-    public void onCreateAccountClick(View v) {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
