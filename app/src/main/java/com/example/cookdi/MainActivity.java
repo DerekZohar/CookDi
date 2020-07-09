@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.testText);
+//        textView = findViewById(R.id.testText);
 //        demo call API
 //        ServiceManager.getInstance().getUserService().getUserInformation().enqueue(new Callback<User>() {
 //            @Override
