@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FF3868">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#FF3868">
+    android:background="#FF3868"
+    android:id="@+id/register_view">
 
     <androidx.cardview.widget.CardView
         android:layout_width="325dp"
@@ -117,3 +122,4 @@
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>
+</ScrollView>
