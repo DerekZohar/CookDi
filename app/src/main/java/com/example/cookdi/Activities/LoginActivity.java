@@ -1,5 +1,6 @@
 package com.example.cookdi.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,5 +29,11 @@ public class LoginActivity extends AppCompatActivity {
     public void hideKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void onCreateAccountClick(View v) {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
