@@ -10,19 +10,17 @@ const pool = mysql.createPool({
     // database: 'bh1qqiz4n9xynvm2tzc8',
     // insecureAuth: true
     connectionLimit: 100,
-    host: 'localhost',
+    host: 'us-cdbr-east-02.cleardb.com',
     port: 3306,
-    user: 'root',
-    password: 'ductrung@@113',
-    database: 'web03',
+    user: 'bf429f27095475',
+    password: '56349a0e',
+    database: 'heroku_6dd61aff90cf7bc',
     insecureAuth: true
 });
 
 const pool_query = util.promisify(pool.query).bind(pool);
 
 module.exports = {
-    load: sql => pool_query(sql),
-    add: (entity, table) => pool_query(`insert into ${table} set ?`, entity),
-    del: (condition, table) => pool_query(`delete from ${table} where ?`, condition),
-    patch: (entity, condition, table) => pool_query(`update ${table} set ? where ?`, [entity, condition]),
+    // query: async(sql) => pool_query(sql).then(value => {console.log(value); return value[0]}),
+    query: (sql) => {return pool_query(sql);}
 };
