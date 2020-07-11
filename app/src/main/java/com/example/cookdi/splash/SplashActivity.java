@@ -3,10 +3,12 @@ package com.example.cookdi.splash;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 
 
@@ -18,8 +20,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-
+        SystemClock.sleep(2000);
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        finish();
     }
 
 }
