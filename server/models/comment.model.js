@@ -1,8 +1,7 @@
 const db = require('../utils/database.util');
 
 module.exports = {
-    all: _ => db.query(`call get_friend_all()`),
-    add: (userId,friendId) => db.query(`call add_friend("${userId}","${friendId}")`),
-    remove: (userId,friendId) => db.query(`call remove_friend("${userId}","${friendId}")`),
-    get_friend_by_id: userId => db.query(`call get_friend_by_id("${userId}")`),
+    comments_get_by_recipe_id: recipeId => db.query(`call comments_get_by_recipe_id("${recipeId}")`),
+    add: (userId,recipeId,commentContent,commentTime) => db.query(`call comments_add("${userId}","${recipeId}","${commentContent}","${commentTime}")`),
+    remove: (userId,recipeId) => db.query(`call comments_remove("${userId}","${recipeId}")`)
 }
