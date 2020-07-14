@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         viewPagerMain.setAdapter(pagerAdapter);
 
         tabBarMenu.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPagerMain.setCurrentItem(tab.getPosition());
