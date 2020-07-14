@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const bodyParser = require('body-parser');
 
 const enviromentName = "dev"
 app.use(morgan(enviromentName));
-
+app.use(bodyParser.json());
 const port = 3000
 
 const userRoutes = require('./routes/user.route.js');
