@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -42,4 +43,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.0'
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 }
