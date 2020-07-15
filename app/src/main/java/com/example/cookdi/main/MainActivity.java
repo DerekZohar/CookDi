@@ -6,9 +6,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.cookdi.PagerAdapter.PagerAdapter;
+import com.example.cookdi.libs.BCrypt;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
