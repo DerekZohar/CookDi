@@ -1,4 +1,4 @@
-package com.example.cookdi.libs;
+package com.example.cookdi.libs.bcrypt;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
