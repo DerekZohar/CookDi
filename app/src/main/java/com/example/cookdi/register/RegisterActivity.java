@@ -3,6 +3,7 @@ package com.example.cookdi.register;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +17,6 @@ import com.example.cookdi.HomeFragment.HomeFragment;
 import com.example.cookdi.R;
 import com.example.cookdi.config.Config;
 import com.example.cookdi.helpers.TextHelper;
-import com.example.cookdi.libs.bcrypt.BCrypt;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
@@ -26,6 +26,7 @@ import com.example.cookdi.splash.SplashActivity;
 import java.util.HashMap;
 import java.util.Map;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -104,16 +105,17 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }
 
     private void registerUserAccount() {
         Map<String, Object> params = new HashMap<>();
+        String pass = BCrypt.withDefaults().hashToString(Config.LOG_ROUND_SALT, password.getText().toString().toCharArray());
         params.put("username", username.getText().toString());
-        params.put("password", BCrypt.hashpw(password.getText().toString(), BCrypt.gensalt(Config.LOG_ROUND_SALT)));
-        
+        params.put("password", pass);
+
         ServiceManager.getInstance().getUserService().registerAccount(params).enqueue(new Callback<Map<String, String>>() {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {

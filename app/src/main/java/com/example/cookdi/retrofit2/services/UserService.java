@@ -19,4 +19,7 @@ public interface UserService {
 
     @POST("/user/add")
     Call<Map<String, String>> registerAccount(@Body()Map<String, Object> params);
+
+    @POST("/user/auth")
+    Call<Map<String, String>> authentication(@Body()Map<String, Object> params);
 }
