@@ -45,4 +45,6 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+
+    implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.9.0'
 }
