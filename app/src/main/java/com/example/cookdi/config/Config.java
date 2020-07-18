@@ -6,4 +6,5 @@ public class Config {
 
     //Using this base url for emulator using
     public static String BASE_URL = "http://10.0.2.2:3000";
+    public static int LOG_ROUND_SALT = 12;
 }
