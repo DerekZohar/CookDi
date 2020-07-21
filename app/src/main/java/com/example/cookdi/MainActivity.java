@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPagerMain;
     PagerAdapter pagerAdapter;
 
+    RecyclerView rviewHomeRecipes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         tabFavorite = findViewById(R.id.tabFavorite);
         tabSaved = findViewById(R.id.tabSaved);
         viewPagerMain = findViewById(R.id.viewPagerMain);
-
         initViewPager();
 
     }
@@ -46,17 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public void initViewPager(){
         pagerAdapter = new com.example.cookdi.PagerAdapter.PagerAdapter(getSupportFragmentManager());
         viewPagerMain.setAdapter(pagerAdapter);
-
-        RecyclerView rviewHomeRecipes = findViewById(R.id.rviewHomeRecipes);
-//        RecyclerView rviewFavoriteRecipes = findViewById(R.id.rviewFavoriteRecipes);
-//        RecyclerView rviewSavedRecipes = findViewById(R.id.rviewSavedRecipes);
-
-        ArrayList<RecipeModel> recipeHomeList = new ArrayList<>();
-        RecipeHomeAdapter recipeHomeAdapter = new RecipeHomeAdapter(this, recipeHomeList);
-
-        rviewHomeRecipes.setHasFixedSize(true);
-        rviewHomeRecipes.setLayoutManager(new LinearLayoutManager(this));
-        rviewHomeRecipes.setAdapter(recipeHomeAdapter);
 
         tabBarMenu.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -75,4 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

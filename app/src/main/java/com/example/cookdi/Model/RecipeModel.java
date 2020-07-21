@@ -3,7 +3,7 @@ package com.example.cookdi.Model;
 public class RecipeModel {
     private int recipeId;
     private int userId;
-    private float recipeRating;
+    private double recipeRating;
     private boolean recipeSaved;
     private boolean recipeFavorited;
     private String userAvatar;
@@ -12,7 +12,7 @@ public class RecipeModel {
     private String recipeName;
     private String recipeTime;
 
-    public RecipeModel(int recipeId, int userId, float recipeRating, boolean recipeSaved, boolean recipeFavorited, String userAvatar, String foodPortrait, String userName, String recipeName, String recipeTime) {
+    public RecipeModel(int recipeId, int userId, double recipeRating, boolean recipeSaved, boolean recipeFavorited, String userAvatar, String foodPortrait, String userName, String recipeName, String recipeTime) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.recipeRating = recipeRating;
@@ -41,11 +41,11 @@ public class RecipeModel {
         this.userId = userId;
     }
 
-    public float getRecipeRating() {
+    public double getRecipeRating() {
         return recipeRating;
     }
 
-    public void setRecipeRating(float recipeRating) {
+    public void setRecipeRating(double recipeRating) {
         this.recipeRating = recipeRating;
     }
 

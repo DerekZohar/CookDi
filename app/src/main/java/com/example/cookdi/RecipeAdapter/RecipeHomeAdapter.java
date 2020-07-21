@@ -1,6 +1,8 @@
 package com.example.cookdi.RecipeAdapter;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
 import com.squareup.picasso.Picasso;
@@ -28,10 +31,13 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
         m_recipeList = recipeList;
     }
 
+
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public RecipeHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(m_context).inflate(R.layout.home_recipe, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -48,13 +54,21 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
         holder.userName.setText(currentRecipe.getUserName());
         holder.recipeName.setText(currentRecipe.getRecipeName());
         holder.recipeTime.setText(currentRecipe.getRecipeTime());
-        Picasso.get().load(currentRecipe.getFoodPortrait()).into(holder.foodPortrait);
-        Picasso.get().load(currentRecipe.getUserAvatar()).into(holder.userAvatar);
-//        holder.recipeRating.setRating(currentRecipe.getRecipeRating());
-//        if(currentRecipe.isRecipeFavorited())
-//            holder.recipeFavorited.requestFocus();
-//        if(currentRecipe.isRecipeSaved())
-//            holder.recipeSaved.requestFocus();
+
+//        holder.foodPortrait.setImageResource(R.color.colorPrimary);
+        Picasso.get().setLoggingEnabled(true);
+//
+        Picasso.get().load(currentRecipe.getFoodPortrait()).error(R.color.colorPrimary).placeholder(R.color.colorGray).resize(200, 180).into(holder.foodPortrait);
+        Picasso.get().load(currentRecipe.getUserAvatar()).error(R.color.colorPrimary).placeholder(R.color.colorGray).into(holder.userAvatar);
+//        Log.d("aaaaa", currentRecipe.getFoodPortrait());
+//        Glide.with(m_context).load(currentRecipe.getUserAvatar()).placeholder(R.drawable.ic_placeholder_background).into(holder.userAvatar);
+//        Glide.with(m_context).load("https://disease.sh/assets/img/flags/vn.png").placeholder(R.drawable.ic_placeholder_background).into(holder.foodPortrait);
+//        holder.foodPortrait.setImageResource(R.color.colorPrimary);
+        holder.recipeRating.setRating((float) currentRecipe.getRecipeRating());
+        if(currentRecipe.isRecipeFavorited())
+            holder.recipeFavorited.requestFocus();
+        if(currentRecipe.isRecipeSaved())
+            holder.recipeSaved.requestFocus();
 
     }
 
@@ -89,6 +103,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                 }
             });
         }
