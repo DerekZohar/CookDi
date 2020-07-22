@@ -1,14 +1,19 @@
 package com.example.cookdi.HomeFragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.cookdi.HomeFragment.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
+
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,11 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView list;
+    ArrayList<RecipeModel> recipeHomeList;
+    RecipeHomeAdapter recipeHomeAdapter;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -61,9 +71,38 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.home_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+
+        list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
+        recipeHomeList = getHomeData();
+        recipeHomeAdapter = new RecipeHomeAdapter(getActivity(), recipeHomeList);
+        list.setAdapter(recipeHomeAdapter);
+        list.setHasFixedSize(true);
+        return view;
 
         //test UI only
-        return inflater.inflate(R.layout.home_recipe, container, false);
+//        return inflater.inflate(R.layout.home_recipe, container, false);
+    }
+
+
+    public ArrayList<RecipeModel> getHomeData(){
+
+        RecipeModel r1 = new RecipeModel(123, 123, 4.5, false, true,
+                "https://image.tmdb.org/t/p/w185//2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+                "https://disease.sh/assets/img/flags/vn.png",
+                "Nguyen Huu Tien", "Mi Y", "30-35p");
+
+        RecipeModel r2 = new RecipeModel(124, 125, 3.0, true, true,
+                "https://f0.pngfuel.com/png/340/946/man-face-illustration-avatar-user-computer-icons-software-developer-avatar-png-clip-art.png",
+                "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/sardinesca_94123_16x9.jpg",
+                "Nguyen Huu", "Bun Cha", "20-35p");
+
+        ArrayList<RecipeModel> list = new ArrayList<>();
+        list.add(r1);
+        list.add(r2);
+        list.add(r1);
+        list.add(r2);
+        list.add(r1);
+        return list;
     }
 }
