@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
-import com.example.cookdi.RecipeAdapter.RecipeHomeAdapter;
 
 import java.util.ArrayList;
 

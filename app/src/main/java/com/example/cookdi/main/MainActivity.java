@@ -16,9 +16,7 @@ import com.example.cookdi.HomeFragment.HomeFragment;
 import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.PagerAdapter.PagerAdapter;
 import com.example.cookdi.R;
-import com.example.cookdi.RecipeAdapter.RecipeHomeAdapter;
 import com.example.cookdi.SavedFragment.SavedFragment;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
