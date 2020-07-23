@@ -27,7 +27,7 @@ public class Person {
     public void setMessenger(String messenger) { this.messenger = messenger; }
 
     public ImageView getImageView(ImageView imageView) {
-        String imgURL  = "abc";
+        String imgURL  = "https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg";
         Picasso.get().load(imgURL).placeholder(R.mipmap.user).into(imageView);
         return imageView;
     }

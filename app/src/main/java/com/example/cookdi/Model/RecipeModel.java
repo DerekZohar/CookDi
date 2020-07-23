@@ -1,4 +1,4 @@
-package com.example.cookdi.HomeFragment.Model;
+package com.example.cookdi.Model;
 
 public class RecipeModel {
     private int recipeId;

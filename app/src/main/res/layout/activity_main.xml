@@ -30,8 +30,7 @@
                 app:tabTextColor="@color/colorPrimary"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabMode="fixed"
-
-                app:tabBackground="@color/colorWhite">
+                app:tabBackground="@color/colorLightGray">
 
             </com.google.android.material.tabs.TabLayout>
 
