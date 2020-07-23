@@ -187,6 +187,5 @@ public class HomeFragment extends Fragment {
                 isItemLoading = false;
             }
         }, 2000);
-
     }
 }

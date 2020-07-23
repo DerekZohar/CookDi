@@ -1,43 +1,62 @@
 package com.example.cookdi.PagerAdapter;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import java.util.ArrayList;
+import java.util.List;
+import com.example.cookdi.R;
 
-import com.example.cookdi.FavoriteFragment.FavoriteFragment;
-import com.example.cookdi.HomeFragment.HomeFragment;
-import com.example.cookdi.SavedFragment.SavedFragment;
 
-public class PagerAdapter extends FragmentPagerAdapter {
-
-    private final int NUMBER_OF_TAB = 3;
-    private final int  HOME_TAB_POSITION = 0;
-    private final int FAVORITE_TAB_POSITION = 1;
-    private final int SAVED_TAB_POSITION = 2;
-
-    public PagerAdapter(@NonNull FragmentManager fm) {
+public class PagerAdapter extends FragmentStatePagerAdapter {
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
+    private final List<Integer> mFragmentIconList = new ArrayList<>();
+    private Context context;
+    public PagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
-    @NonNull
+
+
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case HOME_TAB_POSITION:
-                return new HomeFragment();
-            case FAVORITE_TAB_POSITION:
-                return new FavoriteFragment();
-            case SAVED_TAB_POSITION:
-                return new SavedFragment();
-            default:
-                return null;
-
-        }
+        return mFragmentList.get(position);
     }
-
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+//return mFragmentTitleList.get(position);
+        return null;
+    }
     @Override
     public int getCount() {
-        return NUMBER_OF_TAB;
+        return mFragmentList.size();
+    }
+    public View getTabView(int position) {
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
+        TextView tabTextView = view.findViewById(R.id.tabTextView);
+        tabTextView.setText(mFragmentTitleList.get(position));
+        return view;
+    }
+    public View getSelectedTabView(int position) {
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
+        TextView tabTextView = view.findViewById(R.id.tabTextView);
+        tabTextView.setText(mFragmentTitleList.get(position));
+        tabTextView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+
+        return view;
     }
 }
