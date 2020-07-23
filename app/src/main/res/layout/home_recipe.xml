@@ -39,6 +39,7 @@
                 android:layout_marginLeft="14dp"/>
 
             <TextView
+                android:id="@+id/txtContactHomeRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FF2196F3"
@@ -110,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     android:layout_marginRight="16dp">
 
                     <ImageButton
