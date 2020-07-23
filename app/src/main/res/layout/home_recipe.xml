@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="25dp">
 
     <LinearLayout
         android:background="@color/colorWhite"
@@ -35,7 +35,7 @@
                 android:layout_gravity="center"
                 android:text="Username"
                 android:layout_width="0dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorBlack"
                 android:layout_marginLeft="14dp"/>
 
             <TextView
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginVertical="4dp"
-            app:cardCornerRadius="15dp">
+            app:cardCornerRadius="20dp">
             <ImageView
                 android:id="@+id/imgFoodPortraitHomeRecipe"
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
                 android:text="Name of this food"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorBlack"/>
 
             <TextView
                 android:id="@+id/txtTimeHomeRecipe"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14dp"
                 android:text="15-30mins"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorGray"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

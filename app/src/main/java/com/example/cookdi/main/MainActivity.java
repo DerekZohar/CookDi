@@ -1,21 +1,27 @@
 package com.example.cookdi.main;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.ImageButton;
 
 import com.example.cookdi.ContactFragment.ContactFragment;
 import com.example.cookdi.FavoriteFragment.FavoriteFragment;
 import com.example.cookdi.HomeFragment.HomeFragment;
+import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.PagerAdapter.PagerAdapter;
 import com.example.cookdi.R;
-
+import com.example.cookdi.RecipeAdapter.RecipeHomeAdapter;
 import com.example.cookdi.SavedFragment.SavedFragment;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        getSupportActionBar().setElevation(0);
-
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -70,6 +75,5 @@ public class MainActivity extends AppCompatActivity {
         tab.setCustomView(null);
         tab.setCustomView(tabAdapter.getSelectedTabView(position));
     }
-
 
 }
