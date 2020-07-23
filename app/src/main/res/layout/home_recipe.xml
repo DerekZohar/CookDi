@@ -16,10 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="14dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp">
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgUserAvatarHomeRecipe"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -28,28 +29,32 @@
 
             <TextView
                 android:id="@+id/txtUsernameHomeRecipe"
-                android:layout_marginVertical="6dp"
-                android:layout_marginHorizontal="12dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_gravity="center"
                 android:text="Username"
                 android:layout_width="0dp"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="14dp"/>
 
-            <ImageButton
-                android:id="@+id/btnChatHomeRecipe"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/colorWhite"
-                android:src="@mipmap/ic_comment"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF2196F3"
+                android:layout_gravity="center"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Contact"/>
+
+
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginVertical="6dp"
+            android:layout_height="160dp"
+            android:layout_marginVertical="4dp"
             app:cardCornerRadius="15dp">
             <ImageView
                 android:id="@+id/imgFoodPortraitHomeRecipe"
@@ -70,7 +75,7 @@
                 android:id="@+id/txtFoodNameHomeRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26dp"
+                android:textSize="24dp"
                 android:text="Name of this food"
                 android:textColor="@color/colorPrimary"/>
 
@@ -78,13 +83,14 @@
                 android:id="@+id/txtTimeHomeRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 android:text="15-30mins"
                 android:textColor="@color/colorAccent"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp">
 
                     <RatingBar
                         android:id="@+id/barRatingFoodHomeRecipe"
@@ -94,30 +100,31 @@
                         android:rating="2"
                         android:stepSize="0.5"
                         android:layout_alignParentLeft="true"
+                        style="@style/RatingBar"
                         android:theme="@style/RatingBar"
-                        android:scaleY="0.7"
-                        android:scaleX="0.7"/>                        />
+                        android:isIndicator="false"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        />                        />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp">
 
                     <ImageButton
-                        android:layout_marginRight="6dp"
                         android:id="@+id/btnSaveHomeRecipe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginRight="14dp"
                         android:background="@drawable/save_button_background_selector" />
 
                     <ImageButton
-                        android:layout_marginLeft="6dp"
                         android:id="@+id/btnFavoriteHomeRecipe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="6dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:background="@drawable/favorite_button_background_selector" />
                 </LinearLayout>
             </RelativeLayout>
