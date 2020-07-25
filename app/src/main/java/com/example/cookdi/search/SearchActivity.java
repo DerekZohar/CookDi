@@ -1,14 +1,17 @@
 package com.example.cookdi.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.main.MainActivity;
 import com.veinhorn.tagview.TagView;
 
 public class SearchActivity extends AppCompatActivity {
@@ -20,6 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     TagView tagViewChicken;
     TagView tagViewBeef;
     TagView tagViewFish;
+    ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,15 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 hideKeyBoard();
                 return true;
+            }
+        });
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
