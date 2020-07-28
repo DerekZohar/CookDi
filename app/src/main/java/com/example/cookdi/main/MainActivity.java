@@ -1,8 +1,11 @@
 package com.example.cookdi.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +18,7 @@ import com.example.cookdi.PagerAdapter.PagerAdapter;
 import com.example.cookdi.R;
 
 import com.example.cookdi.SavedFragment.SavedFragment;
+import com.example.cookdi.search.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter tabAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         tabAdapter = new PagerAdapter(getSupportFragmentManager(), this);
         tabAdapter.addFragment(new HomeFragment(), "Home");
