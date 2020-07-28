@@ -19,9 +19,10 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="?attr/homeAsUpIndicator"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_weight="1"/>
+            />
         <EditText
             android:id="@+id/editTextSearchView"
             android:layout_width="0dp"
@@ -47,6 +48,7 @@
         tools:context=".MainActivity"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/typeTextView"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
@@ -142,7 +144,9 @@
             android:textStyle="bold"
             android:padding="7sp"
             android:textSize="25sp"
-            android:textColor="#222"/>
+            android:textColor="#222"
+            android:id="@+id/ingredientTextView"
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"

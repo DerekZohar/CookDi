@@ -14,15 +14,25 @@
         android:background="#FF3868"
         android:weightSum="10"
         android:orientation="horizontal"
-        android:gravity="right"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="9.9"
+            android:text="CookDi"
+            android:textSize="30dp"
+            android:paddingLeft="150dp"
+            android:textColor="#FFF"
+            android:paddingTop="9dp"
+            />
         <ImageButton
+            android:layout_weight="0.1"
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15sp"
             android:background="@null"
-            android:src="@drawable/ic_black_search" />
+            android:src="@drawable/ic_black_search"/>
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
