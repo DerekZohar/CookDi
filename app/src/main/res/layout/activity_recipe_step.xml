@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/stepTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+        <TextView
+            android:id="@+id/stepNumber"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:text="Step: 1/18" />
+        <TextView
+            android:id="@+id/countDownTime"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5:00"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_below="@+id/stepTime"
+        android:id="@+id/imgStep"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:contentDescription="TODO"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_below="@+id/imgStep"
+        android:id="@+id/txtPress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:text="Press button to start cooking rice!"/>
+    <TextView
+        android:layout_below="@+id/txtPress"
+        android:id="@+id/txtEstimateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:text="Estimated: 5m"/>
+    <TextView
+        android:layout_below="@+id/txtEstimateTime"
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:text="Tip: you should put rice in first."/>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/micro_icon"
+                android:contentDescription="TODO" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp">
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/previous_icon"
+                    android:layout_marginRight="20dp"
+                    />
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/next_icon" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
