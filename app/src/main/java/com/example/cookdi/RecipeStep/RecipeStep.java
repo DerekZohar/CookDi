@@ -43,7 +43,7 @@ public class RecipeStep extends AppCompatActivity {
             }
 
             public void onFinish() {
-                
+
             }
         }.start();
     }
