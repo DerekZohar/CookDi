@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#C4C4C4">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <EditText
+                    android:id="@+id/foodname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/text_edit_custom"
+                    android:textSize="15sp"
+                    android:hint="Name of this food"
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+                </EditText>
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TableRow>
+                        <TextView android:text="For"/>
+                        <EditText android:layout_width="100dp"
+                            android:id="@+id/editfor"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/text_edit_custom"
+                            android:textSize="15sp"/>
+                        <TextView android:text="people"/>
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp">
+                        <TextView android:text="Time"/>
+                        <EditText android:layout_width="100dp"
+                            android:id="@+id/time"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/text_edit_custom"
+                            android:textSize="15sp"/>
+                        <TextView android:text="minutes"/>
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView android:text="Level"/>
+                        <EditText android:layout_width="100dp"
+                            android:id="@+id/level"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/text_edit_custom"
+                            android:textSize="15sp"/>
+                    </TableRow>
+
+                </TableLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#C4C4C4"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredients"
+                android:layout_marginLeft="10dp">
+            </TextView>
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:fabSize="mini" />
+
+                <EditText
+                    android:id="@+id/textin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/text_edit_custom"
+                    android:textSize="15sp"
+                    android:layout_alignParentLeft="true"
+                    android:hint="Ingredient name"
+                    android:layout_toLeftOf="@id/add"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#C4C4C4"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Steps"
+                android:layout_marginLeft="10dp"></TextView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addstep"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:fabSize="mini" />
+
+                <EditText
+                    android:id="@+id/textinstep"
+                    android:layout_width="200dp"
+                    android:layout_alignParentLeft="true"
+                    android:hint="step"
+                    android:layout_toLeftOf="@id/steptime"
+                    android:layout_height="40dp"
+                    android:background="@drawable/text_edit_custom"
+                    android:textSize="15sp"
+                    android:layout_marginRight="10dp"/>
+
+                <EditText
+                    android:id="@+id/steptime"
+                    android:layout_width="140dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/text_edit_custom"
+                    android:textSize="15sp"
+                    android:hint="time"
+                    android:layout_toLeftOf="@id/addstep"
+                    android:focusable="false"
+                    android:layout_marginRight="10dp"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/containerstep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#C4C4C4">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Picture"
+                android:layout_marginLeft="10dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+            </ImageView>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload"
+            android:layout_gravity="center"></Button>
+
+    </LinearLayout>
+
+</ScrollView>

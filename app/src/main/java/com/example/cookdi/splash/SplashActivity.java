@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
+import com.example.cookdi.upload.UploadActivity;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SystemClock.sleep(2000);
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        startActivity(new Intent(SplashActivity.this, UploadActivity.class));
         finish();
     }
 
