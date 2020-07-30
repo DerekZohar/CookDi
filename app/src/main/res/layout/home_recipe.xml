@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="25dp"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="25dp">
+    android:orientation="vertical"
+    android:layout_marginBottom="14dp"
+    android:layout_marginHorizontal="2dp">
 
     <LinearLayout
         android:background="@color/colorWhite"
@@ -39,6 +42,7 @@
                 android:layout_marginLeft="14dp"/>
 
             <TextView
+                android:id="@+id/txtContactHomeRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FF2196F3"
@@ -63,6 +67,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"/>
         </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +75,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:id="@+id/txtFoodNameHomeRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,29 +94,29 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="8dp">
 
-                <RatingBar
-                    android:id="@+id/barRatingFoodHomeRecipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:rating="2"
-                    android:stepSize="0.5"
-                    android:layout_alignParentLeft="true"
-                    style="@style/RatingBar"
-                    android:theme="@style/RatingBar"
-                    android:isIndicator="false"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    />                        />
+                    <RatingBar
+                        android:id="@+id/barRatingFoodHomeRecipe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="2"
+                        android:stepSize="0.5"
+                        android:layout_alignParentLeft="true"
+                        style="@style/RatingBar"
+                        android:theme="@style/RatingBar"
+                        android:isIndicator="false"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        />                        />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="18dp">
 
                     <ImageButton
                         android:id="@+id/btnSaveHomeRecipe"
