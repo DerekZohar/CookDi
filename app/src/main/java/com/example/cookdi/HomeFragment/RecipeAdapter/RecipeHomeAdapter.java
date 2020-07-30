@@ -18,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,9 +34,9 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final int ITEMS_LIMIT = 10;
 
     private Context m_context;
-    private ArrayList<RecipeModel> m_recipeList;
+    private List<RecipeDetail> m_recipeList;
 
-    public RecipeHomeAdapter(Context context, ArrayList<RecipeModel> recipeList){
+    public RecipeHomeAdapter(Context context, List<RecipeDetail> recipeList){
         m_context = context;
         m_recipeList = recipeList;
     }
@@ -64,17 +67,17 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
-            final RecipeModel currentRecipe = m_recipeList.get(position);
-            holder.userName.setText(currentRecipe.getUserName());
-            holder.recipeName.setText(currentRecipe.getRecipeName());
-            holder.recipeTime.setText(currentRecipe.getRecipeTime());
+            final RecipeDetail currentRecipe = m_recipeList.get(position);
+            holder.userName.setText(currentRecipe.getChef().getName());
+            holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
+            holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
 
 //        Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(currentRecipe.getFoodPortrait()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getUserAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
 
             //
-            holder.recipeRating.setRating((float) currentRecipe.getRecipeRating());
+            holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
 
             //
 //            initButtonAction();
@@ -95,11 +98,11 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
                     builder.setCancelable(true);
                     builder.setTitle("Save");
-                    builder.setMessage("Saving \"" +currentRecipe.getRecipeName()+"\" recipe to your device?");
+                    builder.setMessage("Saving \"" +currentRecipe.getRecipe().getRecipeName()+"\" recipe to your device?");
                     builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            currentRecipe.setRecipeSaved(true);
+//                            currentRecipe.setRecipeSaved(true);
                             //... db update
                         }
                     });
@@ -113,7 +116,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        currentRecipe.setRecipeFavorited(true);
+//                        currentRecipe.setRecipeFavorited(true);
                         //... db update
                     }
             });
@@ -122,6 +125,11 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         else if(viewHolder instanceof LoadingViewHolder){
             LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
         }
+    }
+
+    String convertTime(int sec) {
+        long min = sec / 60;
+        return min + "mins";
     }
 
     @Override
