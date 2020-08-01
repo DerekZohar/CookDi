@@ -23,6 +23,8 @@
         <activity android:name=".login.LoginActivity" android:exported="true"/>
         <activity android:name=".register.RegisterActivity" android:exported="true"/>
         <activity android:name=".search.SearchActivity" android:exported="true"/>
+        <activity android:name=".Report.ReportActivity" android:exported="true"/>
+        <activity android:name=".Report.ReportActivitySucceed" android:exported="true"/>
     </application>
 
 </manifest>

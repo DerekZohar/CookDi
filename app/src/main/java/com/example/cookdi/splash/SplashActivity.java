@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 
@@ -22,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
 
         SystemClock.sleep(2000);
 //        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        startActivity(new Intent(SplashActivity.this, ReportActivity.class));
         finish();
     }
 
