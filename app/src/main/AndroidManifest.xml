@@ -23,6 +23,9 @@
         <activity android:name=".login.LoginActivity" android:exported="true"/>
         <activity android:name=".register.RegisterActivity" android:exported="true"/>
         <activity android:name=".search.SearchActivity" android:exported="true"/>
+        <activity android:name=".chat.features.main.ChatActivity" android:exported="true"/>
+        <activity android:name=".chat.features.demo.styled.StyledDialogsActivity" android:exported="true"/>
+        <activity android:name=".chat.features.demo.styled.StyledMessagesActivity" android:exported="true"/>
     </application>
 
 </manifest>

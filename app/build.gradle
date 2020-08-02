@@ -55,4 +55,5 @@ dependencies {
     //Tagview
     implementation 'com.veinhorn.tagview:library:1.0.4'
 
+    implementation 'com.github.stfalcon:chatkit:0.3.3'
 }
