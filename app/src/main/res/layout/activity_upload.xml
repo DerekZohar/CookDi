@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_upload"
+    android:longClickable="true"
+    android:focusable="true"
+    >
+
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_view"
+            android:background="#FF3868"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="?attr/homeAsUpIndicator"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                />
+            <TextView
+                android:id="@+id/editTextSearchView"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:paddingLeft="85sp"
+                android:paddingTop="10sp"
+                android:paddingBottom="10sp"
+                android:text="UPLOAD"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,8 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/text_edit_custom"
-                    android:textSize="15sp"
-                    android:hint="Name of this food"
+                    android:textSize="25sp"
+                    android:hint="Name Of This Food"
                     android:layout_margin="10dp"
                     android:gravity="center">
                 </EditText>
@@ -35,7 +71,7 @@
                     android:layout_marginBottom="10dp">
 
                     <TableRow>
-                        <TextView android:text="For"/>
+                        <TextView android:text="For" android:textSize="18sp"/>
                         <EditText android:layout_width="100dp"
                             android:id="@+id/editfor"
                             android:layout_marginLeft="10dp"
@@ -43,13 +79,13 @@
                             android:layout_height="40dp"
                             android:background="@drawable/text_edit_custom"
                             android:textSize="15sp"/>
-                        <TextView android:text="people"/>
+                        <TextView android:text="People" android:textSize="18sp"/>
 
                     </TableRow>
 
                     <TableRow android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp">
-                        <TextView android:text="Time"/>
+                        <TextView android:text="Time" android:textSize="18sp"/>
                         <EditText android:layout_width="100dp"
                             android:id="@+id/time"
                             android:layout_marginLeft="10dp"
@@ -57,11 +93,11 @@
                             android:layout_height="40dp"
                             android:background="@drawable/text_edit_custom"
                             android:textSize="15sp"/>
-                        <TextView android:text="minutes"/>
+                        <TextView android:text="Minutes" android:textSize="18sp"/>
                     </TableRow>
 
                     <TableRow>
-                        <TextView android:text="Level"/>
+                        <TextView android:text="Level" android:textSize="18sp"/>
                         <EditText android:layout_width="100dp"
                             android:id="@+id/level"
                             android:layout_marginLeft="10dp"
@@ -101,7 +137,8 @@
                     android:id="@+id/add"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_baseline_add_24"
-                    app:fabSize="mini" />
+                    app:fabSize="mini"
+                    />
 
                 <EditText
                     android:id="@+id/textin"

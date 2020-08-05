@@ -3,9 +3,10 @@ package com.example.cookdi.upload;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,10 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.sql.Time;
-import java.text.DateFormat;
-import java.util.Calendar;
 
 public class UploadActivity extends AppCompatActivity {
     EditText textIn,textInStep,stepTime;
@@ -101,9 +98,25 @@ public class UploadActivity extends AppCompatActivity {
 
                 buttonRemove.setOnClickListener(thisListener);
                 containerstep.addView(addView);
-
             }
         });
+
+        findViewById(R.id.activity_upload).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyBoard();
+                return true;
+            }
+        });
+    }
+
+    public void hideKeyBoard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
     }
 
 }
