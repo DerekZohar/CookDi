@@ -126,31 +126,33 @@
                 android:layout_marginLeft="10dp">
             </TextView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/textin"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/text_edit_custom"
+                    android:textSize="15sp"
+                    android:hint="Ingredient name"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="9"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/add"
-                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_baseline_add_24"
                     app:fabSize="mini"
                     />
 
-                <EditText
-                    android:id="@+id/textin"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/text_edit_custom"
-                    android:textSize="15sp"
-                    android:layout_alignParentLeft="true"
-                    android:hint="Ingredient name"
-                    android:layout_toLeftOf="@id/add"
-                    android:layout_marginRight="10dp"/>
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container"
@@ -176,48 +178,50 @@
                 android:text="Steps"
                 android:layout_marginLeft="10dp"></TextView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addstep"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_baseline_add_24"
-                    app:fabSize="mini" />
+                android:layout_margin="10dp"
+                android:weightSum="10"
+                android:orientation="horizontal">
 
                 <EditText
+                    android:layout_width="0dp"
                     android:id="@+id/textinstep"
-                    android:layout_width="200dp"
-                    android:layout_alignParentLeft="true"
                     android:hint="step"
-                    android:layout_toLeftOf="@id/steptime"
                     android:layout_height="40dp"
                     android:background="@drawable/text_edit_custom"
                     android:textSize="15sp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="6"/>
 
                 <EditText
+                    android:layout_width="0dp"
                     android:id="@+id/steptime"
-                    android:layout_width="140dp"
                     android:layout_height="40dp"
                     android:background="@drawable/text_edit_custom"
                     android:textSize="15sp"
                     android:hint="time"
-                    android:layout_toLeftOf="@id/addstep"
                     android:focusable="false"
                     android:layout_marginRight="10dp"
-                    />
-            </RelativeLayout>
+                    android:layout_weight="3"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addstep"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:fabSize="mini"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/containerstep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                android:layout_margin="10dp"></LinearLayout>
 
 
         </LinearLayout>
