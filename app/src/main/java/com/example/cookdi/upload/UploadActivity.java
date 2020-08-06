@@ -46,7 +46,7 @@ public class UploadActivity extends AppCompatActivity {
                 final View addView = layoutInflater.inflate(R.layout.ingredient, null);
                 TextView textOut = (TextView)addView.findViewById(R.id.textout);
                 textOut.setText(textIn.getText().toString());
-                Button buttonRemove = (Button)addView.findViewById(R.id.remove);
+                FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.remove);
 
                 final View.OnClickListener thisListener = new View.OnClickListener(){
                     @Override
@@ -87,7 +87,7 @@ public class UploadActivity extends AppCompatActivity {
                 textOutStep.setText(textInStep.getText().toString());
                 TextView steptime = (TextView)addView.findViewById(R.id.texttime);
                 steptime.setText(stepTime.getText().toString());
-                Button buttonRemove = (Button)addView.findViewById(R.id.removestep);
+                FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.removestep);
 
                 final View.OnClickListener thisListener = new View.OnClickListener(){
                     @Override

@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/removestep"
             android:text="Remove"
             android:layout_width="wrap_content"
@@ -31,6 +31,9 @@
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintLeft_toRightOf="@+id/texttime"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_baseline_close_24"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/darker_gray"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
