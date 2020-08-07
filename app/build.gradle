@@ -55,4 +55,10 @@ dependencies {
     //Tagview
     implementation 'com.veinhorn.tagview:library:1.0.4'
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.firebase:firebase-client-android:2.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }
