@@ -2,6 +2,7 @@ package com.example.cookdi.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.chat.ioSocketConnector.IOSocketConnector;
 import com.example.cookdi.config.Config;
 import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.main.MainActivity;

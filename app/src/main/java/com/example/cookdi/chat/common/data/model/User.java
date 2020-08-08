@@ -1,4 +1,4 @@
-package com.adida.chatapp.chatscreen.models;
+package com.example.cookdi.chat.common.data.model;
 
 import com.stfalcon.chatkit.commons.models.IUser;
 
