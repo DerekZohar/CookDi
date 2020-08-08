@@ -11,20 +11,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
+import com.example.cookdi.sharepref.SharePref;
 
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
-
+    Intent intent;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         SystemClock.sleep(2000);
-//        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-        startActivity(new Intent(SplashActivity.this, ChatActivity.class));
+        onFlow();
         finish();
+    }
+
+    void onFlow() {
+        if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        } else {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
     }
 
 }
