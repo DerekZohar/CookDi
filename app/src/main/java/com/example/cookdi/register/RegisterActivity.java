@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                 Toast.makeText(getApplicationContext(), "Register successful", Toast.LENGTH_SHORT).show();
-                openHomepage();
+                openLogin();
                 progressDialog.dismiss();
             }
 
@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void openHomepage() {
-        startActivity(new Intent(this, MainActivity.class));
+    private void openLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
