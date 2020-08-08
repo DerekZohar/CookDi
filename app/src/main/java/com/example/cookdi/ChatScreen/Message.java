@@ -8,8 +8,15 @@ public class Message implements IMessage {
 
     String id;
     String text;
-    Author author;
+    User author;
     Date createdAt;
+
+    public Message(String id, User user, String text, Date createdAt) {
+        this.id = id;
+        this.text = text;
+        this.author = user;
+        this.createdAt = createdAt;
+    }
 
     @Override
     public String getId() {
@@ -22,7 +29,7 @@ public class Message implements IMessage {
     }
 
     @Override
-    public Author getUser() {
+    public User getUser() {
         return author;
     }
 

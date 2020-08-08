@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 
+import com.example.cookdi.ChatScreen.ChatScreenActivity;
 import com.example.cookdi.R;
 import com.example.cookdi.main.MainActivity;
 
@@ -41,6 +43,16 @@ public class ContactFragment extends Fragment {
         listPersonAdapter = new ListPersonAdapter(context, persons);
         listView = (ListView)view.findViewById(R.id.listView_contact);
         listView.setAdapter(listPersonAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>=0){
+                    ChatScreenActivity.open(getActivity());
+                    //CallScreenActivity.open(getActivity(),clickedUser,false);
+                }
+            }
+        });
 
         return view;
     }

@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     tools:context=".ChatScreen.ChatScreenActivity">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/chat_tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+</androidx.appcompat.widget.Toolbar>
+
+<com.stfalcon.chatkit.messages.MessagesList
+    android:id="@+id/chatMessagesList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/chatMessageInput" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_above="@+id/chatMessageInput"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp" />
+
+<com.stfalcon.chatkit.messages.MessageInput
+    android:id="@+id/chatMessageInput"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:gravity="bottom"
+    app:inputHint="Enter message"
+    tools:ignore="MissingConstraints" />
+
+</RelativeLayout>
