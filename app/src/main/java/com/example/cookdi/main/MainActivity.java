@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
+import android.provider.Settings.Secure;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -24,7 +24,10 @@ import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.PagerAdapter.PagerAdapter;
 import com.example.cookdi.R;
 import com.example.cookdi.SavedFragment.SavedFragment;
+import com.example.cookdi.chat.ioSocketConnector.IOSocketConnector;
+import com.example.cookdi.config.Config;
 import com.example.cookdi.search.SearchActivity;
+import com.example.cookdi.sharepref.SharePref;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -40,7 +43,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getSupportActionBar().setElevation(0);
+        //getSupportActionBar().setElevation(0);
+        String uuid=SharePref.getInstance(getApplicationContext()).getUuid();
+
+        if(!uuid.isEmpty() && uuid.length()>0){
+            Config.IOSocketChatConnector = new IOSocketConnector(Config.BASE_URL,uuid);
+        }
+
+        //Try send message
+        Config.IOSocketChatConnector.SendMessage(uuid,"Message");
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);

@@ -26,7 +26,7 @@ public class IOSocketConnector {
     public String senderId;
     public Socket ioSocket;
 
-    IOSocketConnector(String server, final String senderId){
+    public IOSocketConnector(String server, final String senderId){
         this.senderId=senderId;
 
         try{
@@ -51,6 +51,7 @@ public class IOSocketConnector {
             public void call(Object... args) {
                 try {
                     JSONObject message = new JSONObject((String)args[0]);
+                    Log.d("123", message.getString(MESSAGE_CONTENT));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

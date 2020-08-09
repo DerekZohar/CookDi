@@ -3,6 +3,8 @@ package com.example.cookdi.sharepref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.cookdi.chat.ioSocketConnector.IOSocketConnector;
+import com.example.cookdi.config.Config;
 import com.example.cookdi.keys.StringKeys;
 
 
