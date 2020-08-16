@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".main.MainActivity" android:exported="true"/>
         <activity android:name=".login.LoginActivity" android:exported="true"/>
+        <activity android:name=".profile.ActivityProfile" android:exported="true"/>
         <activity android:name=".register.RegisterActivity" android:exported="true"/>
         <activity android:name=".search.SearchActivity" android:exported="true"/>
         <activity android:name=".chat.features.main.ChatActivity" android:exported="true"/>

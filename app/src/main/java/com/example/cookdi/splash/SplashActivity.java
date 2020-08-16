@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
+import com.example.cookdi.profile.ActivityProfile;
 import com.example.cookdi.sharepref.SharePref;
 
 
@@ -28,9 +29,9 @@ public class SplashActivity extends AppCompatActivity {
 
     void onFlow() {
         if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this, ActivityProfile.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, ActivityProfile.class));
         }
     }
 
