@@ -14,18 +14,13 @@ import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
 import com.example.cookdi.R;
-import com.example.cookdi.chat.common.data.fixtures.MessagesFixtures;
-import com.example.cookdi.chat.common.data.model.Message;
-import com.example.cookdi.chat.utils.AppUtils;
 
+import com.example.cookdi.chat.common.data.model.Message;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-/*
- * Created by troy379 on 04.04.17.
- */
 public abstract class DemoMessagesActivity extends AppCompatActivity
         implements MessagesListAdapter.SelectionListener,
         MessagesListAdapter.OnLoadMoreListener {
@@ -55,7 +50,7 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(), true);
+//        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(), true);
     }
 
     @Override
@@ -105,14 +100,14 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
     }
 
     protected void loadMessages() {
-        new Handler().postDelayed(new Runnable() { //imitation of internet connection
-            @Override
-            public void run() {
-                ArrayList<Message> messages = MessagesFixtures.getMessages(lastLoadedDate);
-                lastLoadedDate = messages.get(messages.size() - 1).getCreatedAt();
-                messagesAdapter.addToEnd(messages, false);
-            }
-        }, 1000);
+//        new Handler().postDelayed(new Runnable() { //imitation of internet connection
+////            @Override
+////            public void run() {
+////                ArrayList<Message> messages = MessagesFixtures.getMessages(lastLoadedDate);
+////                lastLoadedDate = messages.get(messages.size() - 1).getCreatedAt();
+////                messagesAdapter.addToEnd(messages, false);
+////            }
+////        }, 1000);
     }
 
     private MessagesListAdapter.Formatter<Message> getMessageStringFormatter() {

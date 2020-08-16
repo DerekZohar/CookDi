@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 import com.example.cookdi.chat.common.data.model.Dialog;
-import com.example.cookdi.chat.utils.AppUtils;
+
 
 /*
  * Created by troy379 on 05.04.17.
@@ -36,9 +36,6 @@ public abstract class DemoDialogsActivity extends AppCompatActivity
 
     @Override
     public void onDialogLongClick(Dialog dialog) {
-        AppUtils.showToast(
-                this,
-                dialog.getDialogName(),
-                false);
+
     }
 }

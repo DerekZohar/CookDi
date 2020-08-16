@@ -1,10 +1,7 @@
 package com.example.cookdi.chat.common.data.model;
 
 import com.stfalcon.chatkit.commons.models.IUser;
-
-/*
- * Created by troy379 on 04.04.17.
- */
+ 
 public class User implements IUser {
 
     private String id;
@@ -32,9 +29,5 @@ public class User implements IUser {
     @Override
     public String getAvatar() {
         return avatar;
-    }
-
-    public boolean isOnline() {
-        return online;
     }
 }

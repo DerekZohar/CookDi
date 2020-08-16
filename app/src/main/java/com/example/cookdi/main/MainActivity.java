@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Try send message
-        Config.IOSocketChatConnector.SendMessage(uuid,"Message");
+//        Config.IOSocketChatConnector.SendMessage(uuid,"Message");
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);

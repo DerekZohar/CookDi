@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 
 import com.example.cookdi.R;
+import com.example.cookdi.chat.features.demo.styled.StyledDialogsActivity;
+import com.example.cookdi.chat.features.demo.styled.StyledMessagesActivity;
 import com.example.cookdi.main.MainActivity;
+import com.example.cookdi.retrofit2.ServiceManager;
 
 import java.util.ArrayList;
 
@@ -42,9 +46,20 @@ public class ContactFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listView_contact);
         listView.setAdapter(listPersonAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                StyledMessagesActivity.open(context);
+            }
+        });
         return view;
     }
     private ArrayList<Person> getListData() {
+//        ArrayList<Person> list = ServiceManager.getInstance().getUserService().getUserInformation().clone();
+        ServiceManager.getInstance().getUserService().
+
+
+
         ArrayList<Person> list = new ArrayList<Person>();
         Person tran_thuan_thanh = new Person("Tran Thuan Thanh", "13123123123123131231231231231312313", "user");
         Person nguyen_huu_tuan= new Person("Nguyen Huu Tuan", "13123123123123131231231231231312313", "user1");

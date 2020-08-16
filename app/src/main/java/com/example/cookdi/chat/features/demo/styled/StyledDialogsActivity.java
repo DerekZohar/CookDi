@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 import com.example.cookdi.R;
-import com.example.cookdi.chat.common.data.fixtures.DialogsFixtures;
 import com.example.cookdi.chat.common.data.model.Dialog;
 import com.example.cookdi.chat.features.demo.DemoDialogsActivity;
 import com.stfalcon.chatkit.utils.DateFormatter;
@@ -52,7 +51,6 @@ public class StyledDialogsActivity extends DemoDialogsActivity
 
     private void initAdapter() {
         super.dialogsAdapter = new DialogsListAdapter<>(super.imageLoader);
-        super.dialogsAdapter.setItems(DialogsFixtures.getDialogs());
 
         super.dialogsAdapter.setOnDialogClickListener(this);
         super.dialogsAdapter.setOnDialogLongClickListener(this);

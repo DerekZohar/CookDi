@@ -15,56 +15,22 @@ public final class MessagesFixtures extends FixturesData {
         throw new AssertionError();
     }
 
-    public static Message getImageMessage() {
-        Message message = new Message(getRandomId(), getUser(), null);
-        message.setImage(new Message.Image(getRandomImage()));
+    public static Message getImageMessage(String url, String uuid) {
+        Message message = new Message(getRandomId(), getUser(uuid), null);
+        message.setImage(new Message.Image(url));
         return message;
     }
 
-    public static Message getVoiceMessage() {
-        Message message = new Message(getRandomId(), getUser(), null);
-        message.setVoice(new Message.Voice("http://example.com", rnd.nextInt(200) + 30));
-        return message;
+    public static Message getTextMessage(String text, String uuid) {
+        return new Message(uuid, getUser(uuid), text);
     }
 
-    public static Message getTextMessage() {
-        return getTextMessage(getRandomMessage());
-    }
-
-    public static Message getTextMessage(String text) {
-        return new Message(getRandomId(), getUser(), text);
-    }
-
-    public static ArrayList<Message> getMessages(Date startDate) {
-        ArrayList<Message> messages = new ArrayList<>();
-        for (int i = 0; i < 10/*days count*/; i++) {
-            int countPerDay = rnd.nextInt(5) + 1;
-
-            for (int j = 0; j < countPerDay; j++) {
-                Message message;
-                if (i % 2 == 0 && j % 3 == 0) {
-                    message = getImageMessage();
-                } else {
-                    message = getTextMessage();
-                }
-
-                Calendar calendar = Calendar.getInstance();
-                if (startDate != null) calendar.setTime(startDate);
-                calendar.add(Calendar.DAY_OF_MONTH, -(i * i + 1));
-
-                message.setCreatedAt(calendar.getTime());
-                messages.add(message);
-            }
-        }
-        return messages;
-    }
-
-    private static User getUser() {
-        boolean even = rnd.nextBoolean();
+    private static User getUser(String id) {
         return new User(
-                even ? "0" : "1",
-                even ? names.get(0) : names.get(1),
-                even ? avatars.get(0) : avatars.get(1),
+                id,
+                names.get(0),
+                null,
                 true);
+        //return userList.getID(id);
     }
 }

@@ -46,23 +46,25 @@ public class IOSocketConnector {
             }
         });
 
-        ioSocket.on(RECEIVE_MESSAGE, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                try {
-                    JSONObject message = new JSONObject((String)args[0]);
-                    Log.d("123", message.getString(MESSAGE_CONTENT));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });
+//        ioSocket.on(RECEIVE_MESSAGE, new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                try {
+//                    JSONObject message = new JSONObject((String)args[0]);
+//                    Log.d("ReceiveMessage", message.getString(MESSAGE_CONTENT));
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//        });
 
     }
 
     public void SendStartMessage(){
+
         JSONObject message = new JSONObject();
 
         try {
@@ -86,5 +88,19 @@ public class IOSocketConnector {
             e.printStackTrace();
         }
     }
+    public void ReceiveMessage(){
+        ioSocket.on(RECEIVE_MESSAGE, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                try {
+                    JSONObject message = new JSONObject((String)args[0]);
+                    Log.d("ReceiveMessage", message.getString(MESSAGE_CONTENT));
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    public Socket getIoSocket(){ return ioSocket;}
 }

@@ -5,9 +5,6 @@ import com.stfalcon.chatkit.commons.models.MessageContentType;
 
 import java.util.Date;
 
-/*
- * Created by troy379 on 04.04.17.
- */
 public class Message implements IMessage,
         MessageContentType.Image, /*this is for default image messages implementation*/
         MessageContentType /*and this one is for custom content type (in this case - voice message)*/ {
@@ -17,7 +14,7 @@ public class Message implements IMessage,
     private Date createdAt;
     private User user;
     private Image image;
-    private Voice voice;
+//    private Voice voice;
 
     public Message(String id, User user, String text) {
         this(id, user, text, new Date());
@@ -55,13 +52,13 @@ public class Message implements IMessage,
         return image == null ? null : image.url;
     }
 
-    public Voice getVoice() {
-        return voice;
-    }
-
-    public String getStatus() {
-        return "Sent";
-    }
+//    public Voice getVoice() {
+//        return voice;
+//    }
+//
+//    public String getStatus() {
+//        return "Sent";
+//    }
 
     public void setText(String text) {
         this.text = text;
@@ -75,9 +72,9 @@ public class Message implements IMessage,
         this.image = image;
     }
 
-    public void setVoice(Voice voice) {
-        this.voice = voice;
-    }
+//    public void setVoice(Voice voice) {
+//        this.voice = voice;
+//    }
 
     public static class Image {
 
@@ -106,4 +103,5 @@ public class Message implements IMessage,
             return duration;
         }
     }
+    
 }
