@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button loginButton;
     ProgressDialog progressDialog;
-
+    TextView forgotPasswordTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username_edit_text);
         password = findViewById(R.id.password_edit_text);
         loginButton = findViewById(R.id.login_button);
+        forgotPasswordTxt = findViewById(R.id.forgot_password_text_view);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
 
@@ -59,8 +61,14 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.login_view).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hideKeyBoard();
+//                hideKeyBoard();
                 return true;
+            }
+        });
+        forgotPasswordTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, SendMailActivity.class));
             }
         });
     }

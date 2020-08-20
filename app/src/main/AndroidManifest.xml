@@ -26,6 +26,9 @@
         <activity android:name=".chat.features.main.ChatActivity" android:exported="true"/>
         <activity android:name=".chat.features.demo.styled.StyledDialogsActivity" android:exported="true"/>
         <activity android:name=".chat.features.demo.styled.StyledMessagesActivity" android:exported="true"/>
+        <activity android:name=".login.SendMailActivity" android:exported="true"/>
+        <activity android:name=".login.ForgotActivity" android:exported="true"/>
+        <activity android:name=".login.OtpMailActivity" android:exported="true"/>
     </application>
 
 </manifest>
