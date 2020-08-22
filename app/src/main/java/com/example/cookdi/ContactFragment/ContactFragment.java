@@ -16,8 +16,14 @@ import com.example.cookdi.chat.features.demo.styled.StyledDialogsActivity;
 import com.example.cookdi.chat.features.demo.styled.StyledMessagesActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.retrofit2.entities.User;
+import com.example.cookdi.retrofit2.entities.UserDetail;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ContactFragment extends Fragment {
@@ -27,22 +33,47 @@ public class ContactFragment extends Fragment {
     }
     View view;
     Context context;
-    ArrayList<Person> persons;
+//    ArrayList<Person> persons;
+    private ArrayList<User> users;
     ListPersonAdapter listPersonAdapter;
     ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = (MainActivity) getActivity();
-        persons = getListData();
-        view = inflater.inflate(R.layout.contact_fragment, container, false);
 
-        listPersonAdapter = new ListPersonAdapter(context, persons);
+        view = inflater.inflate(R.layout.contact_fragment, container, false);
+        getContactData();
+
+
+
+
+        return view;
+    }
+    private void getContactData() {
+//        final ArrayList<User> users = new ArrayList<User>();
+        ServiceManager.getInstance().getUserService().getAllUsers().enqueue(new Callback<UserDetail>() {
+            @Override
+            public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
+                users = response.body().getList();
+
+                setAdapter();
+            }
+            @Override
+            public void onFailure(Call<UserDetail> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    private void setAdapter(){
+        listPersonAdapter = new ListPersonAdapter(context, users);
         listView = (ListView)view.findViewById(R.id.listView_contact);
         listView.setAdapter(listPersonAdapter);
 
@@ -52,38 +83,5 @@ public class ContactFragment extends Fragment {
                 StyledMessagesActivity.open(context);
             }
         });
-        return view;
-    }
-    private ArrayList<Person> getListData() {
-//        ArrayList<Person> list = ServiceManager.getInstance().getUserService().getUserInformation().clone();
-        ServiceManager.getInstance().getUserService().
-
-
-
-        ArrayList<Person> list = new ArrayList<Person>();
-        Person tran_thuan_thanh = new Person("Tran Thuan Thanh", "13123123123123131231231231231312313", "user");
-        Person nguyen_huu_tuan= new Person("Nguyen Huu Tuan", "13123123123123131231231231231312313", "user1");
-        Person nguyen_thanh_truong = new Person("Nguyen Thanh Truong", "13123123123123131231231231231312313", "user2");
-        Person ngo_viet_thang = new Person("Ngo Viet Thang", "13123123123123131231231231231312313", "user3");
-        Person dang_duc_trung = new Person("Dang Duc Trung", "13123123123123131231231231231312313", "user3");
-
-
-        list.add(tran_thuan_thanh);
-        list.add(nguyen_huu_tuan);
-        list.add(nguyen_thanh_truong);
-        list.add(ngo_viet_thang);
-        list.add(dang_duc_trung);
-        list.add(tran_thuan_thanh);
-        list.add(nguyen_huu_tuan);
-        list.add(nguyen_thanh_truong);
-        list.add(ngo_viet_thang);
-        list.add(dang_duc_trung);
-        list.add(tran_thuan_thanh);
-        list.add(nguyen_huu_tuan);
-        list.add(nguyen_thanh_truong);
-        list.add(ngo_viet_thang);
-        list.add(dang_duc_trung);
-
-        return list;
     }
 }

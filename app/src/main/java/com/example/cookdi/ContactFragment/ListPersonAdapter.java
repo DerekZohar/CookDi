@@ -9,15 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.entities.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ListPersonAdapter extends BaseAdapter {
-    private List<Person> persons;
+    private List<User> persons;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public ListPersonAdapter(Context aContext, List<Person> personList){
+    public ListPersonAdapter(Context aContext, List<User> personList){
         this.context = aContext;
         this.persons = personList;
         layoutInflater = LayoutInflater.from(aContext);
@@ -43,29 +45,31 @@ public class ListPersonAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.fragment_contact_person_item, null);
+
             holder = new ViewHolder();
-            holder.userView = (ImageView) convertView.findViewById(R.id.imageView_user);
+
+            holder.avatar = (ImageView) convertView.findViewById(R.id.imageView_user);
             holder.nameView = (TextView) convertView.findViewById(R.id.textView_name);
             holder.stateView = (TextView) convertView.findViewById(R.id.textView_phone);
+
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Person person = this.persons.get(position);
-        holder.nameView.setText(person.getFullName());
+        User person = this.persons.get(position);
+        holder.nameView.setText(person.getName());
 
-        holder.stateView.setText(person.getMessenger());
+        holder.stateView.setText("messages");
 
-        holder.userView = person.getImageView(holder.userView);
+        Picasso.get().load(person.getAvatar()).placeholder(R.mipmap.user).into(holder.avatar);
 
 
         return convertView;
     }
-
-
     static class ViewHolder {
-        ImageView userView;
+        ImageView avatar;
         TextView nameView;
         TextView stateView;
     }
