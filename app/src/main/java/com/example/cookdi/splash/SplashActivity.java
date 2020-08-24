@@ -9,14 +9,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.chat.features.main.ChatActivity;
+import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.sharepref.SharePref;
 
-
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     Intent intent;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

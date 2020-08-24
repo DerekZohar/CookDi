@@ -5,4 +5,7 @@
 
     <string name="date_header_today">Today</string>
     <string name="date_header_yesterday">Yesterday</string>
+    <string name="description">Description:</string>
+    <string name="image">Image:</string>
+    <string name="submit">Submit</string>
 </resources>
