@@ -26,6 +26,7 @@
         <activity android:name=".chat.features.main.ChatActivity" android:exported="true"/>
         <activity android:name=".chat.features.demo.styled.StyledDialogsActivity" android:exported="true"/>
         <activity android:name=".chat.features.demo.styled.StyledMessagesActivity" android:exported="true"/>
+        <activity android:name=".RecipeStep.RecipeStepActivity" android:exported="true"/>
     </application>
 
 </manifest>

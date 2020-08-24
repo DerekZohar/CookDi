@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cookdi.RecipeStep.RecipeStepActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
@@ -30,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, RecipeStepActivity.class));
         }
     }
 
