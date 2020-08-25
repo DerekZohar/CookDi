@@ -52,13 +52,9 @@ public class ContactFragment extends Fragment {
         view = inflater.inflate(R.layout.contact_fragment, container, false);
         getContactData();
 
-
-
-
         return view;
     }
     private void getContactData() {
-//        final ArrayList<User> users = new ArrayList<User>();
         ServiceManager.getInstance().getUserService().getAllUsers().enqueue(new Callback<UserDetail>() {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {

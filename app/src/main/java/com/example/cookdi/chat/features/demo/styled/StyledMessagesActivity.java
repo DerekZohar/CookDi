@@ -93,11 +93,14 @@ public class StyledMessagesActivity extends DemoMessagesActivity
     @Override
     public boolean onSubmit(CharSequence input) {
         final String[] _message = {input.toString()};
-        Config.IOSocketChatConnector.SendMessage("0", _message[0]);
-        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "1"), true);
+        String uuid= SharePref.getInstance(getApplicationContext()).getUuid();
+        Config.IOSocketChatConnector.SendMessage(uuid, _message[0]);
+
+
+        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
+//        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "1234"), true);
 
         //send message socket io
-        String uuid= SharePref.getInstance(getApplicationContext()).getUuid();
 
 
 
@@ -107,10 +110,10 @@ public class StyledMessagesActivity extends DemoMessagesActivity
 //                try {
 //                    JSONObject message = new JSONObject((String)args[0]);
 //                    Log.d("ReceiveMessage123", message.getString(MESSAGE_CONTENT));
-////                    System.out.println(message.getString(MESSAGE_CONTENT));
+//                    System.out.println("________________________");
+//                    System.out.println(message.getString(MESSAGE_CONTENT));
 //                    _message[0] = message.getString(MESSAGE_CONTENT);
-//
-//
+//                    messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }

@@ -52,13 +52,13 @@ public class ListPersonAdapter extends BaseAdapter {
             holder.nameView = (TextView) convertView.findViewById(R.id.textView_name);
             holder.stateView = (TextView) convertView.findViewById(R.id.textView_phone);
 
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         User person = this.persons.get(position);
+
         holder.nameView.setText(person.getName());
 
         holder.stateView.setText("messages");
