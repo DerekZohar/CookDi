@@ -2,6 +2,7 @@ package com.example.cookdi.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +17,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.chat.ioSocketConnector.IOSocketConnector;
 import com.example.cookdi.config.Config;
 import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.register.RegisterActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.sharepref.SharePref;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                 BCrypt.Result result = BCrypt.verifyer().verify(password.getText().toString().toCharArray(),response.body().get("pass") );
                 if (result.verified) {
+                    SharePref.getInstance(getApplicationContext()).setUuid(response.body().get("id").toString());
                     openHomepage();
                 } else {
                     Toast.makeText(getApplicationContext(), "Username or password incorrect", Toast.LENGTH_SHORT).show();

@@ -2,4 +2,7 @@
     <string name="app_name">CookDi</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="n_a">N/A</string>
+
+    <string name="date_header_today">Today</string>
+    <string name="date_header_yesterday">Yesterday</string>
 </resources>
