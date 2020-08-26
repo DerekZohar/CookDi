@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "111926236605",
+    "firebase_url": "https://cookdi.firebaseio.com",
+    "project_id": "cookdi",
+    "storage_bucket": "cookdi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111926236605:android:bc742d6d5130e37dba2ed4",
+        "android_client_info": {
+          "package_name": "com.example.cookdi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111926236605-760fklq8nup90eqvigfp8i7c80t919j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtCanZrwYeZnBz15pPCengTy1iTnImd2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111926236605-760fklq8nup90eqvigfp8i7c80t919j5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

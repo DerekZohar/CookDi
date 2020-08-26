@@ -1,0 +1,65 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/desciptionSection"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorBlack"
+            />
+        <EditText
+            android:id="@+id/desciptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine|textLongMessage"
+            android:hint="Text..."
+            android:textSize="20sp"
+            android:gravity="start"
+            android:layout_margin="5dp"
+            android:background="@drawable/border"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/desciptionSection"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/image"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorBlack"
+            />
+        <ImageView
+            android:id="@+id/imageReport"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/img_report_place_holder"
+            android:layout_margin="5dp"
+
+            />
+    </LinearLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/submit_report_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_custom"
+        android:text="@string/submit"
+         />
+</RelativeLayout>
