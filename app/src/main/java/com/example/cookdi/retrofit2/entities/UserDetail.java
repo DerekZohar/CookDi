@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class UserDetail {
-    @SerializedName("data")
+    @SerializedName("")
     private ArrayList<User> user;
 
     public ArrayList<User> getList(){ return user;}

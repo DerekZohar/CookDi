@@ -57,74 +57,74 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
-        if(viewHolder instanceof ItemViewHolder){
-            ItemViewHolder holder = (ItemViewHolder) viewHolder;
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-
-            final RecipeDetail currentRecipe = m_recipeList.get(position);
-            holder.userName.setText(currentRecipe.getChef().getName());
-            holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
-            holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
-
-//        Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
-
-            //
-            holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
-
-            //
-//            initButtonAction();
-//            if(currentRecipe.isRecipeFavorited())
-//                holder.recipeFavorited.setPressed(true);
-//            else
-//                holder.recipeFavorited.setPressed(false);
-//            if(currentRecipe.isRecipeSaved())
-//                holder.recipeSaved.setPressed(true);
-//            else
-//                holder.recipeSaved.setPressed(true);
-
-            //
-            holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
-                    builder.setCancelable(true);
-                    builder.setTitle("Save");
-                    builder.setMessage("Saving \"" +currentRecipe.getRecipe().getRecipeName()+"\" recipe to your device?");
-                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            currentRecipe.setRecipeSaved(true);
-                            //... db update
-                        }
-                    });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
-
-            holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-//                        currentRecipe.setRecipeFavorited(true);
-                        //... db update
-                    }
-            });
-
-        }
-        else if(viewHolder instanceof LoadingViewHolder){
-            LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
-        }
+//        if(viewHolder instanceof ItemViewHolder){
+//            ItemViewHolder holder = (ItemViewHolder) viewHolder;
+//
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+//
+//            final RecipeDetail currentRecipe = m_recipeList.get(position);
+//            holder.userName.setText(currentRecipe.getChef().getName());
+//            holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
+//            holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
+//
+////        Picasso.get().setLoggingEnabled(true);
+//            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+//            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+//
+//            //
+//            holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
+//
+//            //
+////            initButtonAction();
+////            if(currentRecipe.isRecipeFavorited())
+////                holder.recipeFavorited.setPressed(true);
+////            else
+////                holder.recipeFavorited.setPressed(false);
+////            if(currentRecipe.isRecipeSaved())
+////                holder.recipeSaved.setPressed(true);
+////            else
+////                holder.recipeSaved.setPressed(true);
+//
+//            //
+//            holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+//                    builder.setCancelable(true);
+//                    builder.setTitle("Save");
+//                    builder.setMessage("Saving \"" +currentRecipe.getRecipe().getRecipeName()+"\" recipe to your device?");
+//                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+////                            currentRecipe.setRecipeSaved(true);
+//                            //... db update
+//                        }
+//                    });
+//                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
+//
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
+//            });
+//
+//            holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+////                        currentRecipe.setRecipeFavorited(true);
+//                        //... db update
+//                    }
+//            });
+//
+//        }
+//        else if(viewHolder instanceof LoadingViewHolder){
+//            LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
+//        }
     }
 
     String convertTime(int sec) {

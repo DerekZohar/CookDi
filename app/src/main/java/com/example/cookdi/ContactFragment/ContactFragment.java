@@ -55,15 +55,19 @@ public class ContactFragment extends Fragment {
         return view;
     }
     private void getContactData() {
-        ServiceManager.getInstance().getUserService().getAllUsers().enqueue(new Callback<UserDetail>() {
+        System.out.println("_______________");
+        System.out.println(123);
+
+        ServiceManager.getInstance().getUserService().getAllUsers().enqueue(new Callback<ArrayList<User>>() {
             @Override
-            public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
-                users = response.body().getList();
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                users = response.body();
 
                 setAdapter();
             }
+
             @Override
-            public void onFailure(Call<UserDetail> call, Throwable t) {
+            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 t.printStackTrace();
             }
         });
