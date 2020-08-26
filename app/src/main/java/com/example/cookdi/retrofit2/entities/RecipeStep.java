@@ -17,10 +17,7 @@ public class RecipeStep {
     Integer duration_minute;
 
     @SerializedName("step_image_url")
-    Boolean step_image_url;
-
-    @SerializedName("step_order")
-    Integer step_order;
+    String step_image_url;
 
     public Integer getRecipe_id() {
         return recipe_id;
@@ -54,19 +51,12 @@ public class RecipeStep {
         this.duration_minute = duration_minute;
     }
 
-    public Boolean getStep_image_url() {
+    public String getStep_image_url() {
         return step_image_url;
     }
 
-    public void setStep_image_url(Boolean step_image_url) {
+    public void setStep_image_url(String step_image_url) {
         this.step_image_url = step_image_url;
     }
 
-    public Integer getStep_order() {
-        return step_order;
-    }
-
-    public void setStep_order(Integer step_order) {
-        this.step_order = step_order;
-    }
 }

@@ -6,125 +6,42 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class RecipeDetailSteps {
-    @SerializedName("recipe_id")
+    @SerializedName("recipe")
     @Expose
-    private Integer recipeId;
-
-    @SerializedName("recipe_name")
-    @Expose
-    private String recipeName;
-
-    @SerializedName("user_id")
-    @Expose
-    private Integer userId;
-
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
-
-    @SerializedName("description")
-    @Expose
-    private String description;
-
-    @SerializedName("image_url")
-    @Expose
-    private String imageUrl;
-
-    @SerializedName("rating")
-    @Expose
-    private Integer rating;
-
-    @SerializedName("time")
-    @Expose
-    private Integer time;
-
+    Recipe recipe;
 
     @SerializedName("steps")
     @Expose
     ArrayList<RecipeStep> steps;
 
-
     @SerializedName("chef")
     @Expose
     User chef;
 
+    @SerializedName("ingredients")
+    @Expose
+    private ArrayList<Ingredient> ingredients;
 
-    public Integer getRecipeId() {
-        return recipeId;
+    @SerializedName("isFavorite")
+    @Expose
+    private Boolean isFavorite;
+
+    @SerializedName("tags")
+    @Expose
+    private ArrayList<Tag> tags;
+
+
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipeId(Integer recipeId) {
-        this.recipeId = recipeId;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
-
-    public String getRecipeName() {
-        return recipeName;
-    }
-
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
-        this.time = time;
-    }
-
-//    public Recipe getRecipe() {
-//        return recipe;
-//    }
-//
-//    public void setRecipe(Recipe recipe) {
-//        this.recipe = recipe;
-//    }
 
     public ArrayList<RecipeStep> getSteps() {
         return steps;
     }
-
 
     public void setSteps(ArrayList<RecipeStep> steps) {
         this.steps = steps;
@@ -136,5 +53,30 @@ public class RecipeDetailSteps {
 
     public void setChef(User chef) {
         this.chef = chef;
+    }
+
+
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public ArrayList<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<Tag> tags) {
+        this.tags = tags;
     }
 }

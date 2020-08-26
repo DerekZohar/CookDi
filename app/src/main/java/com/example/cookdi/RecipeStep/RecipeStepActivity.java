@@ -30,9 +30,10 @@ import retrofit2.Response;
 public class RecipeStepActivity extends AppCompatActivity {
     RecipeDetailSteps recipeDetailSteps;
 
-    ImageView imageView;
+    ImageView imgStep;
     TextView description;
-    TextView esimateTime;
+    TextView estimateTime;
+    TextView stepNumber;
     ImageButton preBtn;
     ImageButton nextBtn;
     Button micro;
@@ -40,6 +41,7 @@ public class RecipeStepActivity extends AppCompatActivity {
     int stepID = 1;
     ArrayList<RecipeStep> listSteps;
 
+    String FORMAT_TIME = "%02d:%02d:%02d";
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,10 @@ public class RecipeStepActivity extends AppCompatActivity {
 
         fetchData();
 
-        imageView = (ImageView) findViewById(R.id.imgStep);
+        imgStep = (ImageView) findViewById(R.id.imgStep);
         description = findViewById(R.id.stepDescriptionTxt);
-        esimateTime = findViewById(R.id.stepEstimateTimeTxt);
+        stepNumber = findViewById(R.id.stepNumber);
+        estimateTime = findViewById(R.id.stepEstimateTimeTxt);
         preBtn = findViewById(R.id.previousBtn);
         nextBtn = findViewById(R.id.nextBtn);
         onClickNextBtn();
@@ -73,7 +76,7 @@ public class RecipeStepActivity extends AppCompatActivity {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             public void onTick(long millisUntilFinished) {
 
-                textView.setText(""+String.format("%02d:%02d:%02d",
+                textView.setText(""+String.format(FORMAT_TIME,
                         TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
@@ -116,8 +119,8 @@ public class RecipeStepActivity extends AppCompatActivity {
         ServiceManager.getInstance().getRecipeService().getRecipeSteps().enqueue(new Callback<RecipeDetailSteps>() {
             @Override
             public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
-                 recipeDetailSteps = response.body();
-                 listSteps = recipeDetailSteps.getSteps();
+                     recipeDetailSteps = response.body();
+
 
                 setAdapter();
             }
@@ -129,9 +132,29 @@ public class RecipeStepActivity extends AppCompatActivity {
         });
 
     }
+    @SuppressLint("SetTextI18n")
     private void setAdapter(){
-        Picasso.get().load(recipeDetailSteps.getImageUrl()).placeholder(R.mipmap.picture_icon_placeholder).into(imageView);
+        listSteps = recipeDetailSteps.getSteps();
 
-//        description.setText(recipeDetailSteps.getSteps().get(0).getRecipe_id());
+//        Picasso.get().load(recipeDetailSteps.getSteps().get(0)
+//                .getStep_image_url())
+//                .placeholder(R.mipmap.picture_icon_placeholder)
+//                .error(R.mipmap.picture_icon_placeholder)
+//                .into(imageView);
+        stepNumber.setText("Step: " +  "1/" + listSteps.size());
+        countDown(recipeDetailSteps.getRecipe().getTime());
+        Picasso.get().load("https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg")
+                .placeholder(R.mipmap.picture_icon_placeholder)
+                .error(R.mipmap.picture_icon_placeholder)
+                .into(imgStep);
+
+        description.setText(recipeDetailSteps.getRecipe().getDescription());
+        int estTime = recipeDetailSteps.getRecipe().getTime()*1000;
+        estimateTime.setText(""+String.format(FORMAT_TIME,
+                TimeUnit.MILLISECONDS.toHours(estTime),
+                TimeUnit.MILLISECONDS.toMinutes(estTime) - TimeUnit.HOURS.toMinutes(
+                        TimeUnit.MILLISECONDS.toHours(estTime)),
+                TimeUnit.MILLISECONDS.toSeconds(estTime) - TimeUnit.MINUTES.toSeconds(
+                        TimeUnit.MILLISECONDS.toMinutes(estTime))));
     }
 }

@@ -17,22 +17,37 @@
         android:gravity="center"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
+
         <TextView
             android:id="@+id/stepNumber"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:text="Step: _/_"
             android:textColor="@color/colorBlack"
-            android:text="Step: 1/18" />
-        <TextView
-            android:id="@+id/countDownTime"
-            android:layout_alignParentRight="true"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/containerTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5:00"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"/>
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: "
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/countDownTime"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
     </RelativeLayout>
     <ImageView
         android:layout_below="@+id/stepTime"
@@ -49,7 +64,7 @@
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/colorBlack"
-        android:text="Press button to start cooking rice!"/>
+        android:text="Description!"/>
     <TextView
         android:layout_below="@+id/stepDescriptionTxt"
         android:id="@+id/stepEstimateTimeTxt"
