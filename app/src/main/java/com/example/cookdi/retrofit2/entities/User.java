@@ -4,19 +4,22 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("id")
+    @SerializedName("user_id")
     @Expose
     private Integer id;
-    @SerializedName("name")
+    @SerializedName("user_name")
     @Expose
     private String name;
-    @SerializedName("age")
+    @SerializedName("user_age")
     @Expose
     private Integer age;
-    @SerializedName("email")
+    @SerializedName("user_gender")
+    @Expose
+    private Integer gender;
+    @SerializedName("user_email")
     @Expose
     private String email;
-    @SerializedName("avatar")
+    @SerializedName("user_avatar_url")
     @Expose
     private String avatar;
 
@@ -59,5 +62,11 @@ public class User {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+    public Integer getGender() {
+        return gender;
+    }
 
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
 }

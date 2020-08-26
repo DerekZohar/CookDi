@@ -68,13 +68,13 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
 
             final RecipeDetail currentRecipe = m_recipeList.get(position);
-            holder.userName.setText(currentRecipe.getChef().getName());
+//            holder.userName.setText(currentRecipe.getChef().getName());
             holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
             holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
 
 //        Picasso.get().setLoggingEnabled(true);
             Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+//            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
 
             //
             holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
