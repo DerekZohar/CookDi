@@ -61,7 +61,16 @@ public class RecipeStepActivity extends AppCompatActivity {
         onClickPreviousBtn();
 
     }
-
+//    @Override
+//    public void onBackPressed() {
+//        if(Config.stepID == 1)
+//        System.out.println("_____________________");
+//        System.out.println("back press");
+////        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+////        setIntent.addCategory(Intent.CATEGORY_HOME);
+////        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////        startActivity(setIntent);
+//    }
     //time: second
     public void countDown(int time){
         final TextView textView = (TextView) findViewById(R.id.countDownTime);
@@ -90,7 +99,8 @@ public class RecipeStepActivity extends AppCompatActivity {
                 if(Config.stepID != 1)
                 {
                     Config.stepID = Config.stepID - 1;
-                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+//                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+                    setAdapter();
                 }
             }
         });
@@ -101,7 +111,8 @@ public class RecipeStepActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(Config.stepID != listSteps.size()){
                     Config.stepID = Config.stepID + 1;
-                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+//                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+                    setAdapter();
                 }
             }
         });
@@ -110,9 +121,7 @@ public class RecipeStepActivity extends AppCompatActivity {
         ServiceManager.getInstance().getRecipeService().getRecipeSteps().enqueue(new Callback<RecipeDetailSteps>() {
             @Override
             public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
-                     recipeDetailSteps = response.body();
-
-
+                recipeDetailSteps = response.body();
                 setAdapter();
             }
 
@@ -126,9 +135,9 @@ public class RecipeStepActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setAdapter(){
         listSteps = recipeDetailSteps.getSteps();
-        RecipeStep step =  listSteps.get(0);
-        step.setStep_description("123");
-        listSteps.add(step);
+//        RecipeStep step =  listSteps.get(0);
+//        step.setStep_description("123");
+//        listSteps.add(step);
 
 
         String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
