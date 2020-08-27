@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.config.Config;
 import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
@@ -39,7 +40,6 @@ public class RecipeStepActivity extends AppCompatActivity {
     ImageButton nextBtn;
     Button micro;
 
-    int stepID = 1;
     ArrayList<RecipeStep> listSteps;
 
     String FORMAT_TIME = "%02d:%02d:%02d";
@@ -87,9 +87,9 @@ public class RecipeStepActivity extends AppCompatActivity {
         preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stepID != 1)
+                if(Config.stepID != 1)
                 {
-                    stepID--;
+                    Config.stepID = Config.stepID - 1;
                     startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                 }
             }
@@ -99,8 +99,8 @@ public class RecipeStepActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stepID != listSteps.size()){
-                    stepID++;
+                if(Config.stepID != listSteps.size()){
+                    Config.stepID = Config.stepID + 1;
                     startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                 }
             }
@@ -126,8 +126,12 @@ public class RecipeStepActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setAdapter(){
         listSteps = recipeDetailSteps.getSteps();
+        RecipeStep step =  listSteps.get(0);
+        step.setStep_description("123");
+        listSteps.add(step);
 
-        String imgUrl = recipeDetailSteps.getSteps().get(stepID - 1).getStep_image_url();
+
+        String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
         if(TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)){
             Picasso.get().load(imgUrl)
                     .placeholder(R.mipmap.picture_icon_placeholder)
@@ -136,7 +140,7 @@ public class RecipeStepActivity extends AppCompatActivity {
         }
 
 
-        stepNumber.setText("Step: " +  "1/" + listSteps.size());
+        stepNumber.setText("Step: " + Config.stepID + "/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
 
         description.setText(recipeDetailSteps.getRecipe().getDescription());
