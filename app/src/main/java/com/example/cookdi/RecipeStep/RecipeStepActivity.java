@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
@@ -59,13 +60,6 @@ public class RecipeStepActivity extends AppCompatActivity {
         onClickNextBtn();
         onClickPreviousBtn();
 
-//        String imgURL  = "https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg";
-//        Picasso.get().load(imgURL).placeholder(R.mipmap.picture_icon_placeholder).into(imageView);
-
-
-//        countDown(3);
-
-//        System.out.println(recipeDetailSteps.getRecipeId());
     }
 
     //time: second
@@ -93,11 +87,10 @@ public class RecipeStepActivity extends AppCompatActivity {
         preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("____________");
-                System.out.println(4123);
                 if(stepID != 1)
                 {
-
+                    stepID--;
+                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                 }
             }
         });
@@ -106,11 +99,9 @@ public class RecipeStepActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("___________");
-                System.out.println("412");
                 if(stepID != listSteps.size()){
+                    stepID++;
                     startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
-                    System.out.println(123);
                 }
             }
         });
@@ -136,17 +127,17 @@ public class RecipeStepActivity extends AppCompatActivity {
     private void setAdapter(){
         listSteps = recipeDetailSteps.getSteps();
 
-//        Picasso.get().load(recipeDetailSteps.getSteps().get(0)
-//                .getStep_image_url())
-//                .placeholder(R.mipmap.picture_icon_placeholder)
-//                .error(R.mipmap.picture_icon_placeholder)
-//                .into(imageView);
+        String imgUrl = recipeDetailSteps.getSteps().get(stepID - 1).getStep_image_url();
+        if(TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)){
+            Picasso.get().load(imgUrl)
+                    .placeholder(R.mipmap.picture_icon_placeholder)
+                    .error(R.mipmap.picture_icon_placeholder)
+                    .into(imgStep);
+        }
+
+
         stepNumber.setText("Step: " +  "1/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
-        Picasso.get().load("https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg")
-                .placeholder(R.mipmap.picture_icon_placeholder)
-                .error(R.mipmap.picture_icon_placeholder)
-                .into(imgStep);
 
         description.setText(recipeDetailSteps.getRecipe().getDescription());
         int estTime = recipeDetailSteps.getRecipe().getTime()*1000;

@@ -54,6 +54,7 @@
         android:id="@+id/imgStep"
         android:layout_width="350dp"
         android:layout_height="350dp"
+        android:src="@mipmap/picture_icon_placeholder"
         android:contentDescription="TODO"
         android:layout_centerHorizontal="true"/>
     <TextView

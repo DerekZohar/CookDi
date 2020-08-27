@@ -3,6 +3,7 @@ package com.example.cookdi.retrofit2.services;
 import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.retrofit2.entities.UserDetail;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -16,7 +17,7 @@ public interface UserService {
     Call<User> getUserInformation();
 
     @GET("/user/all")
-    Call<UserDetail> getAllUsers();
+    Call<ArrayList<User>> getAllUsers();
 
     @GET("/user/name")
     Call<User> getUserByName(@Query("username") String name);
