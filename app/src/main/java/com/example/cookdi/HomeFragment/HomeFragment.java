@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
-                System.out.println("________________123");
                 if (page == 0) {
                     recipeHomeList = response.body();
                     initScrollListener();

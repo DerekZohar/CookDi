@@ -7,9 +7,14 @@ public class RecipeDetail {
     @SerializedName("recipe")
     @Expose
     private Recipe recipe;
+
+    @SerializedName("chef")
+    @Expose
+    private User chef;
+
     @SerializedName("isFavorite")
     @Expose
-    private Boolean chef;
+    private Boolean isFavorite;
 
     public Recipe getRecipe() {
         return recipe;
@@ -19,11 +24,19 @@ public class RecipeDetail {
         this.recipe = recipe;
     }
 
-    public Boolean getChef() {
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
+    public void setChef(User chef) {
+        this.chef = chef;
+    }
+    public User getChef() {
         return chef;
     }
 
-    public void setChef(Boolean chef) {
-        this.chef = chef;
-    }
+
 }
