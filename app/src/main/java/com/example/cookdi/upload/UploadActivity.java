@@ -57,6 +57,7 @@ public class UploadActivity extends AppCompatActivity {
 
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
+                textIn.setText("");
 
             }
         });
@@ -98,6 +99,8 @@ public class UploadActivity extends AppCompatActivity {
 
                 buttonRemove.setOnClickListener(thisListener);
                 containerstep.addView(addView);
+                textInStep.setText("");
+                stepTime.setText("");
             }
         });
 

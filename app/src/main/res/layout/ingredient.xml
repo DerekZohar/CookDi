@@ -5,16 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@color/white"
     android:weightSum="10">
 
     <TextView
         android:id="@+id/textout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_weight="9"
+        android:textAlignment="textStart"
+        android:paddingLeft="16dp"
+        android:gravity="center"
         android:layout_marginRight="10dp"
-        />
+        android:layout_gravity="start" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/remove"
@@ -23,7 +27,8 @@
         android:text="Remove"
         android:src="@drawable/ic_baseline_close_24"
         app:fabSize="mini"
-        app:backgroundTint="@android:color/darker_gray"
+        android:outlineSpotShadowColor="@color/transparent"
+        app:backgroundTint="@android:color/white"
         android:layout_weight="1"/>
 
 </LinearLayout>
