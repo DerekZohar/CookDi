@@ -1,6 +1,7 @@
 package com.example.cookdi.retrofit2.services;
 
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.User;
 
 import java.util.HashMap;
@@ -17,6 +18,9 @@ public interface RecipeService {
     @GET("/recipe/all")
     Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page);
 
+    @GET("/recipe/detail?recipe_id=681")
+    Call<RecipeDetailSteps> getRecipeSteps();
+    
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
 }
