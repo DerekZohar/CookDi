@@ -1,8 +1,13 @@
 package com.example.cookdi.upload;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +17,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
@@ -20,11 +27,20 @@ import com.example.cookdi.retrofit2.entities.Ingredient;
 import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.RecipeStep;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class UploadActivity extends AppCompatActivity {
+
     EditText textIn,textInStep,stepTime;
     FloatingActionButton buttonAdd, addstepbutton;
     LinearLayout container, containerstep;
@@ -33,11 +49,22 @@ public class UploadActivity extends AppCompatActivity {
     String stepImageUrl = "";
     String recipeImageUrl ="";
     RecipeDetailSteps detailSteps = new RecipeDetailSteps();
+    private final int PICK_IMAGE_REQUEST = 71;
+    private Uri filePath;
+
+    //firebase
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    UUID UUID;
+    String imgURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         textIn = (EditText)findViewById(R.id.textin);
         stepTime = (EditText)findViewById(R.id.steptime);
@@ -163,7 +190,50 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
     }
+    private void uploadImage() {
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+            UUID = UUID.randomUUID();
 
+            final StorageReference ref = storageReference.child("images/"+ UUID.toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    //url of img on firebase
+                                    imgURL = String.valueOf(uri);
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+
+        }
+
+    }
     public void hideKeyBoard() {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -172,5 +242,20 @@ public class UploadActivity extends AppCompatActivity {
 
         }
     }
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            //here
+            filePath = data.getData();
 
+        }
+    }
 }
