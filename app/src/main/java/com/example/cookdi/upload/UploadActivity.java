@@ -16,7 +16,13 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.entities.Ingredient;
+import com.example.cookdi.retrofit2.entities.Recipe;
+import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
+import com.example.cookdi.retrofit2.entities.RecipeStep;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class UploadActivity extends AppCompatActivity {
     EditText textIn,textInStep,stepTime;
@@ -24,6 +30,9 @@ public class UploadActivity extends AppCompatActivity {
     LinearLayout container, containerstep;
     TextView DisplayTime;
     int stephours, stepminutes;
+    String stepImageUrl = "";
+    String recipeImageUrl ="";
+    RecipeDetailSteps detailSteps = new RecipeDetailSteps();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +53,7 @@ public class UploadActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View addView = layoutInflater.inflate(R.layout.ingredient, null);
-                TextView textOut = (TextView)addView.findViewById(R.id.textout);
+                final TextView textOut = (TextView)addView.findViewById(R.id.textout);
                 textOut.setText(textIn.getText().toString());
                 FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.remove);
 
@@ -52,13 +61,31 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         ((LinearLayout)addView.getParent()).removeView(addView);
+                        ArrayList<Ingredient> ingredients = detailSteps.getIngredients();
+                        for (int i =0;i<ingredients.size() ; ++i) {
+                            if (ingredients.get(i).getIngredient().compareTo(textOut.getText().toString()) == 0) {
+                                ingredients.remove(ingredients.get(i));
+                                break;
+                            }
+                         }
+                        detailSteps.setIngredients(ingredients);
                     }
                 };
 
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
-                textIn.setText("");
 
+
+                ArrayList<Ingredient> ingredients = detailSteps.getIngredients();
+                if (ingredients == null) {
+                    ingredients = new ArrayList<Ingredient>();
+                }
+                Ingredient ingredient = new Ingredient();
+                ingredient.setIngredient(textIn.getText().toString());
+                ingredients.add(ingredient);
+                detailSteps.setIngredients(ingredients);
+
+                textIn.setText("");
             }
         });
         DisplayTime = (EditText) findViewById(R.id.steptime);
@@ -84,7 +111,7 @@ public class UploadActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View addView = layoutInflater.inflate(R.layout.steps, null);
-                TextView textOutStep = (TextView)addView.findViewById(R.id.textoutstep);
+                final TextView textOutStep = (TextView)addView.findViewById(R.id.textoutstep);
                 textOutStep.setText(textInStep.getText().toString());
                 TextView steptime = (TextView)addView.findViewById(R.id.texttime);
                 steptime.setText(stepTime.getText().toString());
@@ -94,13 +121,37 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         ((LinearLayout)addView.getParent()).removeView(addView);
+                        ArrayList<RecipeStep> recipeSteps = detailSteps.getSteps();
+
+                        for (int i =0;i<recipeSteps.size() ; ++i) {
+                            if (recipeSteps.get(i).getStep_description().compareTo(textOutStep.getText().toString()) == 0) {
+                                recipeSteps.remove(recipeSteps.get(i));
+                                break;
+                            }
+                        }
+                        detailSteps.setSteps(recipeSteps);
                     }
                 };
 
                 buttonRemove.setOnClickListener(thisListener);
                 containerstep.addView(addView);
+
+
+                ArrayList<RecipeStep> recipeSteps = detailSteps.getSteps();
+                if (recipeSteps == null) {
+                    recipeSteps = new ArrayList<RecipeStep>();
+                }
+
+                RecipeStep step = new RecipeStep();
+                step.setStep_description(textInStep.getText().toString());
+                step.setDuration_minute(stephours*60 + stepminutes);
+                step.setStep_image_url(stepImageUrl);
+                recipeSteps.add(step);
+                detailSteps.setSteps(recipeSteps);
                 textInStep.setText("");
                 stepTime.setText("");
+                stephours = 0;
+                stepminutes = 0;
             }
         });
 
