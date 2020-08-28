@@ -39,7 +39,7 @@ public class RecipeStepActivity extends AppCompatActivity {
     ImageButton preBtn;
     ImageButton nextBtn;
     Button micro;
-
+    CountDownTimer countDownTimer;
     ArrayList<RecipeStep> listSteps;
 
     String FORMAT_TIME = "%02d:%02d:%02d";
@@ -74,7 +74,7 @@ public class RecipeStepActivity extends AppCompatActivity {
     //time: second
     public void countDown(int time){
         final TextView textView = (TextView) findViewById(R.id.countDownTime);
-        new CountDownTimer(time*1000, 1000) { // adjust the milli seconds here
+        countDownTimer =  new CountDownTimer(time*1000, 1000) { // adjust the milli seconds here
 
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             public void onTick(long millisUntilFinished) {
@@ -99,6 +99,7 @@ public class RecipeStepActivity extends AppCompatActivity {
                 if(Config.stepID != 1)
                 {
                     Config.stepID = Config.stepID - 1;
+                    countDownTimer.cancel();
 //                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
                 }
@@ -111,6 +112,7 @@ public class RecipeStepActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(Config.stepID != listSteps.size()){
                     Config.stepID = Config.stepID + 1;
+                    countDownTimer.cancel();
 //                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
                 }
@@ -135,10 +137,10 @@ public class RecipeStepActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setAdapter(){
         listSteps = recipeDetailSteps.getSteps();
-//        RecipeStep step =  listSteps.get(0);
-//        step.setStep_description("123");
-//        listSteps.add(step);
-
+//        System.out.println("__________stepID");
+//        System.out.println(Config.stepID);
+//        System.out.println("__________");
+//        System.out.println(listSteps.size());
 
         String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
         if(TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)){
@@ -152,7 +154,7 @@ public class RecipeStepActivity extends AppCompatActivity {
         stepNumber.setText("Step: " + Config.stepID + "/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
 
-        description.setText(recipeDetailSteps.getRecipe().getDescription());
+        description.setText(recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_description());
         int estTime = recipeDetailSteps.getRecipe().getTime()*1000;
         estimateTime.setText(""+String.format(FORMAT_TIME,
                 TimeUnit.MILLISECONDS.toHours(estTime),
