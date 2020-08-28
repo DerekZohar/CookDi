@@ -40,21 +40,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/white">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/user"></ImageView>
+            android:src="@mipmap/user"></de.hdodenhof.circleimageview.CircleImageView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/username_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nguyễn Thanh Trường"
+                android:text="Username"
                 android:layout_marginLeft="20dp"></TextView>
             <TextView
+                android:id="@+id/email_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1753118@student.hcmus.edu.vn"

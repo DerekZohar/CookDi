@@ -5,17 +5,19 @@
     android:layout_gravity="center">
 
     <TextView
+        android:id="@+id/haha"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Name"
+        android:text="Change Email"
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"></TextView>
 
     <EditText
+        android:id="@+id/Edit_email"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="Email"
         android:padding="15dp"
         android:background="@drawable/text_edit_custom"
         android:textSize="15sp"
@@ -24,6 +26,7 @@
         android:layout_marginBottom="15dp"/>
 
     <Button
+        android:id="@+id/changebtn_dialog"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_custom"

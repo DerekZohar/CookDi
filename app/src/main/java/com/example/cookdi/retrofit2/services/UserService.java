@@ -14,6 +14,9 @@ public interface UserService {
     @GET("/user")
     Call<User> getUserInformation();
 
+    @GET("/user")
+    Call<User> getUserByID(@Query("id") String user_id);
+
     @GET("/user/name")
     Call<User> getUserByName(@Query("username") String name);
 
@@ -22,4 +25,7 @@ public interface UserService {
 
     @POST("/user/auth")
     Call<Map<String, String>> authentication(@Body()Map<String, Object> params);
+
+    @POST("/user/edit/mail")
+    Call<Map<String, String>> editUserEmail(@Body()Map<String, Object> params);
 }
