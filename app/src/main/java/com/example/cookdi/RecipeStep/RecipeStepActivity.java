@@ -120,7 +120,7 @@ public class RecipeStepActivity extends AppCompatActivity {
         });
     }
     private void fetchData(){
-        ServiceManager.getInstance().getRecipeService().getRecipeSteps().enqueue(new Callback<RecipeDetailSteps>() {
+        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681).enqueue(new Callback<RecipeDetailSteps>() {
             @Override
             public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
                 recipeDetailSteps = response.body();

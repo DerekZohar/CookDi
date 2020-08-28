@@ -14,6 +14,6 @@ public interface RecipeService {
     @GET("/recipe/all")
     Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page);
 
-    @GET("/recipe/detail?recipe_id=681")
-    Call<RecipeDetailSteps> getRecipeSteps();
+    @GET("/recipe/detail")
+    Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id);
 }
