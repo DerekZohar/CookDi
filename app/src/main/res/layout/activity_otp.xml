@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
     >
-
     <TextView
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="Please enter PIN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <com.alimuzaffar.customwidgets.PinEntryEditText
-        android:id="@+id/txt_pin_entry"
-        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:text="Verification Code"
+        android:textSize="25sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Please type the verification code sent your email"
+        android:textSize="16sp"
+        />
+    <com.alimuzaffar.lib.pin.PinEntryEditText
+        android:id="@+id/txt_pin_entry"
+        android:layout_width="308dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="@null"
         android:cursorVisible="false"
         android:digits="1234567890"
         android:inputType="number"
-        android:maxLength="4"
+        android:maxLength="6"
         android:textIsSelectable="false"
-        android:textSize="20sp"
-        tools:ignore="MissingClass" />
+        android:textSize="24dp"
+        app:pinAnimationType="fromBottom"
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Regular EditText"/>
+        app:pinBackgroundIsSquare="true"
+        app:pinCharacterSpacing="4dp"
+        app:pinTextBottomPadding="16dp"
+        tools:ignore="SpUsage" />
 
 </LinearLayout>

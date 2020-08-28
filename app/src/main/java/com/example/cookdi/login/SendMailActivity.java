@@ -38,7 +38,7 @@ public class SendMailActivity extends AppCompatActivity {
                 else{
                     if(validate(email.getText().toString())){
 //                        startActivity(new Intent(SendMailActivity.this, ForgotActivity.class));
-//                        startActivity(new Intent(SendMailActivity.this, OtpMailActivity.class));
+                        startActivity(new Intent(SendMailActivity.this, OtpMailActivity.class));
                     }else {
                         Toast.makeText(getApplicationContext(), "Please enter right format!", Toast.LENGTH_SHORT).show();
                     }
