@@ -28,10 +28,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookdi.R;
+import com.example.cookdi.helpers.TextHelper;
+import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.Ingredient;
 import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.RecipeStep;
+import com.example.cookdi.sharepref.SharePref;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,7 +48,13 @@ import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -54,10 +63,11 @@ public class UploadActivity extends AppCompatActivity {
         static int RECIPE = 1;
     }
 
-    ImageButton stepAttach, recipeImageAttach;
-    EditText textIn,textInStep,stepTime;
-    FloatingActionButton buttonAdd, addstepbutton;
-    LinearLayout container, containerstep;
+    Button publishButton;
+    ImageButton stepAttach;
+    EditText textIn,textInStep,stepTime, foodName, description, tag;
+    FloatingActionButton buttonAdd, addstepbutton, addTag;
+    LinearLayout container, containerstep, tagContainer;
     TextView DisplayTime;
     ImageView recipeImage;
 
@@ -65,6 +75,8 @@ public class UploadActivity extends AppCompatActivity {
     String stepImageUrl = "";
     String recipeImageUrl ="";
     RecipeDetailSteps detailSteps = new RecipeDetailSteps();
+    ArrayList<String> tags = new ArrayList<>();
+
     private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
     private int upImageType = -1;
@@ -85,14 +97,19 @@ public class UploadActivity extends AppCompatActivity {
 
         textIn = (EditText)findViewById(R.id.textin);
         stepTime = (EditText)findViewById(R.id.steptime);
+        foodName = (EditText)findViewById(R.id.foodname);
+        description = (EditText)findViewById(R.id.description);
+        tag = (EditText)findViewById(R.id.tag);
         buttonAdd = (FloatingActionButton) findViewById(R.id.add);
         container = (LinearLayout)findViewById(R.id.container);
+        tagContainer = (LinearLayout)findViewById(R.id.tagContainer);
         containerstep = (LinearLayout)findViewById(R.id.containerstep);
         addstepbutton = (FloatingActionButton) findViewById(R.id.addstep);
+        addTag = (FloatingActionButton) findViewById(R.id.addTag);
         textInStep = (EditText)findViewById(R.id.textinstep);
         stepAttach = findViewById(R.id.stepAttach);
-        recipeImageAttach = findViewById(R.id.recipeImageAttach);
         recipeImage = findViewById(R.id.recipeImage);
+        publishButton = findViewById(R.id.publishButton);
 
 
         stepAttach.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +119,44 @@ public class UploadActivity extends AppCompatActivity {
                 chooseImage();
             }
         });
-        recipeImageAttach.setOnClickListener(new View.OnClickListener() {
+
+        recipeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 upImageType = UpImageType.RECIPE;
                 chooseImage();
+            }
+        });
+
+        publishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPublishRecipeButtonClicked();
+            }
+        });
+
+        addTag.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View addView = layoutInflater.inflate(R.layout.ingredient, null);
+                final TextView textOut = (TextView)addView.findViewById(R.id.textout);
+                textOut.setText(tag.getText().toString());
+                FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.remove);
+
+                final View.OnClickListener thisListener = new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        ((LinearLayout)addView.getParent()).removeView(addView);
+                        tags.remove(tag.getText().toString());
+                    }
+                };
+
+                buttonRemove.setOnClickListener(thisListener);
+                tagContainer.addView(addView);
+                tags.add(tag.getText().toString());
+                tag.setText("");
             }
         });
 
@@ -209,6 +259,7 @@ public class UploadActivity extends AppCompatActivity {
                 step.setStep_description(textInStep.getText().toString());
                 step.setDuration_minute(stephours*60 + stepminutes);
                 step.setStep_image_url(stepImageUrl);
+                stepImageUrl = "";
                 recipeSteps.add(step);
                 detailSteps.setSteps(recipeSteps);
                 textInStep.setText("");
@@ -231,8 +282,7 @@ public class UploadActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
 
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
@@ -244,9 +294,10 @@ public class UploadActivity extends AppCompatActivity {
                                     } else {
                                         recipeImageUrl = imgURL;
                                         Picasso.get().load(imgURL).into(recipeImage);
-
                                     }
                                     upImageType = -1;
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -270,14 +321,7 @@ public class UploadActivity extends AppCompatActivity {
         }
 
     }
-    public void hideKeyBoard() {
-        try {
-            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        } catch (Exception e) {
 
-        }
-    }
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -293,5 +337,75 @@ public class UploadActivity extends AppCompatActivity {
             filePath = data.getData();
             uploadImage();
         }
+    }
+
+    private void onPublishRecipeButtonClicked() {
+        if (TextHelper.isTextEmpty(foodName.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "You must enter recipe name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextHelper.isTextEmpty(description.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "You must enter recipe description", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (tags.size() == 0) {
+            Toast.makeText(getApplicationContext(), "You must enter recipe tag", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (detailSteps.getIngredients().size() == 0) {
+            Toast.makeText(getApplicationContext(), "You must enter recipe ingredient", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (detailSteps.getSteps().size() == 0) {
+            Toast.makeText(getApplicationContext(), "You must enter recipe step", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("recipe_name", foodName.getText().toString());
+        params.put("user_id", SharePref.getInstance(getApplicationContext()).getUuid());
+        params.put("recipe_description", description.getText().toString());
+        params.put("image_url", recipeImageUrl);
+
+        ArrayList<String> ingredients = new ArrayList<String>();
+        for (int i = 0; i < detailSteps.getIngredients().size(); i++) {
+            ingredients.add(detailSteps.getIngredients().get(i).getIngredient());
+        }
+
+        int totalTime = 0;
+
+        ArrayList<Map<String, Object>> steps = new ArrayList<Map<String, Object>>();
+        Map<String, Object> step = new HashMap<>();
+        for (int i = 0; i < detailSteps.getSteps().size(); i++) {
+            step.put("stepDescription", detailSteps.getSteps().get(i).getStep_description());
+            step.put("stepDuration", detailSteps.getSteps().get(i).getDuration_minute());
+            step.put("stepImageUrl", detailSteps.getSteps().get(i).getStep_image_url());
+            totalTime += detailSteps.getSteps().get(i).getDuration_minute();
+            steps.add(step);
+        }
+
+        params.put("recipe_time", totalTime);
+        params.put("recipeSteps", steps);
+        params.put("recipeIngredients", ingredients);
+        params.put("tags", tags);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Uploading...");
+        progressDialog.show();
+        ServiceManager.getInstance().getRecipeService().addRecipe(params).enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
