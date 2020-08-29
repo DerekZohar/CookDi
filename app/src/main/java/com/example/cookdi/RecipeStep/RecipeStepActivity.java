@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -38,11 +40,13 @@ public class RecipeStepActivity extends AppCompatActivity {
     TextView stepNumber;
     ImageButton preBtn;
     ImageButton nextBtn;
-    Button micro;
+    Button voiceBtn;
     CountDownTimer countDownTimer;
     ArrayList<RecipeStep> listSteps;
 
     String FORMAT_TIME = "%02d:%02d:%02d";
+    TextToSpeech textToSpeech;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +61,30 @@ public class RecipeStepActivity extends AppCompatActivity {
         estimateTime = findViewById(R.id.stepEstimateTimeTxt);
         preBtn = findViewById(R.id.previousBtn);
         nextBtn = findViewById(R.id.nextBtn);
+        voiceBtn = findViewById(R.id.voiceBtn);
         onClickNextBtn();
         onClickPreviousBtn();
 
     }
-//    @Override
-//    public void onBackPressed() {
-//        if(Config.stepID == 1)
-//        System.out.println("_____________________");
-//        System.out.println("back press");
-////        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-////        setIntent.addCategory(Intent.CATEGORY_HOME);
-////        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////        startActivity(setIntent);
-//    }
+
+    private void onClickVoiceBtn(){
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i == TextToSpeech.SUCCESS) {
+                    int lang = textToSpeech.setLanguage(new Locale("vi"));
+                }
+            }
+        });
+
+        voiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s = recipeDetailSteps.getSteps().get(0).getStep_description().toString();
+                int speech = textToSpeech.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+    }
     //time: second
     public void countDown(int time){
         final TextView textView = (TextView) findViewById(R.id.countDownTime);
