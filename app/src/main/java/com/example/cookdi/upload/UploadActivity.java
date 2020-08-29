@@ -5,15 +5,20 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,23 +39,35 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.Console;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class UploadActivity extends AppCompatActivity {
 
+    static class UpImageType {
+        static int STEP = 0;
+        static int RECIPE = 1;
+    }
+
+    ImageButton stepAttach, recipeImageAttach;
     EditText textIn,textInStep,stepTime;
     FloatingActionButton buttonAdd, addstepbutton;
     LinearLayout container, containerstep;
     TextView DisplayTime;
+    ImageView recipeImage;
+
     int stephours, stepminutes;
     String stepImageUrl = "";
     String recipeImageUrl ="";
     RecipeDetailSteps detailSteps = new RecipeDetailSteps();
     private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
+    private int upImageType = -1;
 
     //firebase
     FirebaseStorage storage;
@@ -73,6 +90,25 @@ public class UploadActivity extends AppCompatActivity {
         containerstep = (LinearLayout)findViewById(R.id.containerstep);
         addstepbutton = (FloatingActionButton) findViewById(R.id.addstep);
         textInStep = (EditText)findViewById(R.id.textinstep);
+        stepAttach = findViewById(R.id.stepAttach);
+        recipeImageAttach = findViewById(R.id.recipeImageAttach);
+        recipeImage = findViewById(R.id.recipeImage);
+
+
+        stepAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upImageType = UpImageType.STEP;
+                chooseImage();
+            }
+        });
+        recipeImageAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upImageType = UpImageType.RECIPE;
+                chooseImage();
+            }
+        });
 
         buttonAdd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -181,14 +217,6 @@ public class UploadActivity extends AppCompatActivity {
                 stepminutes = 0;
             }
         });
-
-        findViewById(R.id.activity_upload).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                hideKeyBoard();
-                return true;
-            }
-        });
     }
     private void uploadImage() {
         if(filePath != null)
@@ -211,6 +239,14 @@ public class UploadActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     //url of img on firebase
                                     imgURL = String.valueOf(uri);
+                                    if (upImageType == UpImageType.STEP) {
+                                        stepImageUrl = imgURL;
+                                    } else {
+                                        recipeImageUrl = imgURL;
+                                        Picasso.get().load(imgURL).into(recipeImage);
+
+                                    }
+                                    upImageType = -1;
                                 }
                             });
                         }
@@ -255,7 +291,7 @@ public class UploadActivity extends AppCompatActivity {
         {
             //here
             filePath = data.getData();
-
+            uploadImage();
         }
     }
 }
