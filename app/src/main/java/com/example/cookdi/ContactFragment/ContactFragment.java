@@ -18,6 +18,7 @@ import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.retrofit2.entities.UserDetail;
+import com.example.cookdi.sharepref.SharePref;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,6 @@ public class ContactFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -55,10 +54,8 @@ public class ContactFragment extends Fragment {
         return view;
     }
     private void getContactData() {
-        System.out.println("_______________");
-        System.out.println(123);
 
-        ServiceManager.getInstance().getUserService().getAllUsers().enqueue(new Callback<ArrayList<User>>() {
+        ServiceManager.getInstance().getFriendService().getAllFriends(Integer.parseInt(SharePref.getInstance(context).getUuid())).enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 users = response.body();
@@ -71,6 +68,7 @@ public class ContactFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+
     }
     private void setAdapter(){
         listPersonAdapter = new ListPersonAdapter(context, users);

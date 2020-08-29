@@ -125,33 +125,11 @@ public class StyledMessagesActivity extends DemoMessagesActivity
 
         Log.d(TAG, senderId);
 
-        Config.IOSocketChatConnector.SendMessage(senderId, _message[0]);
+        Config.IOSocketChatConnector.SendMessage(senderId, "msg:" + _message[0]);
 
 
         messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
-//        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "1234"), true);
 
-        //send message socket io
-
-
-
-//        Config.IOSocketChatConnector.ioSocket.on(RECEIVE_MESSAGE, new Emitter.Listener() {
-//            @Override
-//            public void call(Object... args) {
-//                try {
-//                    JSONObject message = new JSONObject((String)args[0]);
-//                    Log.d("ReceiveMessage123", message.getString(MESSAGE_CONTENT));
-//                    System.out.println("________________________");
-//                    System.out.println(message.getString(MESSAGE_CONTENT));
-//                    _message[0] = message.getString(MESSAGE_CONTENT);
-//                    messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//
-//        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
         return true;
     }
 
@@ -160,14 +138,21 @@ public class StyledMessagesActivity extends DemoMessagesActivity
 
             @Override
             public void run() {
-
-                messagesAdapter.addToStart(message, true);
+                System.out.println("____________" + isImgMsg(message.getText()));
+                if(isImgMsg(message.getText()))
+                {
+                    messagesAdapter.addToStart(MessagesFixtures.getImageMessage(message.getText().substring(4), "1"), true);
+                }
+                else
+                    messagesAdapter.addToStart(MessagesFixtures.getTextMessage(message.getText().substring(4), "1"), true);
 
             }
         });
 
     }
-
+    private boolean isImgMsg(String txt){
+        return txt.substring(0, 4).equals("img:");
+    }
     @Override
     public void onAddAttachments() {
         chooseImage();
@@ -196,6 +181,7 @@ public class StyledMessagesActivity extends DemoMessagesActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println(1223);
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
@@ -232,6 +218,12 @@ public class StyledMessagesActivity extends DemoMessagesActivity
                                 public void onSuccess(Uri uri) {
                                     imgURL = String.valueOf(uri);
                                     messagesAdapter.addToStart(MessagesFixtures.getImageMessage(imgURL, "0"), true);
+
+                                    //send by socket
+                                    String uuid= SharePref.getInstance(getApplicationContext()).getUuid();
+                                    Log.d(TAG, senderId);
+                                    String img = "img:" + imgURL;
+                                    Config.IOSocketChatConnector.SendMessage(senderId, img);
                                 }
                             });
                         }
@@ -289,18 +281,19 @@ public class StyledMessagesActivity extends DemoMessagesActivity
             //resume tasks needing this permission
         }
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Config.IOSocketChatConnector.UnsetMessageActivity(this);
-        this.finish();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Config.IOSocketChatConnector.UnsetMessageActivity(this);
-        finish();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        System.out.println(123);
+//        Config.IOSocketChatConnector.UnsetMessageActivity(this);
+//        this.finish();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        System.out.println(123);
+//        Config.IOSocketChatConnector.UnsetMessageActivity(this);
+//        finish();
+//    }
 }

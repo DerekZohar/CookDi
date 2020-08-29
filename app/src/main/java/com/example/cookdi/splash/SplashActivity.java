@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, RecipeStepActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
     }
 
