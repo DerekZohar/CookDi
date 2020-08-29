@@ -14,6 +14,8 @@ import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.sharepref.SharePref;
+import com.example.cookdi.upload.UploadActivity;
+
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
@@ -24,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
-        onFlow();
+        startActivity(new Intent(SplashActivity.this, UploadActivity.class));
         finish();
     }
 

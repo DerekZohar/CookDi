@@ -11,7 +11,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity" android:exported="true"/>
+        <activity android:name=".main.MainActivity"/>
+        <activity android:name=".upload.UploadActivity" android:exported="true"/>
         <activity android:name=".login.LoginActivity" android:exported="true"/>
         <activity android:name=".register.RegisterActivity" android:exported="true"/>
         <activity android:name=".search.SearchActivity" android:exported="true"/>

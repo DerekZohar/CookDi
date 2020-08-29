@@ -4,10 +4,14 @@ import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.User;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface RecipeService {
@@ -16,4 +20,7 @@ public interface RecipeService {
 
     @GET("/recipe/detail")
     Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id);
+
+    @POST("/recipe/add")
+    Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
 }
