@@ -21,7 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
+import com.example.cookdi.chat.common.data.model.Message;
 import com.example.cookdi.config.Config;
+import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.sharepref.SharePref;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,9 +42,12 @@ import com.stfalcon.chatkit.utils.DateFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import io.socket.emitter.Emitter;
@@ -67,16 +72,26 @@ public class StyledMessagesActivity extends DemoMessagesActivity
 
     public static final String RECEIVE_MESSAGE="receiveMessage";
     public static final String MESSAGE_CONTENT="messageContent";
-    public static void open(Context context) {
-        context.startActivity(new Intent(context, StyledMessagesActivity.class));
+    public static void open(Context context, User user) {
+        Intent intent =  new Intent(context, StyledMessagesActivity.class);
+        intent.putExtra("userId",user.getId());
+        intent.putExtra("userName",user.getName());
+        intent.putExtra("userAvatar",user.getAvatar());
+
+        context.startActivity(intent);
     }
 
     private MessagesList messagesList;
+    private String senderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_styled_messages);
+
+        Intent intent = getIntent();
+        Integer a = intent.getIntExtra("userId",0);
+        senderId = a.toString();
 
         messagesList = (MessagesList) findViewById(R.id.messagesList);
         initAdapter();
@@ -88,13 +103,29 @@ public class StyledMessagesActivity extends DemoMessagesActivity
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
+        if(senderId == null)
+            return;
+
+        ArrayList<Message> messages = Config.IOSocketChatConnector.GetUnloadedMessages(senderId);
+        if(messages != null){
+            for (int i = 0; i < messages.size(); i++) {
+                messagesAdapter.addToStart(messages.get(i),false);
+            }
+            Config.IOSocketChatConnector.ClearUnloadedMessages(senderId);
+
+        }
+
+        Config.IOSocketChatConnector.SetMessageActivity(this);
     }
 
     @Override
     public boolean onSubmit(CharSequence input) {
         final String[] _message = {input.toString()};
         String uuid= SharePref.getInstance(getApplicationContext()).getUuid();
-        Config.IOSocketChatConnector.SendMessage(uuid, _message[0]);
+
+        Log.d(TAG, senderId);
+
+        Config.IOSocketChatConnector.SendMessage(senderId, _message[0]);
 
 
         messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
@@ -122,6 +153,19 @@ public class StyledMessagesActivity extends DemoMessagesActivity
 //
 //        messagesAdapter.addToStart(MessagesFixtures.getTextMessage(_message[0], "0"), true);
         return true;
+    }
+
+    public void ReceiveMessage(final Message message){
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                messagesAdapter.addToStart(message, true);
+
+            }
+        });
+
     }
 
     @Override
@@ -244,5 +288,19 @@ public class StyledMessagesActivity extends DemoMessagesActivity
             Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
             //resume tasks needing this permission
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Config.IOSocketChatConnector.UnsetMessageActivity(this);
+        this.finish();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Config.IOSocketChatConnector.UnsetMessageActivity(this);
+        finish();
     }
 }

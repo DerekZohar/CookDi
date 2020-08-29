@@ -80,7 +80,7 @@ public class ContactFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                StyledMessagesActivity.open(context);
+                StyledMessagesActivity.open(context, users.get(i));
             }
         });
     }

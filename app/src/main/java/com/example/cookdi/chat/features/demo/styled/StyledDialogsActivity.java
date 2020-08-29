@@ -33,7 +33,7 @@ public class StyledDialogsActivity extends DemoDialogsActivity
 
     @Override
     public void onDialogClick(Dialog dialog) {
-        StyledMessagesActivity.open(this);
+        //StyledMessagesActivity.open(this);
     }
 
     @Override
