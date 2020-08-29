@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cookdi.RecipeStep.RecipeStepActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.Report.ReportActivity;
+import com.example.cookdi.edit_recipe.EditRecipe;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.sharepref.SharePref;
@@ -26,7 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
-        startActivity(new Intent(SplashActivity.this, UploadActivity.class));
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//        startActivity(new Intent(SplashActivity.this, EditRecipe.class));
         finish();
     }
 
