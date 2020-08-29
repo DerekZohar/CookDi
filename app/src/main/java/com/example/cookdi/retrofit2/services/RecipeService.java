@@ -1,6 +1,7 @@
 package com.example.cookdi.retrofit2.services;
 
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.User;
 
 import java.util.List;
@@ -12,4 +13,7 @@ import retrofit2.http.Query;
 public interface RecipeService {
     @GET("/recipe/all")
     Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page);
+
+    @GET("/recipe/detail")
+    Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id);
 }
