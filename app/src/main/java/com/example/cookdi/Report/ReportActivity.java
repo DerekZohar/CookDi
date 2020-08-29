@@ -136,15 +136,15 @@ public class ReportActivity extends AppCompatActivity {
         }
 
     }
-    void onClickEventImageView(){
-        if(isStoragePermissionGranted()){
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    void onClickEventImageView() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isStoragePermissionGranted()) {
                     chooseImage();
                 }
-            });
-        }
+            }
+        });
     }
     private void chooseImage() {
         Intent intent = new Intent();
