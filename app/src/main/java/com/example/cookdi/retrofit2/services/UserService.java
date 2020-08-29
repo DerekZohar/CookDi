@@ -28,4 +28,12 @@ public interface UserService {
 
     @POST("/user/edit/mail")
     Call<Map<String, String>> editUserEmail(@Body()Map<String, Object> params);
+
+    @POST("/user/edit/avatar")
+    Call<Map<String, String>> editUserAvatar(@Body()Map<String, Object> params);
+
+    @POST("/user/edit/pass")
+    Call<Map<String, String>> editUserPass(@Body()Map<String, Object> params);
+
+
 }

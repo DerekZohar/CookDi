@@ -86,6 +86,7 @@
         android:layout_margin="15dp"></TextView>
 
     <Button
+        android:id="@+id/ChangeAvatarbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Change Avatar"
@@ -95,10 +96,10 @@
         android:paddingLeft="10dp"
         ></Button>
     <Button
-        android:id="@+id/Changenamebtn"
+        android:id="@+id/Changeemailbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change name"
+        android:text="Change Email"
         android:gravity="center_vertical"
         android:drawableRight="@drawable/ic_baseline_chevron_right_24"
         android:background="@drawable/profilebutton"
@@ -112,9 +113,10 @@
         android:background="@drawable/profilebutton"
         android:paddingLeft="10dp"></Button>
     <Button
+        android:id="@+id/ChangePasswordbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Phone Number"
+        android:text="Change Password"
         android:gravity="center_vertical"
         android:drawableRight="@drawable/ic_baseline_chevron_right_24"
         android:background="@drawable/profilebutton"
