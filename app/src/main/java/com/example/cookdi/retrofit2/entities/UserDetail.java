@@ -5,10 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDetail {
-    @SerializedName("")
+    @SerializedName("data")
     private ArrayList<User> user;
 
-    public ArrayList<User> getList(){ return user;}
+    public ArrayList<User> getList() {
+        return user;
+    }
 }
