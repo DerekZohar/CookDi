@@ -164,7 +164,7 @@ public class EditRecipe extends AppCompatActivity {
         final View addView = layoutInflater.inflate(R.layout.ingredient, null);
         final TextView textOut = (TextView)addView.findViewById(R.id.textout);
         textOut.setText(text);
-        FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.remove);
+        ImageButton buttonRemove = (ImageButton) addView.findViewById(R.id.remove);
 
         final View.OnClickListener thisListener = new View.OnClickListener(){
             @Override
@@ -185,7 +185,7 @@ public class EditRecipe extends AppCompatActivity {
         final View addView = layoutInflater.inflate(R.layout.ingredient, null);
         final TextView textOut = (TextView)addView.findViewById(R.id.textout);
         textOut.setText(text);
-        FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.remove);
+        ImageButton buttonRemove = (ImageButton) addView.findViewById(R.id.remove);
 
         final View.OnClickListener thisListener = new View.OnClickListener(){
             @Override
@@ -225,7 +225,7 @@ public class EditRecipe extends AppCompatActivity {
         final TextView textTime = (TextView)addView.findViewById(R.id.texttime);
         textOutStep.setText(description);
         textTime.setText(String.valueOf(duration));
-        FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.removestep);
+        ImageButton buttonRemove = (ImageButton) addView.findViewById(R.id.removestep);
 
         final View.OnClickListener thisListener = new View.OnClickListener(){
             @Override
