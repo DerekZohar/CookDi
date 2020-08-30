@@ -19,6 +19,7 @@ import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.sharepref.SharePref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getHomeData(){
-        ServiceManager.getInstance().getRecipeService().getAllRecipe(page).enqueue(new Callback<List<RecipeDetail>>() {
+        ServiceManager.getInstance().getRecipeService().getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid())).enqueue(new Callback<List<RecipeDetail>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {

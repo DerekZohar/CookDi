@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.example.cookdi.keys.StringKeys;
 
-
 public class SharePref {
     private static SharePref sharePref;
     public static SharePref getInstance(Context context) {

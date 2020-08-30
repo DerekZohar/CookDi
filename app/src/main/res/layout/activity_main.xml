@@ -1,76 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/white" android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search_view"
-        android:background="#FF3868"
-        android:weightSum="10"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="9.9"
-            android:text="CookDi"
-            android:textSize="30dp"
-            android:paddingLeft="150dp"
-            android:textColor="#FFF"
-            android:paddingTop="9dp"
-            />
-        <ImageButton
-            android:layout_weight="0.1"
-            android:id="@+id/search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15sp"
-            android:background="@null"
-            android:src="@drawable/ic_black_search"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/search_view" android:background="#FF3868" android:weightSum="10" android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView android:id="@+id/avatarUser" android:layout_width="60dp" android:layout_height="60dp" android:padding="10dp" android:clickable="true" android:src="@mipmap/user"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_weight="9.9" android:text="CookDi" android:textSize="30dp" android:gravity="center_horizontal" android:textColor="#FFF" android:paddingTop="9dp" />
+        <ImageButton android:layout_weight="0.1" android:id="@+id/search_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="15sp" android:background="@null" android:src="@drawable/ic_black_search"/>
     </LinearLayout>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/layoutAppbarMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Good Morning"
-        android:gravity="top"
-        app:elevation="0dp"
-        tools:ignore="MissingClass">
-        <LinearLayout
-            android:id="@+id/tool_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+    <com.google.android.material.appbar.AppBarLayout android:id="@+id/layoutAppbarMain" android:layout_width="match_parent" android:layout_height="wrap_content" app:title="Good Morning" android:gravity="top" app:elevation="0dp" tools:ignore="MissingClass">
+        <LinearLayout android:id="@+id/tool_bar_main" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@color/white"
             android:theme = "@style/MyToolbarTheme">
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?actionBarSize"
-                app:tabGravity="fill"
-                app:tabTextColor="@color/colorPrimary"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabMode="fixed"
-                app:tabBackground="@color/colorLightGray">
+
+            <com.google.android.material.tabs.TabLayout android:id="@+id/tabLayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="?actionBarSize" app:tabBackground="@color/white" app:tabGravity="fill" app:tabIndicatorColor="@color/colorPrimary" app:tabMode="fixed" app:tabTextColor="@color/colorPrimary">
 
             </com.google.android.material.tabs.TabLayout>
 
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:background="@drawable/radius"
-        android:elevation="10dp"
-
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.viewpager.widget.ViewPager android:background="@drawable/radius" android:elevation="10dp" android:paddingTop="10dp" android:id="@+id/viewPager" android:layout_width="match_parent" android:layout_height="match_parent">
     </androidx.viewpager.widget.ViewPager>
 </LinearLayout>

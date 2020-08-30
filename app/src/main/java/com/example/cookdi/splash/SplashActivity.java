@@ -9,16 +9,19 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cookdi.db.DatabaseManager;
+
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.sharepref.SharePref;
-
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     private DatabaseManager mDatabaseManager;
     Intent intent;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void onFlow() {
-        if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
+        if (TextHelper.isTextEmpty(SharePref.getInstance(getApplicationContext()).getUuid())) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
