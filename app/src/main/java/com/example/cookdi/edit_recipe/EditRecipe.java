@@ -151,7 +151,10 @@ public class EditRecipe extends AppCompatActivity {
         for (int i =0;i<recipeDetailSteps.getSteps().size(); i++) {
             addStep(recipeDetailSteps.getSteps().get(i).getStep_description(), recipeDetailSteps.getSteps().get(i).getDuration_minute(), recipeDetailSteps.getSteps().get(i).getStep_image_url());
         }
-        Picasso.get().load(recipeDetailSteps.getRecipe().getImageUrl()).into(recipeImage);
+        if (!TextHelper.isTextEmpty(recipeDetailSteps.getRecipe().getImageUrl())) {
+            Picasso.get().load(recipeDetailSteps.getRecipe().getImageUrl()).into(recipeImage);
+        }
+
         progressDialog.hide();
     }
 
