@@ -11,6 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,5 +71,8 @@ dependencies {
 
     //Download image
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //
+    implementation 'com.android.support:multidex:1.0.3'
 
 }

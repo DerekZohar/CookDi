@@ -3,35 +3,19 @@ package com.example.cookdi.db;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
 
-import com.example.cookdi.SavedFragment.ToBitmap;
 import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class RecipeListDBAdapter {
     private static final String TAG = "RECIPE_MODEL";

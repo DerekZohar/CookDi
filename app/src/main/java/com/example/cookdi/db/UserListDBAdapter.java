@@ -75,7 +75,6 @@ public class UserListDBAdapter {
                 }
             };
             Picasso.get().load(user.getAvatar()).into(target);
-            contentValues.put(UserListDBAdapter.COLUMN_IMG, user.getAvatar());
 
             long res = database.insert(UserListDBAdapter.TABLE_NAME, null, contentValues);
             database.close();
