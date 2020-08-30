@@ -83,51 +83,38 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_fragment, container, false);
-
-        recipeHomeList = getHomeData();
-
         list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
-        recipeHomeAdapter = new RecipeHomeAdapter(getActivity(), recipeHomeList);
-        list.setAdapter(recipeHomeAdapter);
-        initScrollListener();
+        getHomeData();
         return view;
     }
 
-    private ArrayList<RecipeModel> getHomeData(){
+    private void getHomeData(){
 
-        RecipeModel r1 = new RecipeModel(123, 123, 4.5, false, true,
-                "https://image.tmdb.org/t/p/w185//2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
-                "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/chorizo-mozarella-gnocchi-bake-cropped.jpg",
-                "Nguyễn Hữu Tiến", "Mì Ý", "30-35p");
+        ServiceManager.getInstance().getRecipeService().getAllRecipe(page).enqueue(new Callback<List<RecipeDetail>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
+                Log.d("HOME","onResponse: " + page);
+                if (page == 0) {
+                    recipeHomeList = response.body();
+                    setRecipeHomeAdapter();
+                    initScrollListener();
+                } else {
+                    if (response.body() != null) {
+                       boolean isSuccess = recipeHomeList.addAll(response.body());
+                    }
+                }
 
-        RecipeModel r2 = new RecipeModel(124, 125, 3.0, true, true,
-                "https://f0.pngfuel.com/png/340/946/man-face-illustration-avatar-user-computer-icons-software-developer-avatar-png-clip-art.png",
-                "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/sardinesca_94123_16x9.jpg",
-                "Tiến Nguyễn Hữu", "Bún Chả Hà Nội", "60-125p");
+                if (response.body() == null) {
+//                    list.clearOnScrollListeners();
+                } else {
+                    page += 1;
+                }
 
-        RecipeModel r3 = new RecipeModel(123, 123, 4.5, false, false,
-                "https://image.tmdb.org/t/p/w185//2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
-                "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/chorizo-mozarella-gnocchi-bake-cropped.jpg",
-                "Độc Cô Cầu Bại", "PHO Sinh Viên", "120-180p");
-
-        RecipeModel r4 = new RecipeModel(123, 123, 4.5, true, false,
-                "https://image.tmdb.org/t/p/w185//2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
-                "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/chorizo-mozarella-gnocchi-bake-cropped.jpg",
-                "AbcXyz All Night", "Bánh Canh Cua Đồng", "90-100p");
-
-        ArrayList<RecipeModel> list = new ArrayList<>();
-        list.add(r1);
-        list.add(r2);
-        list.add(r3);
-        list.add(r4);
-        list.add(r4);
-        list.add(r1);
-        list.add(r2);
-        list.add(r3);
-        list.add(r4);
-        list.add(r4);
-        return list;
+            }
+    });
     }
+
 
     private void initScrollListener(){
 //        Log.d("f22222222222", "to inint scroll listener");
@@ -169,20 +156,13 @@ public class HomeFragment extends Fragment {
                 recipeHomeList.remove(recipeHomeList.size() - 1);
                 int scrollPosition = recipeHomeList.size();
                 recipeHomeAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + recipeHomeAdapter.getItemLimit();
 
-                while (currentSize - 1 < nextLimit) {
+//                int currentSize = scrollPosition;
+//                int nextLimit = currentSize + recipeHomeAdapter.getItemLimit();
+//                RecipeDetail r4 = recipeHomeList.get(0);
+//                recipeHomeList.add(r4);
 
-                    RecipeModel re = new RecipeModel(123, 123, 4.5, false, true,
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaw3hvjrmp7igf5FTOX_ULVLg_c9nFXFokpA&usqp=CAU",
-                            "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/11/2/0/DV1510H_fried-chicken-recipe-10_s4x3.jpg.rend.hgtvcom.826.620.suffix/1568222255998.jpeg",
-                            "Sick My Duck", "Dui Ga Chien Nuoc Mam", "40-45p");
-                    recipeHomeList.add(re);
-
-                    currentSize++;
-                }
-
+                getHomeData();
                 recipeHomeAdapter.notifyDataSetChanged();
                 isItemLoading = false;
             }
