@@ -3,6 +3,8 @@ package com.example.cookdi.HomeFragment.RecipeAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +16,26 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.sharepref.SharePref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -55,10 +65,10 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
 
         if(viewHolder instanceof ItemViewHolder){
-            ItemViewHolder holder = (ItemViewHolder) viewHolder;
+            final ItemViewHolder holder = (ItemViewHolder) viewHolder;
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,11 +124,51 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
 
             holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-//                        currentRecipe.setRecipeFavorited(true);
-                        //... db update
-                    }
+                @Override
+                public void onClick(View view) {
+                    int user_id = Integer.valueOf(SharePref.getInstance(m_context).getUuid());
+                    int recipe_id = currentRecipe.getRecipe().getRecipeId();
+                    final Map<String, Object> params = new HashMap<>();
+                    params.put("user_id", user_id);
+                    params.put("recipe_id", recipe_id);
+                    ServiceManager.getInstance().getFavoriteService().addToFavorite(params).enqueue(new Callback<Map<String, String>>() {
+                        @Override
+                        public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                            if (response.message().equals("OK")) {
+                                holder.recipeFavorited.setBackgroundResource(R.drawable.ic_favorite_red);
+                            } else if (response.message().equals("Not Found")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                                builder.setCancelable(true);
+                                builder.setTitle("Warning");
+                                builder.setMessage(currentRecipe.getRecipe().getRecipeName()+ " Is Already In Your Favorite? Would You Like To Remove It?");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        ServiceManager.getInstance().getFavoriteService().delete(params).enqueue(new Callback<Map<String, String>>() {
+                                            @Override
+                                            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                                holder.recipeFavorited.setBackgroundResource(R.drawable.ic_favorite);
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
+                                            }
+                                        });
+                                    }
+                                });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                        }
+                    });
+
+                }
             });
 
         }
