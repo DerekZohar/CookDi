@@ -26,6 +26,7 @@
         <activity android:name=".Report.ReportActivity" android:exported="true"/>
         <activity android:name=".Report.ReportActivitySucceed" android:exported="true"/>
         <activity android:name=".RecipeStep.RecipeStepActivity" android:exported="true"/>
+        <activity android:name=".ManageRecipe.ManageRecipeActivity" android:exported="true"/>
     </application>
 
 </manifest>

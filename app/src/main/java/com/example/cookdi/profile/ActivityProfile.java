@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.cookdi.ManageRecipe.ManageRecipeActivity;
 import com.example.cookdi.R;
 import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.chat.common.data.model.Dialog;
@@ -61,7 +62,7 @@ import retrofit2.Response;
 
 public class ActivityProfile extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangeAvatar, ChangePass, ReportBtn;
+    private Button ChangeEmail, ChangeAvatar, ChangePass, ReportBtn, ManageRecipeBtn;
     private Button Logout, ChangeEmailbtn, ChangePassbtn, UploadRecipeBtn;
     User user;
     private TextView userName, Email;
@@ -97,11 +98,19 @@ public class ActivityProfile extends AppCompatActivity {
         backBtn = findViewById(R.id.back_button);
         UploadRecipeBtn = findViewById(R.id.upload_btn);
         ReportBtn = findViewById(R.id.report_btn);
+        ManageRecipeBtn = findViewById(R.id.manageRecipeBtn);
 
         ReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ActivityProfile.this, ReportActivity.class));
+            }
+        });
+
+        ManageRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ActivityProfile.this, ManageRecipeActivity.class));
             }
         });
 
