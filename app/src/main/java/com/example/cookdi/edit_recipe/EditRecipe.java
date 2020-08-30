@@ -222,7 +222,9 @@ public class EditRecipe extends AppCompatActivity {
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.steps, null);
         final TextView textOutStep = (TextView)addView.findViewById(R.id.textoutstep);
+        final TextView textTime = (TextView)addView.findViewById(R.id.texttime);
         textOutStep.setText(description);
+        textTime.setText(String.valueOf(duration));
         FloatingActionButton buttonRemove = (FloatingActionButton) addView.findViewById(R.id.removestep);
 
         final View.OnClickListener thisListener = new View.OnClickListener(){
