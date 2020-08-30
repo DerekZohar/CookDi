@@ -2,6 +2,7 @@ package com.example.cookdi.profile;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.sharepref.SharePref;
+import com.example.cookdi.splash.SplashActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -64,16 +67,18 @@ public class ActivityProfile extends AppCompatActivity {
     private static final String TAG = "ActivityProfile";
     UUID UUID;
     private Uri filePath;
+    ImageButton backBtn;
     //Firebase
     FirebaseStorage storage;
     StorageReference storageReference;
     String imgURL;
-
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        context = getApplicationContext();
 
         fetchData();
         storage = FirebaseStorage.getInstance();
@@ -86,10 +91,14 @@ public class ActivityProfile extends AppCompatActivity {
         avatar = (CircleImageView) findViewById(R.id.avatar_profile);
         ChangeAvatar = (Button) findViewById(R.id.ChangeAvatarbtn);
         ChangePass = (Button) findViewById(R.id.ChangePasswordbtn);
+        backBtn = findViewById(R.id.back_button);
 
-
-
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +150,37 @@ public class ActivityProfile extends AppCompatActivity {
                 ViewGroup viewGroup = findViewById(android.R.id.content);
                 View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.popuplogout, viewGroup, false);
                 builder.setView(dialogView);
-                AlertDialog alertDialog = builder.create();
+                final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
+
+                Button cancelBtn = dialogView.findViewById(R.id.cancel_button);
+                Button logoutBtn = dialogView.findViewById(R.id.logout_btn);
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                logoutBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        final ProgressDialog progressDialog = new ProgressDialog(context);
+//                        progressDialog.setTitle("Loading...");
+//                        progressDialog.show();
+
+
+                        SharePref.getInstance(getApplicationContext()).setUuid(null);
+
+//                        progressDialog.dismiss();
+                        alertDialog.dismiss();
+
+                        startActivity(new Intent(ActivityProfile.this, SplashActivity.class));
+
+
+                    }
+                });
             }
         });
 
@@ -150,7 +188,7 @@ public class ActivityProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isStoragePermissionGranted()){
-                chooseImage();
+                    chooseImage();
                 }
             }
         });
@@ -234,7 +272,6 @@ public class ActivityProfile extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 user = response.body();
-
                 setData();
             }
 
@@ -258,14 +295,12 @@ public class ActivityProfile extends AppCompatActivity {
     }
 
     public  boolean isStoragePermissionGranted() {
-
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 Log.v(TAG,"Permission is granted");
                 return true;
             } else {
-
                 Log.v(TAG,"Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
@@ -314,12 +349,10 @@ public class ActivityProfile extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                                             Picasso.get().load(imgURL).into(avatar);
-
                                         }
 
                                         @Override
                                         public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                                            System.out.println("____________2");
                                             t.printStackTrace();
                                         }
                                     });

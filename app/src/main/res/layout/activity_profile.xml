@@ -44,6 +44,7 @@
             android:id="@+id/avatar_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:padding="10dp"
             android:src="@mipmap/user"></de.hdodenhof.circleimageview.CircleImageView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,28 +132,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Give us feed back"
-        android:gravity="center_vertical"
-        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
-        android:background="@drawable/profilebutton"
-        android:paddingLeft="10dp"></Button>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Report"
         android:gravity="center_vertical"
         android:drawableRight="@drawable/ic_baseline_chevron_right_24"
         android:background="@drawable/profilebutton"
         android:paddingLeft="10dp"></Button>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="About us"
-        android:gravity="center_vertical"
-        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
-        android:background="@drawable/profilebutton"
-        android:paddingLeft="10dp"
-        android:layout_marginBottom="20dp"></Button>
 
     <Button
         android:id="@+id/logoutbtn"
