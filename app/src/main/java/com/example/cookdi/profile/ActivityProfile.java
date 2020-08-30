@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.cookdi.R;
+import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.chat.common.data.model.Dialog;
 import com.example.cookdi.config.Config;
 import com.example.cookdi.helpers.TextHelper;
@@ -36,6 +37,8 @@ import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.sharepref.SharePref;
 import com.example.cookdi.splash.SplashActivity;
+import com.example.cookdi.upload.UploadActivity;
+import com.firebase.client.core.Repo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -58,8 +61,8 @@ import retrofit2.Response;
 
 public class ActivityProfile extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangeAvatar, ChangePass;
-    private Button Logout, ChangeEmailbtn, ChangePassbtn;
+    private Button ChangeEmail, ChangeAvatar, ChangePass, ReportBtn;
+    private Button Logout, ChangeEmailbtn, ChangePassbtn, UploadRecipeBtn;
     User user;
     private TextView userName, Email;
     private CircleImageView avatar;
@@ -92,6 +95,22 @@ public class ActivityProfile extends AppCompatActivity {
         ChangeAvatar = (Button) findViewById(R.id.ChangeAvatarbtn);
         ChangePass = (Button) findViewById(R.id.ChangePasswordbtn);
         backBtn = findViewById(R.id.back_button);
+        UploadRecipeBtn = findViewById(R.id.upload_btn);
+        ReportBtn = findViewById(R.id.report_btn);
+
+        ReportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ActivityProfile.this, ReportActivity.class));
+            }
+        });
+
+        UploadRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ActivityProfile.this, UploadActivity.class));
+            }
+        });
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

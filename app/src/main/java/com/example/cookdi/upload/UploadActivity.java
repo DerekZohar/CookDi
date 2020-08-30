@@ -64,6 +64,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     Button publishButton;
+    ImageButton backBtn;
     ImageButton stepAttach;
     EditText textIn,textInStep,stepTime, foodName, description, tag;
     FloatingActionButton buttonAdd, addstepbutton, addTag;
@@ -110,7 +111,15 @@ public class UploadActivity extends AppCompatActivity {
         stepAttach = findViewById(R.id.stepAttach);
         recipeImage = findViewById(R.id.recipeImage);
         publishButton = findViewById(R.id.publishButton);
+        backBtn = findViewById(R.id.back_button);
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("____________________123");
+                finish();
+            }
+        });
 
         stepAttach.setOnClickListener(new View.OnClickListener() {
             @Override

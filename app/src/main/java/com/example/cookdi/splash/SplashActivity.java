@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
-        startActivity(new Intent(SplashActivity.this, UploadActivity.class));
+        onFlow();
         finish();
     }
 
@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         if (TextHelper.isTextEmpty(SharePref.getInstance(getApplicationContext()).getUuid())) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, RecipeStepActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
     }
 
