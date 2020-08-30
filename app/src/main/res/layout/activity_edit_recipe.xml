@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="9"
                 android:inputType="text"
-                android:paddingLeft="90dp"
+                android:paddingLeft="120dp"
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:text="Edit"
@@ -324,7 +324,7 @@
             android:paddingTop="15sp"
             android:paddingRight="90sp"
             android:paddingBottom="15sp"
-            android:text="Publish"
+            android:text="Edit"
             android:textColor="@color/white"
             android:textSize="25sp"></Button>
 

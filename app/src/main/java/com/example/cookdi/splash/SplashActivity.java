@@ -27,8 +27,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemClock.sleep(2000);
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 //        startActivity(new Intent(SplashActivity.this, EditRecipe.class));
+        EditRecipe.open(getApplicationContext(), 781);
         finish();
     }
 
@@ -36,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, RecipeStepActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
     }
 

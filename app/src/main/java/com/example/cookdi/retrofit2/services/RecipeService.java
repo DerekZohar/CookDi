@@ -20,7 +20,10 @@ public interface RecipeService {
 
     @GET("/recipe/detail")
     Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id);
-    
+
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
+
+    @POST("/recipe/update")
+    Call<Map<String, String>> updateRecipe(@Body() HashMap<String, Object> params);
 }
