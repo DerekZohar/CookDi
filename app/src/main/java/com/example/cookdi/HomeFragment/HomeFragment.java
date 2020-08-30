@@ -13,9 +13,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
@@ -122,6 +122,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
     }
 
     private void setRecipeHomeAdapter() {

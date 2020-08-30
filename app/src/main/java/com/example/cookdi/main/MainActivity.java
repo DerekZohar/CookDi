@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import com.example.cookdi.ContactFragment.ContactFragment;
 import com.example.cookdi.FavoriteFragment.FavoriteFragment;
 import com.example.cookdi.HomeFragment.HomeFragment;
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.PagerAdapter.PagerAdapter;
 import com.example.cookdi.R;
 import com.example.cookdi.SavedFragment.SavedFragment;

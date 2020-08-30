@@ -1,5 +1,6 @@
 package com.example.cookdi.HomeFragment.RecipeAdapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,11 +18,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.db.RecipeListDBAdapter;
+import com.example.cookdi.db.UserListDBAdapter;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +62,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
         if(viewHolder instanceof ItemViewHolder){
-            ItemViewHolder holder = (ItemViewHolder) viewHolder;
+            final ItemViewHolder holder = (ItemViewHolder) viewHolder;
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,16 +83,6 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             //
             holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
 
-            //
-//            initButtonAction();
-//            if(currentRecipe.isRecipeFavorited())
-//                holder.recipeFavorited.setPressed(true);
-//            else
-//                holder.recipeFavorited.setPressed(false);
-//            if(currentRecipe.isRecipeSaved())
-//                holder.recipeSaved.setPressed(true);
-//            else
-//                holder.recipeSaved.setPressed(true);
 
             //
             holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +94,16 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     builder.setTitle("Save");
                     builder.setMessage("Saving \"" +currentRecipe.getRecipe().getRecipeName()+"\" recipe to your device?");
                     builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @SuppressLint("ResourceAsColor")
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-//                            currentRecipe.setRecipeSaved(true);
-                            //... db update
+
+                            //button color changed
+//                            holder.recipeSaved.setBackgroundColor(R.color.colorPrimary);
+
+                            //db sqlite update
+                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+                            UserListDBAdapter.insertUser(currentRecipe.getChef());
                         }
                     });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
@@ -169,6 +169,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             recipeRating = itemView.findViewById(R.id.barRatingFoodHomeRecipe);
             recipeSaved = itemView.findViewById(R.id.btnSaveHomeRecipe);
             recipeFavorited = itemView.findViewById(R.id.btnFavoriteHomeRecipe);
+
         }
     }
 
@@ -185,5 +186,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initButtonAction(){
 
     }
+
+
 
 }

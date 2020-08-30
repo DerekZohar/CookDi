@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private final int ITEMS_LIMIT = 10;
 
     private Context m_context;
-    private ArrayList<RecipeModel> m_recipeList;
+    private ArrayList<RecipeDetail> m_recipeList;
 
-    public RecipeFavoriteAdapter(Context context, ArrayList<RecipeModel> recipeList){
+    public RecipeFavoriteAdapter(Context context, ArrayList<RecipeDetail> recipeList){
         m_context = context;
         m_recipeList = recipeList;
     }
@@ -61,27 +61,6 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
 
-            RecipeModel currentRecipe = m_recipeList.get(position);
-            holder.userName.setText(currentRecipe.getUserName());
-            holder.recipeName.setText(currentRecipe.getRecipeName());
-            holder.recipeTime.setText(currentRecipe.getRecipeTime());
-
-//        Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(currentRecipe.getFoodPortrait()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getUserAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
-
-            //
-            holder.recipeRating.setRating((float) currentRecipe.getRecipeRating());
-
-            //
-//            if(currentRecipe.isRecipeFavorited())
-//                holder.recipeFavorited.setBackgroundResource(R.drawable.ic_favorited);
-//            else
-//                holder.recipeFavorited.setBackgroundResource(R.drawable.ic_favorite);
-//            if(currentRecipe.isRecipeSaved())
-//                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmarked);
-//            else
-//                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmark);
 
         }
         else if(viewHolder instanceof LoadingViewHolder){

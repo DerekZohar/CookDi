@@ -60,4 +60,15 @@ dependencies {
     implementation ('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.firebase:firebase-client-android:2.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //Download image
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }
