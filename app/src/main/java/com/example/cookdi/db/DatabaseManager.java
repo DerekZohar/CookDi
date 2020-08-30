@@ -14,7 +14,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     private Context mContext;
-    private int mOpenCounter;
 
     public static DatabaseManager getInstance() {
         return mDatabaseInstance;

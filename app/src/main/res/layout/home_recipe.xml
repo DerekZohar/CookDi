@@ -9,7 +9,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-
         android:id="@+id/recipeView"
         android:background="@color/white"
         android:orientation="vertical"
@@ -134,28 +133,6 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="invisible"
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/ic_empty"
-        android:layout_marginTop="220dp"
-        android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Things empty!"
-            android:layout_gravity="center"
-            />
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
