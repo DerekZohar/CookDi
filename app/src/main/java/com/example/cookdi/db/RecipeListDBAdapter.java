@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 
 import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
+import com.example.cookdi.retrofit2.entities.SavedUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -94,6 +95,11 @@ public class RecipeListDBAdapter {
     public static void deleteAllRecipe() {
         SQLiteDatabase database = mDatabaseManager.getWritableDatabase();
         database.delete(TABLE_NAME, null, null);
+    }
+
+    public static boolean deleteById(int id){
+        SQLiteDatabase db = DatabaseManager.getInstance().getReadableDatabase();
+        return db.delete(TABLE_NAME, COLUMN_ID + "=" + id, null) > 0;
     }
 
     public static boolean isRecipeExist(Recipe recipe) {

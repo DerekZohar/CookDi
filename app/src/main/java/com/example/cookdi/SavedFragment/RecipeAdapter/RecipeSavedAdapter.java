@@ -109,7 +109,9 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                             //db sqlite update
-//                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+                            RecipeListDBAdapter.deleteById(currentRecipe.getRecipe().getRecipeId());
+                            m_recipeList.remove(currentRecipe);
+                            notifyDataSetChanged();
 //                            UserListDBAdapter.insertUser(currentRecipe.getChef());
                         }
                     });
