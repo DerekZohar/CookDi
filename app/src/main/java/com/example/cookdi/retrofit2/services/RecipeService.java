@@ -19,7 +19,7 @@ public interface RecipeService {
     Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page);
 
     @GET("/recipe/detail")
-    Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id);
+    Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id, @Query("user_id") int user_id );
 
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);

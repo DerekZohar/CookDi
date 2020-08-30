@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         SystemClock.sleep(2000);
 //        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 //        startActivity(new Intent(SplashActivity.this, EditRecipe.class));
-        EditRecipe.open(getApplicationContext(), 781);
+        EditRecipe.open(SplashActivity.this, 781);
         finish();
     }
 

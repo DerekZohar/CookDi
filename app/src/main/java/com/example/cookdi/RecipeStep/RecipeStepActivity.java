@@ -19,6 +19,7 @@ import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.RecipeStep;
+import com.example.cookdi.sharepref.SharePref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -120,7 +121,8 @@ public class RecipeStepActivity extends AppCompatActivity {
         });
     }
     private void fetchData(){
-        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681).enqueue(new Callback<RecipeDetailSteps>() {
+        int uuid = Integer.parseInt(SharePref.getInstance(getApplicationContext()).getUuid());
+        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681, uuid).enqueue(new Callback<RecipeDetailSteps>() {
             @Override
             public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
                 recipeDetailSteps = response.body();

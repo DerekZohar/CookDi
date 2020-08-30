@@ -121,7 +121,8 @@ public class EditRecipe extends AppCompatActivity {
     private void getData() {
         progressDialog.setTitle("Loading...");
         progressDialog.show();
-        ServiceManager.getInstance().getRecipeService().getRecipeSteps(recipeId).enqueue(new Callback<RecipeDetailSteps>() {
+        int uuid = Integer.parseInt(SharePref.getInstance(getApplicationContext()).getUuid());
+        ServiceManager.getInstance().getRecipeService().getRecipeSteps(recipeId, uuid).enqueue(new Callback<RecipeDetailSteps>() {
             @Override
             public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
                 if (response.code() == 200) {
