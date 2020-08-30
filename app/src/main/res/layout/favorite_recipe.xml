@@ -125,7 +125,7 @@
                         android:id="@+id/btnFavoriteFavoriteRecipe"
                         android:layout_width="26dp"
                         android:layout_height="26dp"
-                        android:background="@drawable/favorite_button_background_selector" />
+                        android:background="@drawable/ic_favorite_red" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

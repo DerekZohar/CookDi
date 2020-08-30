@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ import java.util.UUID;
 public class ReportActivity extends AppCompatActivity {
     UUID UUID;
     Button submit;
+    ImageButton backBtn;
     EditText editText;
     ImageView imageView;
 
@@ -60,6 +62,7 @@ public class ReportActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.desciptionEditText);
         imageView = (ImageView) findViewById(R.id.imageReport);
         imageView.setTag("0"); // set tag to check image change ?
+        backBtn = findViewById(R.id.back_button);
 
 //        mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -67,7 +70,7 @@ public class ReportActivity extends AppCompatActivity {
 
         submitEvent();
         onClickEventImageView();
-
+        OnBackBtnClicked();
     }
     public String getDescription(){
         return editText.getText().toString();
@@ -92,6 +95,14 @@ public class ReportActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    private void OnBackBtnClicked(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     private void uploadImage() {
         if(filePath != null)

@@ -25,6 +25,8 @@ import com.example.cookdi.register.RegisterActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.sharepref.SharePref;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,6 +94,11 @@ public class LoginActivity extends AppCompatActivity {
         ServiceManager.getInstance().getUserService().authentication(params).enqueue(new Callback<Map<String, String>>() {
             @Override
             public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if(response.body() == null) {
+                    Toast.makeText(getApplicationContext(), "Username or password incorrect", Toast.LENGTH_SHORT).show();progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    return;
+                }
                 BCrypt.Result result = BCrypt.verifyer().verify(password.getText().toString().toCharArray(),response.body().get("pass") );
                 if (result.verified) {
                     SharePref.getInstance(getApplicationContext()).setUuid(response.body().get("id").toString());

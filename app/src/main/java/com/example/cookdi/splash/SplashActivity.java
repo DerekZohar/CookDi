@@ -11,9 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cookdi.RecipeStep.RecipeStepActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.Report.ReportActivity;
+import com.example.cookdi.helpers.TextHelper;
+import com.example.cookdi.edit_recipe.EditRecipe;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
+import com.example.cookdi.profile.ActivityProfile;
 import com.example.cookdi.sharepref.SharePref;
+import com.example.cookdi.upload.UploadActivity;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
@@ -29,10 +33,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void onFlow() {
-        if ((SharePref.getInstance(getApplicationContext()).getUuid() == null)) {
+        if (TextHelper.isTextEmpty(SharePref.getInstance(getApplicationContext()).getUuid())) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, RecipeStepActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
     }
 

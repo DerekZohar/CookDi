@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_view"
+        android:background="#FF3868"
+        android:weightSum="10"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="?attr/homeAsUpIndicator"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+        <TextView
+            android:id="@+id/editTextSearchView"
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingLeft="85sp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:text="PROFILE"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_profile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="10dp"
+            android:src="@mipmap/user"></de.hdodenhof.circleimageview.CircleImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/username_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_marginLeft="20dp"></TextView>
+            <TextView
+                android:id="@+id/email_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1753118@student.hcmus.edu.vn"
+                android:layout_marginLeft="20dp"></TextView>
+            <RatingBar
+                android:id="@+id/barRatingPr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="2"
+                android:stepSize="0.5"
+                android:layout_alignParentLeft="true"
+                style="@style/RatingBar"
+                android:theme="@style/RatingBar"
+                android:isIndicator="false"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account"
+        android:layout_margin="15dp"></TextView>
+
+    <Button
+        android:id="@+id/ChangeAvatarbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Avatar"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"
+        ></Button>
+    <Button
+        android:id="@+id/Changeemailbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Email"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
+    <Button
+        android:id="@+id/upload_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload recipe"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
+    <Button
+        android:id="@+id/ChangePasswordbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:layout_margin="15dp"
+        android:paddingLeft="10dp"></TextView>
+
+    <Button
+        android:id="@+id/report_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
+
+    <Button
+        android:id="@+id/logoutbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/logout"
+        android:drawablePadding="10dp"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cookdi version 1.0.1 Android"
+        android:layout_margin="15dp"
+        android:paddingLeft="10dp"></TextView>
+</LinearLayout>

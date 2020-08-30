@@ -1,6 +1,7 @@
 package com.example.cookdi.retrofit2;
 
 import com.example.cookdi.config.Config;
+import com.example.cookdi.retrofit2.services.FavoriteService;
 import com.example.cookdi.retrofit2.services.RecipeService;
 import com.example.cookdi.retrofit2.services.UserService;
 
@@ -32,5 +33,9 @@ public class ServiceManager {
 
     public RecipeService getRecipeService() {
         return retrofit.create(RecipeService.class);
+    }
+
+    public FavoriteService getFavoriteService() {
+        return retrofit.create(FavoriteService.class);
     }
 }
