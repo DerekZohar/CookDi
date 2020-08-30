@@ -1,5 +1,6 @@
 package com.example.cookdi.SavedFragment.RecipeAdapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.db.RecipeListDBAdapter;
+import com.example.cookdi.db.UserListDBAdapter;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
 import com.example.cookdi.retrofit2.entities.SavedUser;
@@ -92,6 +95,30 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             inputStream = new ByteArrayInputStream(savedUser.getImage());
             bitmap = BitmapFactory.decodeStream(inputStream);
             holder.userAvatar.setImageBitmap(bitmap);
+
+            holder.recipeRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                    builder.setCancelable(true);
+                    builder.setTitle("Delete");
+                    builder.setMessage("Delete \"" +currentRecipe.getRecipe().getRecipeName()+"\" ?");
+                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @SuppressLint("ResourceAsColor")
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            //db sqlite update
+//                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+//                            UserListDBAdapter.insertUser(currentRecipe.getChef());
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
         }
         else if(viewHolder instanceof com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.LoadingViewHolder){
             com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.LoadingViewHolder holder = (com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.LoadingViewHolder) viewHolder;
@@ -127,7 +154,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private TextView recipeName;
         private TextView recipeTime;
         private RatingBar recipeRating;
-//        private ImageButton recipeSaved;
+        private ImageButton recipeRemove;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,7 +164,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             recipeName = itemView.findViewById(R.id.txtFoodNameSavedRecipe);
             recipeTime = itemView.findViewById(R.id.txtTimeSavedRecipe);
             recipeRating = itemView.findViewById(R.id.barRatingFoodSavedRecipe);
-//            recipeSaved = itemView.findViewById(R.id.btnSaveSavedRecipe);
+            recipeRemove = itemView.findViewById(R.id.btnRemoveSavedRecipe);
         }
     }
 

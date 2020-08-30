@@ -102,8 +102,8 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                            holder.recipeSaved.setBackgroundColor(R.color.colorPrimary);
 
                             //db sqlite update
-//                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
-//                            UserListDBAdapter.insertUser(currentRecipe.getChef());
+                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+                            UserListDBAdapter.insertUser(currentRecipe.getChef());
                         }
                     });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
@@ -186,7 +186,4 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initButtonAction(){
 
     }
-
-
-
 }

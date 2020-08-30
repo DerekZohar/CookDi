@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.sharepref.SharePref;
 
@@ -96,16 +98,24 @@ public class HomeFragment extends Fragment {
     }
 
     private void getHomeData(){
+        Log.d("PAGE HOME DATA ", page+"");
         ServiceManager.getInstance().getRecipeService().getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid())).enqueue(new Callback<List<RecipeDetail>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
                 if (page == 0) {
-                    recipeHomeList = response.body();
-                    initScrollListener();
+                   recipeHomeList = response.body();
                 } else {
                     if (response.body() != null) {
-                       boolean isSuccess = recipeHomeList.addAll(response.body());
+                        recipeHomeList.remove(recipeHomeList.size() - 1);
+
+                        int scrollPosition = recipeHomeList.size();
+                        recipeHomeAdapter.notifyItemRemoved(scrollPosition);
+
+                        recipeHomeList.addAll(response.body());
+
+                        recipeHomeAdapter.notifyDataSetChanged();
+                        isItemLoading = false;
                     }
                 }
 
@@ -119,16 +129,17 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
-
-            }
+            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) { }
         });
+
+
 
     }
 
     private void setRecipeHomeAdapter() {
         recipeHomeAdapter = new RecipeHomeAdapter(getActivity(), recipeHomeList);
         list.setAdapter(recipeHomeAdapter);
+        initScrollListener();
     }
 
     private void initScrollListener(){
@@ -146,7 +157,7 @@ public class HomeFragment extends Fragment {
 
                 if(linearLayoutManager != null){
                     if(!isItemLoading){
-                        if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == recipeHomeList.size() - 1){
+                        if(linearLayoutManager.findLastVisibleItemPosition() == recipeHomeList.size() - 1){
                             loadMore();
                             isItemLoading = true;
                         }
@@ -164,20 +175,7 @@ public class HomeFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                recipeHomeList.remove(recipeHomeList.size() - 1);
-                int scrollPosition = recipeHomeList.size();
-                recipeHomeAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + recipeHomeAdapter.getItemLimit();
-
-                while (currentSize - 1 < nextLimit) {
-                    getHomeData();
-
-                    currentSize++;
-                }
-
-                recipeHomeAdapter.notifyDataSetChanged();
-                isItemLoading = false;
+                getHomeData();
             }
         }, 2000);
     }

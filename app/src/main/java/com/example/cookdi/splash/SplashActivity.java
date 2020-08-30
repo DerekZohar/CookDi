@@ -26,9 +26,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initAppDB();
         SystemClock.sleep(2000);
-//        initAppDB();
-//        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         onFlow();
         finish();
     }
@@ -43,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
 
     void initAppDB(){
         mDatabaseManager = DatabaseManager.newInstance(getApplicationContext());
-        mDatabaseManager.resetDB();
+//        mDatabaseManager.resetDB();
         Log.d("CREATE DATABASE", "Done");
     }
 

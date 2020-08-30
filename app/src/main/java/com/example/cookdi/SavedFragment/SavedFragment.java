@@ -164,11 +164,7 @@ public class SavedFragment extends Fragment {
                 int currentSize = scrollPosition;
                 int nextLimit = currentSize + recipeSavedAdapter.getItemLimit();
 
-                while (currentSize - 1 < nextLimit) {
                     getSavedData();
-
-                    currentSize++;
-                }
 
                 recipeSavedAdapter.notifyDataSetChanged();
                 isItemLoading = false;

@@ -111,11 +111,12 @@
                     android:layout_marginRight="18dp">
 
                     <ImageButton
-                        android:id="@+id/btnSaveSavedRecipe"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:id="@+id/btnRemoveSavedRecipe"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:layout_marginRight="4dp"
-                        android:background="@drawable/save_button_background_selector" />
+                        android:backgroundTint="@color/colorPrimary"
+                        android:background="@drawable/ic_remove" />
 
                    </LinearLayout>
             </RelativeLayout>
