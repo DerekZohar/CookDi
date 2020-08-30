@@ -23,4 +23,7 @@ public interface RecipeService {
 
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
+
+    @POST("/recipe/update")
+    Call<Map<String, String>> updateRecipe(@Body() HashMap<String, Object> params);
 }

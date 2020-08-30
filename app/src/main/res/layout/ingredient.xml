@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/white"
+    android:layout_gravity="center_vertical"
     android:weightSum="10">
 
     <TextView
@@ -20,14 +21,18 @@
         android:layout_marginRight="10dp"
         android:layout_gravity="start" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/remove"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:text="Remove"
-        android:src="@drawable/ic_baseline_close_24"
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+
+        android:src="@mipmap/cross"
         app:fabSize="mini"
-        android:outlineSpotShadowColor="@color/transparent"
+
+        android:background="@color/white"
         app:backgroundTint="@android:color/white"
         android:layout_weight="1"/>
 

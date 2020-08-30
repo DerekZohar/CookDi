@@ -44,6 +44,7 @@ public class RecipeStepActivity extends AppCompatActivity {
     ArrayList<RecipeStep> listSteps;
 
     String FORMAT_TIME = "%02d:%02d:%02d";
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,30 +63,30 @@ public class RecipeStepActivity extends AppCompatActivity {
         onClickPreviousBtn();
 
     }
-//    @Override
-//    public void onBackPressed() {
-//        if(Config.stepID == 1)
-//        System.out.println("_____________________");
-//        System.out.println("back press");
-////        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-////        setIntent.addCategory(Intent.CATEGORY_HOME);
-////        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////        startActivity(setIntent);
-//    }
-    //time: second
-    public void countDown(int time){
-        final TextView textView = (TextView) findViewById(R.id.countDownTime);
-        countDownTimer =  new CountDownTimer(time*1000, 1000) { // adjust the milli seconds here
 
-            @SuppressLint({"DefaultLocale", "SetTextI18n"})
+    // @Override
+    // public void onBackPressed() {
+    // if(Config.stepID == 1)
+    // System.out.println("_____________________");
+    // System.out.println("back press");
+    //// Intent setIntent = new Intent(Intent.ACTION_MAIN);
+    //// setIntent.addCategory(Intent.CATEGORY_HOME);
+    //// setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    //// startActivity(setIntent);
+    // }
+    // time: second
+    public void countDown(int time) {
+        final TextView textView = (TextView) findViewById(R.id.countDownTime);
+        countDownTimer = new CountDownTimer(time * 1000, 1000) { // adjust the milli seconds here
+
+            @SuppressLint({ "DefaultLocale", "SetTextI18n" })
             public void onTick(long millisUntilFinished) {
 
-                textView.setText(""+String.format(FORMAT_TIME,
-                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                textView.setText("" + String.format(FORMAT_TIME, TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                                - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
+                                - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
             }
 
             public void onFinish() {
@@ -93,75 +94,76 @@ public class RecipeStepActivity extends AppCompatActivity {
             }
         }.start();
     }
-    private void onClickPreviousBtn(){
+
+    private void onClickPreviousBtn() {
         preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Config.stepID != 1)
-                {
+                if (Config.stepID != 1) {
                     Config.stepID = Config.stepID - 1;
                     countDownTimer.cancel();
-//                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+                    // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
                 }
             }
         });
     }
-    private void onClickNextBtn(){
+
+    private void onClickNextBtn() {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Config.stepID != listSteps.size()){
+                if (Config.stepID != listSteps.size()) {
                     Config.stepID = Config.stepID + 1;
                     countDownTimer.cancel();
-//                    startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
+                    // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
                 }
             }
         });
     }
-    private void fetchData(){
-        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681, Integer.parseInt(SharePref.getInstance(getApplicationContext()).getUuid())).enqueue(new Callback<RecipeDetailSteps>() {
-            @Override
-            public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
-                recipeDetailSteps = response.body();
-                setAdapter();
-            }
 
-            @Override
-            public void onFailure(Call<RecipeDetailSteps> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    private void fetchData() {
+        int uuid = Integer.parseInt(SharePref.getInstance(getApplicationContext()).getUuid());
+        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681, uuid)
+                .enqueue(new Callback<RecipeDetailSteps>() {
+                    @Override
+                    public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
+                        recipeDetailSteps = response.body();
+                        setAdapter();
+                    }
+
+                    @Override
+                    public void onFailure(Call<RecipeDetailSteps> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
 
     }
+
     @SuppressLint("SetTextI18n")
-    private void setAdapter(){
+    private void setAdapter() {
         listSteps = recipeDetailSteps.getSteps();
-//        System.out.println("__________stepID");
-//        System.out.println(Config.stepID);
-//        System.out.println("__________");
-//        System.out.println(listSteps.size());
+        // System.out.println("__________stepID");
+        // System.out.println(Config.stepID);
+        // System.out.println("__________");
+        // System.out.println(listSteps.size());
 
         String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
-        if(TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)){
-            Picasso.get().load(imgUrl)
-                    .placeholder(R.mipmap.picture_icon_placeholder)
-                    .error(R.mipmap.picture_icon_placeholder)
-                    .into(imgStep);
+        if (TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)) {
+            Picasso.get().load(imgUrl).placeholder(R.mipmap.picture_icon_placeholder)
+                    .error(R.mipmap.picture_icon_placeholder).into(imgStep);
         }
-
 
         stepNumber.setText("Step: " + Config.stepID + "/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
 
         description.setText(recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_description());
-        int estTime = recipeDetailSteps.getRecipe().getTime()*1000;
-        estimateTime.setText(""+String.format(FORMAT_TIME,
-                TimeUnit.MILLISECONDS.toHours(estTime),
-                TimeUnit.MILLISECONDS.toMinutes(estTime) - TimeUnit.HOURS.toMinutes(
-                        TimeUnit.MILLISECONDS.toHours(estTime)),
-                TimeUnit.MILLISECONDS.toSeconds(estTime) - TimeUnit.MINUTES.toSeconds(
-                        TimeUnit.MILLISECONDS.toMinutes(estTime))));
+        int estTime = recipeDetailSteps.getRecipe().getTime() * 1000;
+        estimateTime.setText("" + String.format(FORMAT_TIME, TimeUnit.MILLISECONDS.toHours(estTime),
+                TimeUnit.MILLISECONDS.toMinutes(estTime)
+                        - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(estTime)),
+                TimeUnit.MILLISECONDS.toSeconds(estTime)
+                        - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(estTime))));
     }
 }

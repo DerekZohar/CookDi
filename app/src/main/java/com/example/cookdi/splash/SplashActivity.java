@@ -12,6 +12,7 @@ import com.example.cookdi.RecipeStep.RecipeStepActivity;
 import com.example.cookdi.chat.features.main.ChatActivity;
 import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.helpers.TextHelper;
+import com.example.cookdi.edit_recipe.EditRecipe;
 import com.example.cookdi.login.LoginActivity;
 import com.example.cookdi.main.MainActivity;
 import com.example.cookdi.profile.ActivityProfile;
