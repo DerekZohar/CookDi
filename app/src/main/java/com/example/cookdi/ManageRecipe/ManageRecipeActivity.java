@@ -44,7 +44,7 @@ public class ManageRecipeActivity extends AppCompatActivity {
 
     private RecyclerView list;
     private boolean isItemLoading = false;
-    private int page = 0;
+    private int page = 1;
     private RecipeHomeAdapter recipeHomeAdapter;
 
     Context context;
@@ -61,11 +61,12 @@ public class ManageRecipeActivity extends AppCompatActivity {
 
 
     private void getHomeData(){
-        ServiceManager.getInstance().getRecipeService().getAllRecipe(page, Integer.parseInt(SharePref.getInstance(context).getUuid())).enqueue(new Callback<List<RecipeDetail>>() {
+        ServiceManager.getInstance().getRecipeService().getManagedRecipe(page, 251).enqueue(new Callback<List<RecipeDetail>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
-                if (page == 0) {
+
+                if (page == 1) {
                     recipeHomeList = response.body();
                     initScrollListener();
                 } else {
@@ -85,7 +86,7 @@ public class ManageRecipeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }

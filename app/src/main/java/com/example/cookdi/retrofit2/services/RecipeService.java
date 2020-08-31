@@ -16,14 +16,19 @@ import retrofit2.http.Query;
 
 public interface RecipeService {
     @GET("/recipe/all")
-    Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page,@Query("user_id") int user_id );
+    Call<List<RecipeDetail>> getAllRecipe(@Query("page") int page, @Query("user_id") int user_id );
 
     @GET("/recipe/detail")
     Call<RecipeDetailSteps> getRecipeSteps(@Query("recipe_id") int id, @Query("user_id") int user_id );
+
+    @GET("/recipe/user/recipe")
+    Call<List<RecipeDetail>> getManagedRecipe(@Query("page") int page, @Query("user_id") int user_id );
 
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
 
     @POST("/recipe/update")
     Call<Map<String, String>> updateRecipe(@Body() HashMap<String, Object> params);
+
+
 }
