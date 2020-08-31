@@ -19,12 +19,13 @@ import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.sharepref.SharePref;
 
 import java.util.List;
+import com.example.cookdi.retrofit2.entities.RecipeDetail;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String ARG_PARAM1 = "param1";
@@ -40,10 +41,8 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private RecipeFavoriteAdapter recipeFavoriteAdapter;
 
-
     public FavoriteFragment() {
     }
-
 
     public static FavoriteFragment newInstance(String param1, String param2) {
         FavoriteFragment fragment = new FavoriteFragment();
@@ -64,8 +63,7 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.favorite_fragment, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.favorite_fragment);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -82,30 +80,31 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
         return view;
     }
 
-    private void getFavoriteData(){
+    private void getFavoriteData() {
         int user_id = Integer.valueOf(SharePref.getInstance(getContext()).getUuid());
-        ServiceManager.getInstance().getFavoriteService().getAllFavoriteRecipe(page, user_id).enqueue(new Callback<List<RecipeDetail>>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<List<RecipeDetail>> call, final Response<List<RecipeDetail>> response) {
-                new Handler().postDelayed(new Runnable() {
+        ServiceManager.getInstance().getFavoriteService().getAllFavoriteRecipe(page, user_id)
+                .enqueue(new Callback<List<RecipeDetail>>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
-                    public void run() {
-                        if (page == 0) {
-                            recipeFavoriteList = response.body();
-                        }
+                    public void onResponse(Call<List<RecipeDetail>> call, final Response<List<RecipeDetail>> response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (page == 0) {
+                                    recipeFavoriteList = response.body();
+                                }
 
-                        setRecipeFavoriteAdapter();
+                                setRecipeFavoriteAdapter();
+                            }
+                        }, 700);
+
                     }
-                }, 700);
 
-            }
+                    @Override
+                    public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
-
-            }
-        });
+                    }
+                });
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

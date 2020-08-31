@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
-import com.example.cookdi.Model.RecipeModel;
+
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
@@ -46,7 +46,7 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context m_context;
     private List<RecipeDetail> m_recipeList;
 
-    public RecipeFavoriteAdapter(Context context, List<RecipeDetail> recipeList){
+    public RecipeFavoriteAdapter(Context context, List<RecipeDetail> recipeList) {
         m_context = context;
         m_recipeList = recipeList;
     }
@@ -54,11 +54,10 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_ITEM){
+        if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(m_context).inflate(R.layout.favorite_recipe, parent, false);
             return new ItemViewHolder(view);
-        }
-        else{
+        } else {
             View view = LayoutInflater.from(m_context).inflate(R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
         }
@@ -67,7 +66,7 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
-        if(viewHolder instanceof ItemViewHolder){
+        if (viewHolder instanceof ItemViewHolder) {
             final RecipeFavoriteAdapter.ItemViewHolder holder = (RecipeFavoriteAdapter.ItemViewHolder) viewHolder;
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +81,10 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
             holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
 
-
-            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
-
+            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
+                    .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error)
+                    .placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
 
             holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
 
@@ -100,29 +99,35 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
                     builder.setCancelable(true);
                     builder.setTitle("Warning");
-                    builder.setMessage(currentRecipe.getRecipe().getRecipeName()+ " Would You Like To Remove This Recipe?");
+                    builder.setMessage(
+                            currentRecipe.getRecipe().getRecipeName() + " Would You Like To Remove This Recipe?");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ServiceManager.getInstance().getFavoriteService().delete(params).enqueue(new Callback<Map<String, String>>() {
-                                @Override
-                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                                }
+                            ServiceManager.getInstance().getFavoriteService().delete(params)
+                                    .enqueue(new Callback<Map<String, String>>() {
+                                        @Override
+                                        public void onResponse(Call<Map<String, String>> call,
+                                                Response<Map<String, String>> response) {
+                                        }
 
-                                @Override
-                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                        @Override
+                                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
 
-                                }
-                            });
+                                        }
+                                    });
                         }
                     });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
             });
-        }
-        else if(viewHolder instanceof LoadingViewHolder){
+        } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
         }
     }
@@ -137,12 +142,11 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return m_recipeList.get(position) == null ? VIEW_TYPE_ITEM_LOADING : VIEW_TYPE_ITEM;
     }
 
-
-    public int getItemLimit(){
+    public int getItemLimit() {
         return this.ITEMS_LIMIT;
     }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder{
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView userAvatar;
         private ImageView foodPortrait;
@@ -174,7 +178,7 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private class LoadingViewHolder extends RecyclerView.ViewHolder{
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         private ProgressBar prbarItemLoading;
 

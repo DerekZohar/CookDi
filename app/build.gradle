@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.cookdi"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -61,6 +61,7 @@ dependencies {
     implementation ('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+
 
     //Firebase storage
     implementation 'com.google.firebase:firebase-database:19.3.1'

@@ -4,20 +4,23 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.sharepref.SharePref;
 
@@ -30,9 +33,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A simple {@link Fragment} subclass. Use the {@link HomeFragment#newInstance}
+ * factory method to create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
 
@@ -53,14 +55,15 @@ public class HomeFragment extends Fragment {
     private int page = 0;
     private RecipeHomeAdapter recipeHomeAdapter;
 
+    private View fragmentView;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Use this factory method to create a new instance of this fragment using the
+     * provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
@@ -86,56 +89,65 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
-        list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
-        getHomeData();
-
-
-        return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            return fragmentView;
+        } else {
+            // Inflate the layout for this fragment
+            View view = inflater.inflate(R.layout.home_fragment, container, false);
+            list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
+            getHomeData();
+            fragmentView = view;
+            return view;
+        }
     }
 
-    private void OnItemClicked(){
+    private void getHomeData() {
 
-    }
-    private void getHomeData(){
-        ServiceManager.getInstance().getRecipeService().getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid())).enqueue(new Callback<List<RecipeDetail>>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
-                if (page == 0) {
-                    recipeHomeList = response.body();
-                    initScrollListener();
-                } else {
-                    if (response.body() != null) {
-                       boolean isSuccess = recipeHomeList.addAll(response.body());
+        ServiceManager.getInstance().getRecipeService()
+                .getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid()))
+                .enqueue(new Callback<List<RecipeDetail>>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
+                        if (page == 0) {
+                            recipeHomeList = response.body();
+                        } else {
+                            if (response.body() != null) {
+                                recipeHomeList.remove(recipeHomeList.size() - 1);
+
+                                int scrollPosition = recipeHomeList.size();
+                                recipeHomeAdapter.notifyItemRemoved(scrollPosition);
+
+                                recipeHomeList.addAll(response.body());
+
+                                recipeHomeAdapter.notifyDataSetChanged();
+                                isItemLoading = false;
+                            }
+                        }
+
+                        if (response.body() == null) {
+                            list.clearOnScrollListeners();
+                        } else {
+                            page += 1;
+                        }
+
+                        setRecipeHomeAdapter();
                     }
-                }
 
-                if (response.body() == null) {
-                    list.clearOnScrollListeners();
-                } else {
-                    page += 1;
-                }
-
-                setRecipeHomeAdapter();
-            }
-
-            @Override
-            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
-
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
+                    }
+                });
     }
 
     private void setRecipeHomeAdapter() {
         recipeHomeAdapter = new RecipeHomeAdapter(getActivity(), recipeHomeList);
         list.setAdapter(recipeHomeAdapter);
+        initScrollListener();
     }
 
-    private void initScrollListener(){
+    private void initScrollListener() {
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -148,9 +160,9 @@ public class HomeFragment extends Fragment {
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-                if(linearLayoutManager != null){
-                    if(!isItemLoading){
-                        if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == recipeHomeList.size() - 1){
+                if (linearLayoutManager != null) {
+                    if (!isItemLoading) {
+                        if (linearLayoutManager.findLastVisibleItemPosition() == recipeHomeList.size() - 1) {
                             loadMore();
                             isItemLoading = true;
                         }
@@ -160,7 +172,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void loadMore(){
+    public void loadMore() {
         recipeHomeList.add(null);
         recipeHomeAdapter.notifyItemInserted(recipeHomeList.size() - 1);
 
@@ -168,20 +180,7 @@ public class HomeFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                recipeHomeList.remove(recipeHomeList.size() - 1);
-                int scrollPosition = recipeHomeList.size();
-                recipeHomeAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + recipeHomeAdapter.getItemLimit();
-
-                while (currentSize - 1 < nextLimit) {
-                    getHomeData();
-
-                    currentSize++;
-                }
-
-                recipeHomeAdapter.notifyDataSetChanged();
-                isItemLoading = false;
+                getHomeData();
             }
         }, 2000);
     }
