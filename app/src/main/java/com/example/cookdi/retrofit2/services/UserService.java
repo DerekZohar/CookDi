@@ -1,9 +1,12 @@
 package com.example.cookdi.retrofit2.services;
 
+import com.example.cookdi.retrofit2.entities.Recipe;
+import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.User;
 import com.example.cookdi.retrofit2.entities.UserDetail;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -24,6 +27,7 @@ public interface UserService {
 
     @GET("/user/name")
     Call<User> getUserByName(@Query("username") String name);
+
 
     @POST("/user/add")
     Call<Map<String, String>> registerAccount(@Body() Map<String, Object> params);

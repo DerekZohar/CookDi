@@ -28,6 +28,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.cookdi.ManageRecipe.ManageRecipeActivity;
 import com.example.cookdi.R;
 import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.chat.common.data.model.Dialog;
@@ -62,7 +63,7 @@ import retrofit2.Response;
 
 public class ActivityProfile extends AppCompatActivity {
 
-    private Button ChangeEmail, ChangeAvatar, ChangePass, ReportBtn;
+    private Button ChangeEmail, ChangeAvatar, ChangePass, ReportBtn, ManageRecipeBtn;
     private Button Logout, ChangeEmailbtn, ChangePassbtn, UploadRecipeBtn;
     User user;
     private TextView userName, Email;
@@ -72,7 +73,7 @@ public class ActivityProfile extends AppCompatActivity {
     UUID UUID;
     private Uri filePath;
     ImageButton backBtn;
-    //Firebase
+    // Firebase
     FirebaseStorage storage;
     StorageReference storageReference;
     String imgURL;
@@ -100,11 +101,19 @@ public class ActivityProfile extends AppCompatActivity {
         UploadRecipeBtn = findViewById(R.id.upload_btn);
         ReportBtn = findViewById(R.id.report_btn);
         ratingBar = findViewById(R.id.barRatingPr);
+        ManageRecipeBtn = findViewById(R.id.manageRecipeBtn);
 
         ReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ActivityProfile.this, ReportActivity.class));
+            }
+        });
+
+        ManageRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ActivityProfile.this, ManageRecipeActivity.class));
             }
         });
 
@@ -127,7 +136,8 @@ public class ActivityProfile extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityProfile.this);
                 ViewGroup viewGroup = findViewById(android.R.id.content);
-                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.popupchangename, viewGroup, false);
+                View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.popupchangename, viewGroup,
+                        false);
                 builder.setView(dialogView);
                 final EditText changeEmail_edt = (EditText) dialogView.findViewById(R.id.Edit_email);
                 changeEmail_edt.setText(user.getEmail());
@@ -138,27 +148,28 @@ public class ActivityProfile extends AppCompatActivity {
                 ChangeEmailbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(TextHelper.isTextEmpty(changeEmail_edt.getText().toString())){
+                        if (TextHelper.isTextEmpty(changeEmail_edt.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "Email empty", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Map<String, Object> params = new HashMap<>();
                             params.put("user_id", SharePref.getInstance(getApplicationContext()).getUuid());
                             params.put("user_email", changeEmail_edt.getText().toString());
 
-                            ServiceManager.getInstance().getUserService().editUserEmail(params).enqueue(new Callback<Map<String, String>>() {
-                                @Override
-                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                                    Email.setText(changeEmail_edt.getText().toString());
-                                    user.setEmail(changeEmail_edt.getText().toString());
-                                    alertDialog.dismiss();
-                                }
+                            ServiceManager.getInstance().getUserService().editUserEmail(params)
+                                    .enqueue(new Callback<Map<String, String>>() {
+                                        @Override
+                                        public void onResponse(Call<Map<String, String>> call,
+                                                Response<Map<String, String>> response) {
+                                            Email.setText(changeEmail_edt.getText().toString());
+                                            user.setEmail(changeEmail_edt.getText().toString());
+                                            alertDialog.dismiss();
+                                        }
 
-                                @Override
-                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
+                                        @Override
+                                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                            t.printStackTrace();
+                                        }
+                                    });
                         }
                     }
                 });
@@ -175,7 +186,6 @@ public class ActivityProfile extends AppCompatActivity {
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-
                 Button cancelBtn = dialogView.findViewById(R.id.cancel_button);
                 Button logoutBtn = dialogView.findViewById(R.id.logout_btn);
 
@@ -188,18 +198,16 @@ public class ActivityProfile extends AppCompatActivity {
                 logoutBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        final ProgressDialog progressDialog = new ProgressDialog(context);
-//                        progressDialog.setTitle("Loading...");
-//                        progressDialog.show();
-
+                        // final ProgressDialog progressDialog = new ProgressDialog(context);
+                        // progressDialog.setTitle("Loading...");
+                        // progressDialog.show();
 
                         SharePref.getInstance(getApplicationContext()).setUuid(null);
 
-//                        progressDialog.dismiss();
+                        // progressDialog.dismiss();
                         alertDialog.dismiss();
 
                         startActivity(new Intent(ActivityProfile.this, SplashActivity.class));
-
 
                     }
                 });
@@ -209,7 +217,7 @@ public class ActivityProfile extends AppCompatActivity {
         ChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isStoragePermissionGranted()){
+                if (isStoragePermissionGranted()) {
                     chooseImage();
                 }
             }
@@ -220,7 +228,8 @@ public class ActivityProfile extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityProfile.this);
                 ViewGroup viewGroup = findViewById(android.R.id.content);
-                final View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.popupchangepass, viewGroup, false);
+                final View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.popupchangepass, viewGroup,
+                        false);
                 builder.setView(dialogView);
                 final EditText CurrentPass = (EditText) dialogView.findViewById(R.id.currentpass);
                 final EditText NewPass = (EditText) dialogView.findViewById(R.id.newpass);
@@ -231,42 +240,52 @@ public class ActivityProfile extends AppCompatActivity {
                 ChangePassbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(TextHelper.isTextEmpty(CurrentPass.getText().toString()) || TextHelper.isTextEmpty(NewPass.getText().toString())){
+                        if (TextHelper.isTextEmpty(CurrentPass.getText().toString())
+                                || TextHelper.isTextEmpty(NewPass.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "Pass empty", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Map<String, Object> params = new HashMap<>();
                             params.put("username", userName.getText().toString());
-                            ServiceManager.getInstance().getUserService().authentication(params).enqueue(new Callback<Map<String, String>>() {
-                                @Override
-                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                                    BCrypt.Result result = BCrypt.verifyer().verify(CurrentPass.getText().toString().toCharArray(), response.body().get("pass"));
-                                    if (result.verified) {
-                                        String pass = BCrypt.withDefaults().hashToString(Config.LOG_ROUND_SALT, NewPass.getText().toString().toCharArray());
-                                        Map<String, Object> params = new HashMap<>();
-                                        params.put("user_id", SharePref.getInstance(getApplicationContext()).getUuid());
-                                        params.put("user_password", pass);
+                            ServiceManager.getInstance().getUserService().authentication(params)
+                                    .enqueue(new Callback<Map<String, String>>() {
+                                        @Override
+                                        public void onResponse(Call<Map<String, String>> call,
+                                                Response<Map<String, String>> response) {
+                                            BCrypt.Result result = BCrypt.verifyer().verify(
+                                                    CurrentPass.getText().toString().toCharArray(),
+                                                    response.body().get("pass"));
+                                            if (result.verified) {
+                                                String pass = BCrypt.withDefaults().hashToString(Config.LOG_ROUND_SALT,
+                                                        NewPass.getText().toString().toCharArray());
+                                                Map<String, Object> params = new HashMap<>();
+                                                params.put("user_id",
+                                                        SharePref.getInstance(getApplicationContext()).getUuid());
+                                                params.put("user_password", pass);
 
-                                        ServiceManager.getInstance().getUserService().editUserPass(params).enqueue(new Callback<Map<String, String>>() {
-                                            @Override
-                                            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                                                alertDialog.dismiss();
+                                                ServiceManager.getInstance().getUserService().editUserPass(params)
+                                                        .enqueue(new Callback<Map<String, String>>() {
+                                                            @Override
+                                                            public void onResponse(Call<Map<String, String>> call,
+                                                                    Response<Map<String, String>> response) {
+                                                                alertDialog.dismiss();
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<Map<String, String>> call,
+                                                                    Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "current password incorrect",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
+                                        }
 
-                                            @Override
-                                            public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                                                t.printStackTrace();
-                                            }
-                                        });
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "current password incorrect", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                                }
-                            });
+                                        @Override
+                                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                        }
+                                    });
                         }
                     }
                 });
@@ -274,36 +293,36 @@ public class ActivityProfile extends AppCompatActivity {
             }
         });
 
-
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             uploadImage();
 
         }
     }
-    private void fetchData(){
-        System.out.println("fech data");
-        ServiceManager.getInstance().getUserService().getUserByID(SharePref.getInstance(getApplicationContext()).getUuid()).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                user = response.body();
-                setData();
-            }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    private void fetchData() {
+        System.out.println("fech data");
+        ServiceManager.getInstance().getUserService()
+                .getUserByID(SharePref.getInstance(getApplicationContext()).getUuid()).enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        user = response.body();
+                        setData();
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
     }
-    private void setData(){
+
+    private void setData() {
         userName.setText(user.getName());
         Email.setText(user.getEmail());
         Picasso.get().load(user.getAvatar()).into(avatar);
@@ -317,60 +336,59 @@ public class ActivityProfile extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-    public  boolean isStoragePermissionGranted() {
+    public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
                 return true;
             } else {
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                Log.v(TAG, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, 1);
                 return false;
             }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
+        } else { // permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted");
             return true;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
-            //resume tasks needing this permission
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+            // resume tasks needing this permission
         }
     }
 
     private void uploadImage() {
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             UUID = UUID.randomUUID();
 
-            final StorageReference ref = storageReference.child("images/"+ UUID.toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final StorageReference ref = storageReference.child("images/" + UUID.toString());
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                        public void onSuccess(Uri uri) {
+                            imgURL = String.valueOf(uri);
 
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    imgURL = String.valueOf(uri);
+                            Map<String, Object> params = new HashMap<>();
+                            params.put("user_id", SharePref.getInstance(getApplicationContext()).getUuid());
+                            params.put("user_avatar_url", imgURL);
 
-                                    Map<String, Object> params = new HashMap<>();
-                                    params.put("user_id", SharePref.getInstance(getApplicationContext()).getUuid());
-                                    params.put("user_avatar_url",imgURL);
-
-                                    ServiceManager.getInstance().getUserService().editUserAvatar(params).enqueue(new Callback<Map<String, String>>() {
+                            ServiceManager.getInstance().getUserService().editUserAvatar(params)
+                                    .enqueue(new Callback<Map<String, String>>() {
                                         @Override
-                                        public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                        public void onResponse(Call<Map<String, String>> call,
+                                                Response<Map<String, String>> response) {
                                             Picasso.get().load(imgURL).into(avatar);
                                         }
 
@@ -379,26 +397,23 @@ public class ActivityProfile extends AppCompatActivity {
                                             t.printStackTrace();
                                         }
                                     });
-                                }
-                            });
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                }
+            });
         }
 
     }

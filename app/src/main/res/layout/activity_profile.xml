@@ -123,6 +123,15 @@
         android:drawableRight="@drawable/ic_baseline_chevron_right_24"
         android:background="@drawable/profilebutton"
         android:paddingLeft="10dp"></Button>
+    <Button
+        android:id="@+id/manageRecipeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Recipe"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/ic_baseline_chevron_right_24"
+        android:background="@drawable/profilebutton"
+        android:paddingLeft="10dp"></Button>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

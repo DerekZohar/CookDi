@@ -29,6 +29,7 @@
         <activity android:name=".login.SendMailActivity" android:exported="true"/>
         <activity android:name=".login.ForgotActivity" android:exported="true"/>
         <activity android:name=".login.OtpMailActivity" android:exported="true"/>
+        <activity android:name=".ManageRecipe.ManageRecipeActivity" android:exported="true"/>
     </application>
 
 </manifest>
