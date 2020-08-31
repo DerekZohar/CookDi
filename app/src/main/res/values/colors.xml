@@ -10,7 +10,7 @@
     <color name="colorYellow">#FFEB3B</color>
     <color name="colorLightYellow">#FFE45B</color>
     <color name="colorLightGray">#DDDDDD</color>
-
+    <color name="colorPureWhite">#FFFFFF</color>
     <color name="cornflower_blue">#6274e2</color>
     <color name="cornflower_blue_dark">#303F9F</color>
     <color name="cornflower_blue_darkest">#2d3a93</color>
