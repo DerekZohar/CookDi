@@ -55,7 +55,7 @@ public class ContactFragment extends Fragment {
     }
     private void getContactData() {
 
-        ServiceManager.getInstance().getFriendService().getAllFriends(Integer.parseInt(SharePref.getInstance(context).getUuid())).enqueue(new Callback<ArrayList<User>>() {
+        ServiceManager.getInstance().getFriendService().getAllFriend(Integer.parseInt(SharePref.getInstance(context).getUuid())).enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 users = response.body();

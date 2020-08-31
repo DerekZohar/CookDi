@@ -14,8 +14,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface FriendService {
-    @POST("/friend/all")
-    Call<List<User>> getAllFriend(@Query("id") String id);
+    @GET("/friend/all")
+    Call<ArrayList<User>> getAllFriend(@Query("id") int id);
 
     @POST("friend/add")
     Call<Map<String, String>> addFriend(@Body() Map<String, Object> params);
