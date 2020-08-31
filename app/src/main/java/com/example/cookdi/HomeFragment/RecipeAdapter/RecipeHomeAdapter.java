@@ -1,31 +1,48 @@
 package com.example.cookdi.HomeFragment.RecipeAdapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cookdi.Model.RecipeModel;
 import com.example.cookdi.R;
+import com.example.cookdi.detail.DetailActivity;
+import com.example.cookdi.helpers.TextHelper;
+import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.db.RecipeListDBAdapter;
+import com.example.cookdi.db.UserListDBAdapter;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.sharepref.SharePref;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -36,7 +53,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context m_context;
     private List<RecipeDetail> m_recipeList;
 
-    public RecipeHomeAdapter(Context context, List<RecipeDetail> recipeList){
+    public RecipeHomeAdapter(Context context, List<RecipeDetail> recipeList) {
         m_context = context;
         m_recipeList = recipeList;
     }
@@ -44,87 +61,143 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_ITEM){
+        if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(m_context).inflate(R.layout.home_recipe, parent, false);
             return new ItemViewHolder(view);
-        }
-        else{
+        } else {
             View view = LayoutInflater.from(m_context).inflate(R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
 
-//        if(viewHolder instanceof ItemViewHolder){
-//            ItemViewHolder holder = (ItemViewHolder) viewHolder;
-//
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            });
-//
-//            final RecipeDetail currentRecipe = m_recipeList.get(position);
-//            holder.userName.setText(currentRecipe.getChef().getName());
-//            holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
-//            holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
-//
-////        Picasso.get().setLoggingEnabled(true);
-//            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-//            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
-//
-//            //
-//            holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
-//
-//            //
-////            initButtonAction();
-////            if(currentRecipe.isRecipeFavorited())
-////                holder.recipeFavorited.setPressed(true);
-////            else
-////                holder.recipeFavorited.setPressed(false);
-////            if(currentRecipe.isRecipeSaved())
-////                holder.recipeSaved.setPressed(true);
-////            else
-////                holder.recipeSaved.setPressed(true);
-//
-//            //
-//            holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
-//                    builder.setCancelable(true);
-//                    builder.setTitle("Save");
-//                    builder.setMessage("Saving \"" +currentRecipe.getRecipe().getRecipeName()+"\" recipe to your device?");
-//                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-////                            currentRecipe.setRecipeSaved(true);
-//                            //... db update
-//                        }
-//                    });
-//                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
-//
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                }
-//            });
-//
-//            holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-////                        currentRecipe.setRecipeFavorited(true);
-//                        //... db update
-//                    }
-//            });
-//
-//        }
-//        else if(viewHolder instanceof LoadingViewHolder){
-//            LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
-//        }
+        if (viewHolder instanceof ItemViewHolder) {
+            final ItemViewHolder holder = (ItemViewHolder) viewHolder;
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                    view.getContext().startActivity(intent);
+                }
+            });
+
+            final RecipeDetail currentRecipe = m_recipeList.get(position);
+            holder.userName.setText(currentRecipe.getChef().getName());
+            holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
+            holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
+
+            // Picasso.get().setLoggingEnabled(true);
+            if (!TextHelper.isTextEmpty(currentRecipe.getRecipe().getImageUrl()))
+                Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
+                        .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            if (!TextHelper.isTextEmpty(currentRecipe.getChef().getAvatar()))
+                Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error)
+                        .placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+
+            //
+            holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
+
+            //
+            holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                    builder.setCancelable(true);
+                    builder.setTitle("Save");
+                    builder.setMessage(
+                            "Saving \"" + currentRecipe.getRecipe().getRecipeName() + "\" recipe to your device?");
+                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @SuppressLint("ResourceAsColor")
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            // button color changed
+                            // holder.recipeSaved.setBackgroundColor(R.color.colorPrimary);
+
+                            // db sqlite update
+                            RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+                            UserListDBAdapter.insertUser(currentRecipe.getChef());
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+
+            holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int user_id = Integer.valueOf(SharePref.getInstance(m_context).getUuid());
+                    int recipe_id = currentRecipe.getRecipe().getRecipeId();
+                    final Map<String, Object> params = new HashMap<>();
+                    params.put("user_id", user_id);
+                    params.put("recipe_id", recipe_id);
+                    ServiceManager.getInstance().getFavoriteService().addToFavorite(params)
+                            .enqueue(new Callback<Map<String, String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call,
+                                        Response<Map<String, String>> response) {
+                                    if (response.message().equals("OK")) {
+                                        holder.recipeFavorited.setBackgroundResource(R.drawable.ic_favorite_red);
+                                    } else if (response.message().equals("Not Found")) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                                        builder.setCancelable(true);
+                                        builder.setTitle("Warning");
+                                        builder.setMessage(currentRecipe.getRecipe().getRecipeName()
+                                                + " Is Already In Your Favorite? Would You Like To Remove It?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                ServiceManager.getInstance().getFavoriteService().delete(params)
+                                                        .enqueue(new Callback<Map<String, String>>() {
+                                                            @Override
+                                                            public void onResponse(Call<Map<String, String>> call,
+                                                                    Response<Map<String, String>> response) {
+                                                                holder.recipeFavorited
+                                                                        .setBackgroundResource(R.drawable.ic_favorite);
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<Map<String, String>> call,
+                                                                    Throwable t) {
+
+                                                            }
+                                                        });
+                                            }
+                                        });
+                                        builder.setNegativeButton(android.R.string.cancel,
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                                }
+                            });
+
+                }
+            });
+
+        } else if (viewHolder instanceof LoadingViewHolder) {
+            LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
+        }
     }
 
     String convertTime(int sec) {
@@ -134,7 +207,8 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-//        return m_recipeList == null ? 0 : m_recipeList.size() > ITEMS_LIMIT ? ITEMS_LIMIT : m_recipeList.size();
+        // return m_recipeList == null ? 0 : m_recipeList.size() > ITEMS_LIMIT ?
+        // ITEMS_LIMIT : m_recipeList.size();
         return m_recipeList == null ? 0 : m_recipeList.size();
     }
 
@@ -143,12 +217,11 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return m_recipeList.get(position) == null ? VIEW_TYPE_ITEM_LOADING : VIEW_TYPE_ITEM;
     }
 
-
-    public int getItemLimit(){
+    public int getItemLimit() {
         return this.ITEMS_LIMIT;
     }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder{
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView userAvatar;
         private ImageView foodPortrait;
@@ -169,10 +242,11 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             recipeRating = itemView.findViewById(R.id.barRatingFoodHomeRecipe);
             recipeSaved = itemView.findViewById(R.id.btnSaveHomeRecipe);
             recipeFavorited = itemView.findViewById(R.id.btnFavoriteHomeRecipe);
+
         }
     }
 
-    private class LoadingViewHolder extends RecyclerView.ViewHolder{
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         private ProgressBar prbarItemLoading;
 
@@ -182,8 +256,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    private void initButtonAction(){
+    private void initButtonAction() {
 
     }
-
 }

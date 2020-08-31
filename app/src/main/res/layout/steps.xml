@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical"
+
+    android:background="@color/white"
+    android:weightSum="10">
+        <TextView
+            android:id="@+id/textoutstep"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="6"
+            android:textAlignment="textStart"
+            android:paddingLeft="16dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/texttime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="3"
+            android:textAlignment="textStart"
+            android:paddingLeft="16dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="start"/>
+
+        <ImageButton
+            android:id="@+id/removestep"
+            android:text="Remove"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:src="@mipmap/cross"
+            app:fabSize="mini"
+            android:background="@color/white"
+            app:backgroundTint="@android:color/white"
+            android:layout_weight="1"/>
+
+</LinearLayout>

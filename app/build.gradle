@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.cookdi"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -62,10 +62,17 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
-    //firebase storage
+
+    //Firebase storage
     implementation 'com.google.firebase:firebase-database:19.3.1'
     implementation 'com.firebase:firebase-client-android:2.3.1'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.android.support:multidex:1.0.3'
+    //OTP
+    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+        // Exclude is only needed if you already have
+        // androidx.appcompat as a dependency in your app.
+        exclude group: 'androidx.appcompat', module: 'appcompat'
+    }
 }

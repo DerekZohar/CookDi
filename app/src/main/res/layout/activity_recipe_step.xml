@@ -8,7 +8,37 @@
     android:background="@color/colorWhite"
     android:orientation="vertical"
     >
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF3868"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="?attr/homeAsUpIndicator" />
+
+        <TextView
+            android:id="@+id/editTextSearchView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:inputType="text"
+            android:paddingLeft="90dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:text="Steps"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
     <RelativeLayout
+        android:layout_below="@+id/action_bar"
         android:id="@+id/stepTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,6 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageButton
+                android:id="@+id/voiceBtn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
