@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.detail.DetailActivity;
 import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.db.RecipeListDBAdapter;
@@ -77,7 +79,9 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                    view.getContext().startActivity(intent);
                 }
             });
 

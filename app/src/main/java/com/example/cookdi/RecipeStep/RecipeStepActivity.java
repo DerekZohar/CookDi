@@ -42,7 +42,7 @@ public class RecipeStepActivity extends AppCompatActivity {
     Button micro;
     CountDownTimer countDownTimer;
     ArrayList<RecipeStep> listSteps;
-
+    int RecipeID;
     String FORMAT_TIME = "%02d:%02d:%02d";
 
     @SuppressLint("WrongViewCast")
@@ -51,7 +51,9 @@ public class RecipeStepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_step);
 
+        RecipeID = getIntent().getIntExtra("recipe_id", 0);
         fetchData();
+
 
         imgStep = (ImageView) findViewById(R.id.imgStep);
         description = findViewById(R.id.stepDescriptionTxt);
@@ -59,21 +61,14 @@ public class RecipeStepActivity extends AppCompatActivity {
         estimateTime = findViewById(R.id.stepEstimateTimeTxt);
         preBtn = findViewById(R.id.previousBtn);
         nextBtn = findViewById(R.id.nextBtn);
+
         onClickNextBtn();
         onClickPreviousBtn();
 
+
     }
 
-    // @Override
-    // public void onBackPressed() {
-    // if(Config.stepID == 1)
-    // System.out.println("_____________________");
-    // System.out.println("back press");
-    //// Intent setIntent = new Intent(Intent.ACTION_MAIN);
-    //// setIntent.addCategory(Intent.CATEGORY_HOME);
-    //// setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    //// startActivity(setIntent);
-    // }
+
     // time: second
     public void countDown(int time) {
         final TextView textView = (TextView) findViewById(R.id.countDownTime);
@@ -125,7 +120,7 @@ public class RecipeStepActivity extends AppCompatActivity {
 
     private void fetchData() {
         int uuid = Integer.parseInt(SharePref.getInstance(getApplicationContext()).getUuid());
-        ServiceManager.getInstance().getRecipeService().getRecipeSteps(681, uuid)
+        ServiceManager.getInstance().getRecipeService().getRecipeSteps(RecipeID, uuid)
                 .enqueue(new Callback<RecipeDetailSteps>() {
                     @Override
                     public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {

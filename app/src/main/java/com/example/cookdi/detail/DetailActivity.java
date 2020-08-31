@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.RecipeStep.RecipeStepActivity;
+import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.detail.IngredientRecyclerView.IngredientRecyclerViewAdapter;
 import com.example.cookdi.detail.ReviewRecyclerView.ReviewRecyclerViewAdapter;
 import com.example.cookdi.detail.StepRecyclerView.StepRecyclerViewAdapter;
@@ -77,7 +79,9 @@ public class DetailActivity extends AppCompatActivity {
         stepLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), RecipeStepActivity.class);
+                intent.putExtra("recipe_id", id);
+                v.getContext().startActivity(intent);
             }
         });
 
