@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,6 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -39,11 +41,14 @@ public class RecipeStepActivity extends AppCompatActivity {
     TextView stepNumber;
     ImageButton preBtn;
     ImageButton nextBtn;
-    Button micro;
+    ImageButton voice;
     CountDownTimer countDownTimer;
     ArrayList<RecipeStep> listSteps;
     int RecipeID;
     String FORMAT_TIME = "%02d:%02d:%02d";
+    TextToSpeech textToSpeech;
+    ImageButton backBtn;
+    int stepID = 1;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -61,14 +66,41 @@ public class RecipeStepActivity extends AppCompatActivity {
         estimateTime = findViewById(R.id.stepEstimateTimeTxt);
         preBtn = findViewById(R.id.previousBtn);
         nextBtn = findViewById(R.id.nextBtn);
+        voice = findViewById(R.id.voiceBtn);
+        backBtn = findViewById(R.id.back_button);
+
 
         onClickNextBtn();
         onClickPreviousBtn();
-
-
+        OnVoiceBtnClicked();
+        OnBackBtnClicked();
     }
 
+    private void OnBackBtnClicked(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+    private void OnVoiceBtnClicked(){
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i == TextToSpeech.SUCCESS) {
+                    int lang = textToSpeech.setLanguage(new Locale("vi"));
+                }
+            }
+        });
 
+        voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int speech = textToSpeech.speak(listSteps.get(stepID - 1).getStep_description(), TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+    }
     // time: second
     public void countDown(int time) {
         final TextView textView = (TextView) findViewById(R.id.countDownTime);
@@ -94,8 +126,8 @@ public class RecipeStepActivity extends AppCompatActivity {
         preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Config.stepID != 1) {
-                    Config.stepID = Config.stepID - 1;
+                if (stepID != 1) {
+                    stepID = stepID - 1;
                     countDownTimer.cancel();
                     // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
@@ -108,8 +140,8 @@ public class RecipeStepActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Config.stepID != listSteps.size()) {
-                    Config.stepID = Config.stepID + 1;
+                if (stepID != listSteps.size()) {
+                    stepID = stepID + 1;
                     countDownTimer.cancel();
                     // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
@@ -144,16 +176,16 @@ public class RecipeStepActivity extends AppCompatActivity {
         // System.out.println("__________");
         // System.out.println(listSteps.size());
 
-        String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
+        String imgUrl = recipeDetailSteps.getSteps().get(stepID - 1).getStep_image_url();
         if (TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)) {
             Picasso.get().load(imgUrl).placeholder(R.mipmap.picture_icon_placeholder)
                     .error(R.mipmap.picture_icon_placeholder).into(imgStep);
         }
 
-        stepNumber.setText("Step: " + Config.stepID + "/" + listSteps.size());
+        stepNumber.setText("Step: " + stepID + "/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
 
-        description.setText(recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_description());
+        description.setText(recipeDetailSteps.getSteps().get(stepID - 1).getStep_description());
         int estTime = recipeDetailSteps.getRecipe().getTime() * 1000;
         estimateTime.setText("" + String.format(FORMAT_TIME, TimeUnit.MILLISECONDS.toHours(estTime),
                 TimeUnit.MILLISECONDS.toMinutes(estTime)

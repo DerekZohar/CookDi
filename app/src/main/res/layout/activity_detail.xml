@@ -4,7 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF3868"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageButton
+            android:id="@+id/imageButtonBackDetailedRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="?attr/homeAsUpIndicator" />
+
+        <TextView
+            android:id="@+id/editTextSearchView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:inputType="text"
+            android:paddingLeft="90dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:text="Report"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
     <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -366,11 +396,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <ImageButton
-        android:id="@+id/imageButtonBackDetailedRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_arrow_back_24"
-        android:backgroundTint="@color/colorGray"
-        tools:ignore="ContentDescription,UnusedAttribute" />
 </RelativeLayout>

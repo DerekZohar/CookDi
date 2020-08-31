@@ -3,6 +3,7 @@ package com.example.cookdi.FavoriteFragment.RecipeAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 
 import com.example.cookdi.R;
+import com.example.cookdi.detail.DetailActivity;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.sharepref.SharePref;
@@ -64,7 +66,7 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
 
         if (viewHolder instanceof ItemViewHolder) {
             final RecipeFavoriteAdapter.ItemViewHolder holder = (RecipeFavoriteAdapter.ItemViewHolder) viewHolder;
@@ -72,7 +74,9 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                    view.getContext().startActivity(intent);
                 }
             });
 
