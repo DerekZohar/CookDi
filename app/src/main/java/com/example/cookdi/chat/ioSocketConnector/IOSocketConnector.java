@@ -27,9 +27,6 @@ public class IOSocketConnector {
     public static final String MESSAGE_RECIPIENT_ID="recipientId";
     public static final String MESSAGE_CONTENT="messageContent";
 
-
-    String SERVER_NAME="https://cookdi-test.herokuapp.com/";
-
     public String senderId;
     public Socket ioSocket;
     public HashMap<String, ArrayList<Message>> messages;
@@ -39,7 +36,7 @@ public class IOSocketConnector {
         this.senderId=senderId;
 
         try{
-            ioSocket= IO.socket(SERVER_NAME);
+            ioSocket= IO.socket(server);
         }
         catch (URISyntaxException e){
 
