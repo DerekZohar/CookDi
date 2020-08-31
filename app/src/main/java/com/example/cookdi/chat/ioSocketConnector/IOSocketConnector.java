@@ -28,7 +28,7 @@ public class IOSocketConnector {
     public static final String MESSAGE_CONTENT="messageContent";
 
 
-    String SERVER_NAME="https://cookdi.herokuapp.com/";
+    String SERVER_NAME="https://cookdi-test.herokuapp.com/";
 
     public String senderId;
     public Socket ioSocket;
@@ -39,7 +39,7 @@ public class IOSocketConnector {
         this.senderId=senderId;
 
         try{
-            ioSocket= IO.socket(server);
+            ioSocket= IO.socket(SERVER_NAME);
         }
         catch (URISyntaxException e){
 
@@ -78,7 +78,7 @@ public class IOSocketConnector {
     public void ReceiveMessageInActivity(String message,String senderId){
         Message rcvMess = new Message("0",new User("","","",true),message);
 
-        if(currentActivity!= null){
+        if(currentActivity!= null && currentActivity.senderId.equals(senderId)){
             currentActivity.ReceiveMessage(rcvMess);
         }
         else{
@@ -134,7 +134,7 @@ public class IOSocketConnector {
         currentActivity = activity;
     }
 
-    public void UnsetMessageActivity(StyledMessagesActivity activity){
+    public void UnsetMessageActivity(){
         currentActivity = null;
     }
 

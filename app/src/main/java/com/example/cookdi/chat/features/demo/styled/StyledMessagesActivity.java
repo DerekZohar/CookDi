@@ -82,7 +82,7 @@ public class StyledMessagesActivity extends DemoMessagesActivity
     }
 
     private MessagesList messagesList;
-    private String senderId;
+    public String senderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +109,9 @@ public class StyledMessagesActivity extends DemoMessagesActivity
         ArrayList<Message> messages = Config.IOSocketChatConnector.GetUnloadedMessages(senderId);
         if(messages != null){
             for (int i = 0; i < messages.size(); i++) {
-                messagesAdapter.addToStart(messages.get(i),false);
+                Message m = messages.get(i);
+                m.setText(m.getText().substring(4));
+                messagesAdapter.addToStart(m,false);
             }
             Config.IOSocketChatConnector.ClearUnloadedMessages(senderId);
 
@@ -281,19 +283,27 @@ public class StyledMessagesActivity extends DemoMessagesActivity
             //resume tasks needing this permission
         }
     }
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        System.out.println(123);
-//        Config.IOSocketChatConnector.UnsetMessageActivity(this);
-//        this.finish();
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        System.out.println(123);
-//        Config.IOSocketChatConnector.UnsetMessageActivity(this);
-//        finish();
-//    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Config.IOSocketChatConnector.UnsetMessageActivity();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Config.IOSocketChatConnector.UnsetMessageActivity();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Config.IOSocketChatConnector.SetMessageActivity(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Config.IOSocketChatConnector.SetMessageActivity(this);
+    }
 }
