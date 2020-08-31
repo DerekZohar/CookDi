@@ -10,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.retrofit2.entities.RecipeStep;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<StepModel> models;
+    private List<RecipeStep> models;
 
-    public StepRecyclerViewAdapter(Context context, ArrayList<StepModel> models) {
+    public StepRecyclerViewAdapter(Context context, List<RecipeStep> models) {
         this.context = context;
         this.models = models;
     }
@@ -33,10 +34,12 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        StepModel model = models.get(position);
+        RecipeStep model = models.get(position);
 
-        holder.numberTextView.setText(Integer.toString(model.getNumber()));
-        holder.contextTextView.setText(model.getContext());
+        holder.orderTextView.setText(Integer.toString(model.getStep_Order()));
+        holder.descriptionTextView.setText(model.getStep_description());
+        String time = String.format("%02d:%02d",  model.getDuration_minute() / 60, model.getDuration_minute() % 60);
+        holder.timeTextView.setText(time);
     }
 
     @Override
@@ -45,13 +48,15 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView numberTextView;
-        private TextView contextTextView;
+        private TextView orderTextView;
+        private TextView descriptionTextView;
+        private TextView timeTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            numberTextView = itemView.findViewById(R.id.txtStepNumber);
-            contextTextView = itemView.findViewById(R.id.txtStepContext);
+            orderTextView = itemView.findViewById(R.id.textViewStepOrderStepRecyclerView);
+            descriptionTextView = itemView.findViewById(R.id.textViewStepDescriptionStepRecyclerView);
+            timeTextView = itemView.findViewById(R.id.textViewTimeStepRecyclerView);
         }
     }
 }

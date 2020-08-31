@@ -19,6 +19,9 @@ public class RecipeStep {
     @SerializedName("step_image_url")
     String step_image_url;
 
+    @SerializedName("step_order")
+    Integer step_order;
+
     public Integer getRecipe_id() {
         return recipe_id;
     }
@@ -59,4 +62,11 @@ public class RecipeStep {
         this.step_image_url = step_image_url;
     }
 
+    public Integer getStep_Order() {
+        return step_order;
+    }
+
+    public void setStep_Order(Integer step_order) {
+        this.step_order = step_order;
+    }
 }

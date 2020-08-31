@@ -24,7 +24,7 @@ public class Recipe {
     private String imageUrl;
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private float rating;
     @SerializedName("time")
     @Expose
     private Integer time;
@@ -77,7 +77,7 @@ public class Recipe {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getRating() {
+    public float getRating() {
         return rating;
     }
 

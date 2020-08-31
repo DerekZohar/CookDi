@@ -5,19 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cookdi.R;
-
-import java.util.ArrayList;
+import com.example.cookdi.retrofit2.entities.Ingredient;
+import java.util.List;
 
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<IngredientModel> models;
+    private List<Ingredient> models;
 
-    public IngredientRecyclerViewAdapter(Context context, ArrayList<IngredientModel> models) {
+    public IngredientRecyclerViewAdapter(Context context, List<Ingredient> models) {
         this.context = context;
         this.models = models;
     }
@@ -33,8 +31,8 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        IngredientModel model = models.get(position);
-        holder.contextTextView.setText(model.getContext());
+        Ingredient model = models.get(position);
+        holder.descriptionTextView.setText(model.getIngredient());
     }
 
     @Override
@@ -43,11 +41,11 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView contextTextView;
+        private TextView descriptionTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            contextTextView = itemView.findViewById(R.id.txtIngredientContext);
+            descriptionTextView = itemView.findViewById(R.id.textViewIngredientDescription);
         }
     }
 }
