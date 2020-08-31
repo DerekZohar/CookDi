@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,6 +56,8 @@ public class HomeFragment extends Fragment {
     private int page = 0;
     private RecipeHomeAdapter recipeHomeAdapter;
 
+    private View fragmentView;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,21 +93,27 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
-        list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
-        getHomeData();
-        return view;
+        if(savedInstanceState != null){
+            return fragmentView;
+        }
+        else {
+            // Inflate the layout for this fragment
+            View view = inflater.inflate(R.layout.home_fragment, container, false);
+            list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
+            getHomeData();
+            fragmentView = view;
+            return view;
+        }
     }
 
-    private void getHomeData(){
-        Log.d("PAGE HOME DATA ", page+"");
+    private void getHomeData() {
+
         ServiceManager.getInstance().getRecipeService().getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid())).enqueue(new Callback<List<RecipeDetail>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
                 if (page == 0) {
-                   recipeHomeList = response.body();
+                    recipeHomeList = response.body();
                 } else {
                     if (response.body() != null) {
                         recipeHomeList.remove(recipeHomeList.size() - 1);
@@ -129,11 +138,9 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) { }
+            public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
+            }
         });
-
-
-
     }
 
     private void setRecipeHomeAdapter() {
