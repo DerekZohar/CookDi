@@ -22,4 +22,10 @@ public interface UserService {
 
     @POST("/user/auth")
     Call<Map<String, String>> authentication(@Body()Map<String, Object> params);
+
+    @POST("/user/forgot")
+    Call<Map<String, String>> forgotPassword(@Body() Map<String, Object> params);
+
+    @POST("/user/forgot/reset")
+    Call<Map<String, String>> otpForgotPassword(@Body() Map<String, Object> params);
 }
