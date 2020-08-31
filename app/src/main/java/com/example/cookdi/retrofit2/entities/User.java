@@ -23,6 +23,11 @@ public class User {
     @Expose
     private String avatar;
 
+    @SerializedName("rate")
+    @Expose
+    private float rate;
+
+
     public Integer getId() {
         return id;
     }
@@ -68,5 +73,14 @@ public class User {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 }

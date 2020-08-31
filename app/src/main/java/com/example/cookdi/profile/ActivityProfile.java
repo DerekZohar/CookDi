@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,7 @@ public class ActivityProfile extends AppCompatActivity {
     StorageReference storageReference;
     String imgURL;
     Context context;
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,7 @@ public class ActivityProfile extends AppCompatActivity {
         backBtn = findViewById(R.id.back_button);
         UploadRecipeBtn = findViewById(R.id.upload_btn);
         ReportBtn = findViewById(R.id.report_btn);
+        ratingBar = findViewById(R.id.barRatingPr);
 
         ReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -304,6 +307,7 @@ public class ActivityProfile extends AppCompatActivity {
         userName.setText(user.getName());
         Email.setText(user.getEmail());
         Picasso.get().load(user.getAvatar()).into(avatar);
+        ratingBar.setRating(user.getRate());
     }
 
     private void chooseImage() {
