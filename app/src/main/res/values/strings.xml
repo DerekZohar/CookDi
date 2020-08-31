@@ -8,4 +8,11 @@
     <string name="description">Description:</string>
     <string name="image">Image:</string>
     <string name="submit">Submit</string>
+    <string name="forgot_password">Enter your Email</string>
+    <string name="back_to_sign_in">
+        <u>Back to Sign in</u>
+    </string>
+
+    <string name="text_send_mail">We\'ll send you a code to reset password</string>
+
 </resources>
