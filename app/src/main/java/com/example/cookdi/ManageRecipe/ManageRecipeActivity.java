@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -56,6 +57,13 @@ public class ManageRecipeActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         list = (RecyclerView) findViewById(R.id.rviewHomeRecipes);
+        ImageButton backButton = this.findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         getHomeData();
     }
