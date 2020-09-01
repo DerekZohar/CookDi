@@ -20,7 +20,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     public static final String DATABASE_NAME = "CookDi.db";
@@ -44,13 +44,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(RecipeListDBAdapter.SCRIPT_CREATE_TABLE);
         db.execSQL(UserListDBAdapter.SCRIPT_CREATE_TABLE);
-
+        db.execSQL(RecipeStepDBAdapter.SCRIPT_CREATE_TABLE);
+        db.execSQL(IngredientDBAdapter.SCRIPT_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + RecipeListDBAdapter.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserListDBAdapter.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RecipeStepDBAdapter.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + IngredientDBAdapter.TABLE_NAME);
         onCreate(db);
     }
 
@@ -58,6 +61,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + RecipeListDBAdapter.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserListDBAdapter.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RecipeStepDBAdapter.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + IngredientDBAdapter.TABLE_NAME);
         onCreate(db);
     }
 }

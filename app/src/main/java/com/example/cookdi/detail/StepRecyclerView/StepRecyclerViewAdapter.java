@@ -11,16 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
 import com.example.cookdi.retrofit2.entities.RecipeStep;
+import com.example.cookdi.retrofit2.entities.SavedRecipeStep;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
     private Context context;
-    private List<RecipeStep> models;
+    private List<RecipeStep> models = null;
+    private ArrayList<SavedRecipeStep> savedRecipeSteps = null;
 
     public StepRecyclerViewAdapter(Context context, List<RecipeStep> models) {
         this.context = context;
         this.models = models;
+    }
+
+    // for offline mode
+    public StepRecyclerViewAdapter(Context context, ArrayList<SavedRecipeStep> models) {
+        this.context = context;
+        this.savedRecipeSteps = models;
     }
 
     @NonNull
@@ -34,7 +43,13 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecipeStep model = models.get(position);
+        RecipeStep model = new RecipeStep();
+        if(models != null) {
+            model = models.get(position);
+        }
+        else {
+            model = savedRecipeSteps.get(position);
+        }
 
         holder.orderTextView.setText(Integer.toString(model.getStep_Order()));
         holder.descriptionTextView.setText(model.getStep_description());
@@ -44,7 +59,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return models != null ? models.size() : savedRecipeSteps.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

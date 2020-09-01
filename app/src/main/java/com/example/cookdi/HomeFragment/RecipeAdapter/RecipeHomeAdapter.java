@@ -23,12 +23,17 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.db.IngredientDBAdapter;
+import com.example.cookdi.db.RecipeStepDBAdapter;
 import com.example.cookdi.detail.DetailActivity;
 import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.db.RecipeListDBAdapter;
 import com.example.cookdi.db.UserListDBAdapter;
+import com.example.cookdi.retrofit2.entities.Ingredient;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
+import com.example.cookdi.retrofit2.entities.RecipeStep;
 import com.example.cookdi.sharepref.SharePref;
 import com.squareup.picasso.Picasso;
 
@@ -62,6 +67,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
+            Log.d("HOME CONTEXT ", m_context.toString());
             View view = LayoutInflater.from(m_context).inflate(R.layout.home_recipe, parent, false);
             return new ItemViewHolder(view);
         } else {
@@ -122,6 +128,20 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             // db sqlite update
                             RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
                             UserListDBAdapter.insertUser(currentRecipe.getChef());
+                            ServiceManager.getInstance().getRecipeService().getRecipeSteps(currentRecipe.getRecipe().getRecipeId(), currentRecipe.getChef().getId()).enqueue(new Callback<RecipeDetailSteps>() {
+                                @Override
+                                public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
+                                    ArrayList<RecipeStep> recipeSteps = response.body().getSteps();
+                                    RecipeStepDBAdapter.insertRecipeSteps(recipeSteps);
+
+                                    ArrayList<Ingredient> ingredients = response.body().getIngredients();
+                                    IngredientDBAdapter.insertIngredients(ingredients, currentRecipe.getRecipe().getRecipeId());
+                                }
+
+                                @Override
+                                public void onFailure(Call<RecipeDetailSteps> call, Throwable t) {
+                                }
+                            });
                         }
                     });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

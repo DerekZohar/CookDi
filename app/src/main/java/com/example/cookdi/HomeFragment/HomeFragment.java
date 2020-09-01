@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getHomeData() {
-
+        Log.d("HOME PAGE DATA ", page+"");
         ServiceManager.getInstance().getRecipeService()
                 .getAllRecipe(page, Integer.parseInt(SharePref.getInstance(getContext()).getUuid()))
                 .enqueue(new Callback<List<RecipeDetail>>() {
@@ -112,6 +112,7 @@ public class HomeFragment extends Fragment {
                     public void onResponse(Call<List<RecipeDetail>> call, Response<List<RecipeDetail>> response) {
                         if (page == 0) {
                             recipeHomeList = response.body();
+                            setRecipeHomeAdapter();
                         } else {
                             if (response.body() != null) {
                                 recipeHomeList.remove(recipeHomeList.size() - 1);
@@ -127,12 +128,18 @@ public class HomeFragment extends Fragment {
                         }
 
                         if (response.body() == null) {
+                            recipeHomeList.remove(recipeHomeList.size() - 1);
+                            int scrollPosition = recipeHomeList.size();
+                            recipeHomeAdapter.notifyItemRemoved(scrollPosition);
+                            recipeHomeAdapter.notifyDataSetChanged();
+                            isItemLoading = false;
+
                             list.clearOnScrollListeners();
+
                         } else {
                             page += 1;
                         }
 
-                        setRecipeHomeAdapter();
                     }
 
                     @Override
