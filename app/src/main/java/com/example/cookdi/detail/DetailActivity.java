@@ -30,6 +30,7 @@ import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.detail.IngredientRecyclerView.IngredientRecyclerViewAdapter;
 import com.example.cookdi.detail.ReviewRecyclerView.ReviewRecyclerViewAdapter;
 import com.example.cookdi.detail.StepRecyclerView.StepRecyclerViewAdapter;
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
 import com.example.cookdi.retrofit2.entities.Review;
@@ -169,9 +170,18 @@ public class DetailActivity extends AppCompatActivity {
                         }
                     });
 
+                    if(!TextHelper.isTextEmpty(response.body().getRecipe().getImageUrl())){
+                        Picasso.get().load(response.body().getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).fit().into(recipeImageView);
+                    }
+                    else
+                        Picasso.get().load(R.drawable.ic_placeholder_background).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).fit().into(recipeImageView);
 
-                    Picasso.get().load(response.body().getRecipe().getImageUrl()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).fit().into(recipeImageView);
-                    Picasso.get().load(response.body().getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).into(userImageView);
+                    if(!TextHelper.isTextEmpty(response.body().getChef().getAvatar())){
+                        Picasso.get().load(response.body().getChef().getAvatar()).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).into(userImageView);
+                    }
+                    else
+                        Picasso.get().load(R.drawable.ic_placeholder_background).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder_background).into(userImageView);
+
                     recipeNameTextView.setText(response.body().getRecipe().getRecipeName());
                     usernameTextView.setText(response.body().getChef().getName());
                     emailTextView.setText(response.body().getChef().getEmail());

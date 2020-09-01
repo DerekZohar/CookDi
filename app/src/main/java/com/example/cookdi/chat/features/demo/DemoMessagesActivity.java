@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cookdi.helpers.TextHelper;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
@@ -42,7 +43,8 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
         imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, String url, Object payload) {
-                Picasso.get().load(url).into(imageView);
+                if(!TextHelper.isTextEmpty(url))
+                    Picasso.get().load(url).error(R.drawable.ic_error).into(imageView);
             }
         };
     }

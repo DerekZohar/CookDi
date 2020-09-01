@@ -87,6 +87,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), DetailActivity.class);
                     intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     view.getContext().startActivity(intent);
                 }
             });

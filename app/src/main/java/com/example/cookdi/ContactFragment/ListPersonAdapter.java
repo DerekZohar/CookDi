@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.entities.User;
 import com.squareup.picasso.Picasso;
 
@@ -63,7 +64,8 @@ public class ListPersonAdapter extends BaseAdapter {
 
         holder.stateView.setText("messages");
 
-        Picasso.get().load(person.getAvatar()).placeholder(R.mipmap.user).into(holder.avatar);
+        if(!TextHelper.isTextEmpty(person.getAvatar()))
+            Picasso.get().load(person.getAvatar()).error(R.drawable.ic_error).placeholder(R.mipmap.user).into(holder.avatar);
 
 
         return convertView;
