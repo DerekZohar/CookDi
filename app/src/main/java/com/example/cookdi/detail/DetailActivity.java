@@ -61,6 +61,7 @@ public class DetailActivity extends AppCompatActivity {
     private boolean isFriend;
     private EditText reviewEditText;
     private RatingBar reviewRatingBar;
+    private RecipeDetailSteps recipeDetailSteps;
 
     @SuppressLint("ResourceType")
     @Override
@@ -73,17 +74,10 @@ public class DetailActivity extends AppCompatActivity {
         ingredientRecyclerView = findViewById(R.id.recyclerViewIngredientsDetailedRecipe);
         stepRecyclerView = findViewById(R.id.recyclerViewStepsDetailedRecipe);
         reviewRecyclerView = findViewById(R.id.recyclerViewReviewDetailedRecipe);
-        stepLinearLayout = findViewById(R.id.linearLayoutStartStepRecyclerview);
+
         ImageButton backImageButton = findViewById(R.id.imageButtonBackDetailedRecipe);
 
-        stepLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RecipeStepActivity.class);
-                intent.putExtra("recipe_id", id);
-                v.getContext().startActivity(intent);
-            }
-        });
+
 
         final EditText reviewEditText = findViewById(R.id.editTextReviewDetailedRecipe);
         reviewEditText.setRawInputType(InputType.TYPE_CLASS_TEXT);
@@ -95,8 +89,22 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         LoadData();
+
+        stepLinearLayout = findViewById(R.id.linearLayoutStartStepRecyclerview);
+        stepLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recipeDetailSteps.getSteps().size() > 0) {
+                    Intent intent = new Intent(v.getContext(), RecipeStepActivity.class);
+                    intent.putExtra("recipe_id", id);
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
+
+
+
     }
 
     protected void LoadData() {
@@ -117,6 +125,8 @@ public class DetailActivity extends AppCompatActivity {
                     friendImageButton = findViewById(R.id.imageButtonAddFriendDetailedRecipe);
                     Button sendButton = findViewById(R.id.buttonSendDetailedRecipe);
                     Button cancelButton = findViewById(R.id.buttonCancelDetailedRecipe);
+
+                    recipeDetailSteps = response.body();
 
                     if (SharePref.getInstance(getApplicationContext()).getUuid().equals(response.body().getChef().getId().toString())) {
                         friendImageButton.setBackgroundResource(R.drawable.ic_friend_add_disabled);

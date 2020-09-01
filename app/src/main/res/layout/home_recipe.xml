@@ -101,10 +101,11 @@
                         android:numStars="5"
                         android:rating="2"
                         android:stepSize="0.5"
+                        android:clickable="false"
                         android:layout_alignParentLeft="true"
                         style="@style/RatingBar"
                         android:theme="@style/RatingBar"
-                        android:isIndicator="false"
+                        android:isIndicator="true"
                         android:scaleX="0.8"
                         android:scaleY="0.8"
                         />                        />
