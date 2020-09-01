@@ -45,6 +45,7 @@ public class SavedRecipeStepActivity extends AppCompatActivity {
     ArrayList<RecipeStep> listSteps;
     int RecipeID;
     String FORMAT_TIME = "%02d:%02d:%02d";
+    int stepID = 1;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -95,8 +96,8 @@ public class SavedRecipeStepActivity extends AppCompatActivity {
         preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Config.stepID != 1) {
-                    Config.stepID = Config.stepID - 1;
+                if (stepID != 1) {
+                    stepID = stepID - 1;
                     countDownTimer.cancel();
                     // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
@@ -109,8 +110,8 @@ public class SavedRecipeStepActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Config.stepID != listSteps.size()) {
-                    Config.stepID = Config.stepID + 1;
+                if (stepID != listSteps.size()) {
+                    stepID = stepID + 1;
                     countDownTimer.cancel();
                     // startActivity(new Intent(RecipeStepActivity.this, RecipeStepActivity.class));
                     setAdapter();
@@ -145,16 +146,16 @@ public class SavedRecipeStepActivity extends AppCompatActivity {
         // System.out.println("__________");
         // System.out.println(listSteps.size());
 
-        String imgUrl = recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_image_url();
+        String imgUrl = recipeDetailSteps.getSteps().get(stepID - 1).getStep_image_url();
         if (TextHelper.isTextEmpty(imgUrl) & TextHelper.isURL(imgUrl)) {
             Picasso.get().load(imgUrl).placeholder(R.mipmap.picture_icon_placeholder)
                     .error(R.mipmap.picture_icon_placeholder).into(imgStep);
         }
 
-        stepNumber.setText("Step: " + Config.stepID + "/" + listSteps.size());
+        stepNumber.setText("Step: " + stepID + "/" + listSteps.size());
         countDown(recipeDetailSteps.getRecipe().getTime());
 
-        description.setText(recipeDetailSteps.getSteps().get(Config.stepID - 1).getStep_description());
+        description.setText(recipeDetailSteps.getSteps().get(stepID - 1).getStep_description());
         int estTime = recipeDetailSteps.getRecipe().getTime() * 1000;
         estimateTime.setText("" + String.format(FORMAT_TIME, TimeUnit.MILLISECONDS.toHours(estTime),
                 TimeUnit.MILLISECONDS.toMinutes(estTime)
