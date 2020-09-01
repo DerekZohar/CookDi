@@ -24,6 +24,9 @@ public interface RecipeService {
     @GET("/recipe/user/recipe")
     Call<List<RecipeDetail>> getManagedRecipe(@Query("page") int page, @Query("user_id") int user_id );
 
+    @GET("/recipe/search")
+    Call<List<RecipeDetail>> searchRecipe(@Query("page") int page, @Query("user_id") int user_id, @Query("keyword") String keyword);
+
     @POST("/recipe/add")
     Call<Map<String, String>> addRecipe(@Body() HashMap<String, Object> params);
 

@@ -23,9 +23,15 @@
 
     </style>
 
-    <style name="MyToolbarTheme"
-        parent="@style/ThemeOverlay.AppCompat.Dark">
+    <style name="MyToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="titleTextColor">@color/colorWhite</item>
+    </style>
+
+    <style name="SpotsDialog" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.DeviceDefault</item>
+        <item name="DialogTitleText">Loading…</item>
+        <item name="DialogSpotColor">@color/colorPrimary</item>
+        <item name="DialogSpotCount">4</item>
     </style>
 </resources>
