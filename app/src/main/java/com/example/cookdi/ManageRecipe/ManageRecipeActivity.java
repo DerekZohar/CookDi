@@ -56,6 +56,7 @@ public class ManageRecipeActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         list = (RecyclerView) findViewById(R.id.rviewHomeRecipes);
+
         getHomeData();
     }
 
