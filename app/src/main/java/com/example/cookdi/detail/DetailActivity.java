@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
 import com.example.cookdi.RecipeStep.RecipeStepActivity;
-import com.example.cookdi.Report.ReportActivity;
 import com.example.cookdi.detail.IngredientRecyclerView.IngredientRecyclerViewAdapter;
 import com.example.cookdi.detail.ReviewRecyclerView.ReviewRecyclerViewAdapter;
 import com.example.cookdi.detail.StepRecyclerView.StepRecyclerViewAdapter;
@@ -42,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +52,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageButton favoriteImageButton;
     ImageButton friendImageButton;
     List<Review> reviewList;
+    android.app.AlertDialog dialog;
     private RecyclerView ingredientRecyclerView;
     private RecyclerView stepRecyclerView;
     private RecyclerView reviewRecyclerView;
@@ -68,6 +69,11 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setTheme(R.style.SpotsDialog)
+                .build();
+        dialog.show();
 
         id = getIntent().getIntExtra("recipe_id", 0);
 
@@ -76,7 +82,6 @@ public class DetailActivity extends AppCompatActivity {
         reviewRecyclerView = findViewById(R.id.recyclerViewReviewDetailedRecipe);
 
         ImageButton backImageButton = findViewById(R.id.imageButtonBackDetailedRecipe);
-
 
 
         final EditText reviewEditText = findViewById(R.id.editTextReviewDetailedRecipe);
@@ -102,7 +107,6 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
     }
@@ -183,13 +187,17 @@ public class DetailActivity extends AppCompatActivity {
 
                     stepRecyclerView.setAdapter(new StepRecyclerViewAdapter(getApplicationContext(), response.body().getSteps()));
                     stepRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                    dialog.dismiss();
                 } else {
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Không nhận được phản hồi từ máy chủ!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RecipeDetailSteps> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Không nhận được phản hồi từ máy chủ!", Toast.LENGTH_SHORT).show();
             }
         });
