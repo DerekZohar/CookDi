@@ -116,7 +116,6 @@ public class UploadActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("____________________123");
                 finish();
             }
         });

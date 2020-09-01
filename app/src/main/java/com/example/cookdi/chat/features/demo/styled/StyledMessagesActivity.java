@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public class StyledMessagesActivity extends DemoMessagesActivity
     FirebaseStorage storage;
     StorageReference storageReference;
     String imgURL;
+    ImageButton backBtn;
 
     public static final String RECEIVE_MESSAGE="receiveMessage";
     public static final String MESSAGE_CONTENT="messageContent";
@@ -99,12 +101,20 @@ public class StyledMessagesActivity extends DemoMessagesActivity
         MessageInput input = (MessageInput) findViewById(R.id.input);
         input.setInputListener(this);
         input.setAttachmentsListener(this);
+        backBtn = findViewById(R.id.back_button);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
         if(senderId == null)
             return;
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ArrayList<Message> messages = Config.IOSocketChatConnector.GetUnloadedMessages(senderId);
         if(messages != null){
