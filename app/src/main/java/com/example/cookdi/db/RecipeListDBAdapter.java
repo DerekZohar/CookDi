@@ -150,6 +150,24 @@ public class RecipeListDBAdapter {
         //databaseManager.closeDatabase();
         return recipeModelList;
     }
+
+    public static SavedRecipe getRecipeById(int id){
+        SQLiteDatabase db = DatabaseManager.getInstance().getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE " + COLUMN_ID + "=" + id, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            SavedRecipe savedRecipe = new SavedRecipe();
+            savedRecipe.setRecipeId(cursor.getInt(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_ID)));
+            savedRecipe.setRecipeName(cursor.getString(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_NAME)));
+            savedRecipe.setUserId(cursor.getInt(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_USERID)));
+            savedRecipe.setRating(cursor.getInt(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_RATING)));
+            savedRecipe.setTime(cursor.getInt(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_TIME)));
+            savedRecipe.setImage(cursor.getBlob(cursor.getColumnIndex(RecipeListDBAdapter.COLUMN_IMG)));
+            return savedRecipe;
+        }
+        return null;
+    }
 }
 
 

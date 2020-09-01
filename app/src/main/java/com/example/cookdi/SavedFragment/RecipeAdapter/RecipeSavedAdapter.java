@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cookdi.R;
 import com.example.cookdi.db.RecipeListDBAdapter;
 import com.example.cookdi.db.UserListDBAdapter;
+import com.example.cookdi.detail.DetailActivity;
+import com.example.cookdi.detail.DetailSavedActivity;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
 import com.example.cookdi.retrofit2.entities.SavedUser;
@@ -64,7 +67,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
 
         if(viewHolder instanceof com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.ItemViewHolder){
             com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.ItemViewHolder holder = (com.example.cookdi.SavedFragment.RecipeAdapter.RecipeSavedAdapter.ItemViewHolder) viewHolder;
@@ -73,6 +76,9 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onClick(View view) {
 
+                    Intent intent = new Intent(view.getContext(), DetailSavedActivity.class);
+                    intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                    view.getContext().startActivity(intent);
                 }
             });
 
