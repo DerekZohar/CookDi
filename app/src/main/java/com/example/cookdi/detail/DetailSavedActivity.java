@@ -119,13 +119,21 @@ public class DetailSavedActivity extends AppCompatActivity {
         TextView emailTextView = findViewById(R.id.textViewEmailDetailedSavedRecipe);
         RatingBar ratingBar = findViewById(R.id.barRatingFoodDetailedSavedRecipe);
 
-        InputStream inputStream  = new ByteArrayInputStream(savedRecipe.getImage());
-        Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
-        recipeImageView.setImageBitmap(bitmap);
+        if(savedRecipe.getImage() != null){
+            InputStream inputStream  = new ByteArrayInputStream(savedRecipe.getImage());
+            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            recipeImageView.setImageBitmap(bitmap);
+        }
+        else
+            recipeImageView.setImageResource(R.drawable.ic_error);
 
-        inputStream = new ByteArrayInputStream(savedUser.getImage());
-        bitmap = BitmapFactory.decodeStream(inputStream);
-        userImageView.setImageBitmap(bitmap);
+        if(savedUser.getImage() != null){
+            InputStream inputStream = new ByteArrayInputStream(savedUser.getImage());
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            userImageView.setImageBitmap(bitmap);
+        }
+       else
+           userImageView.setImageResource(R.drawable.ic_error);
 
         recipeNameTextView.setText(savedRecipe.getRecipeName());
         usernameTextView.setText(savedUser.getName());

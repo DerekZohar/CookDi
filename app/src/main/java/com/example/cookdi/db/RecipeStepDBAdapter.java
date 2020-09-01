@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.entities.RecipeStep;
 import com.example.cookdi.retrofit2.entities.SavedRecipeStep;
 import com.squareup.picasso.Picasso;
@@ -81,7 +82,8 @@ public class RecipeStepDBAdapter {
 
                     }
                 };
-                Picasso.get().load(recipeStep.getStep_image_url()).into(target);
+                if(!TextHelper.isTextEmpty(recipeStep.getStep_image_url()))
+                    Picasso.get().load(recipeStep.getStep_image_url()).into(target);
 
                 res = database.insert(RecipeStepDBAdapter.TABLE_NAME, null, contentValues);
             }

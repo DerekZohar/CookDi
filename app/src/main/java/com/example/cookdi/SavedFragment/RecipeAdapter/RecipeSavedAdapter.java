@@ -22,10 +22,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookdi.R;
+import com.example.cookdi.SavedFragment.SavedFragment;
 import com.example.cookdi.db.RecipeListDBAdapter;
 import com.example.cookdi.db.UserListDBAdapter;
 import com.example.cookdi.detail.DetailActivity;
 import com.example.cookdi.detail.DetailSavedActivity;
+import com.example.cookdi.helpers.TextHelper;
+import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
 import com.example.cookdi.retrofit2.entities.SavedUser;
@@ -75,10 +78,14 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (RecipeListDBAdapter.isRecipeSaved(m_recipeList.get(position).getRecipe().getRecipeId())) {
+                        Intent intent = new Intent(view.getContext(), DetailSavedActivity.class);
+                        intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
+                        view.getContext().startActivity(intent);
+                    }
+                    else {
 
-                    Intent intent = new Intent(view.getContext(), DetailSavedActivity.class);
-                    intent.putExtra("recipe_id", m_recipeList.get(position).getRecipe().getRecipeId());
-                    view.getContext().startActivity(intent);
+                    }
                 }
             });
 
@@ -94,13 +101,21 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SavedRecipe savedRecipe = (SavedRecipe) currentRecipe.getRecipe();
             SavedUser savedUser = (SavedUser) currentRecipe.getChef();
 
-            InputStream inputStream  = new ByteArrayInputStream(savedRecipe.getImage());
-            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
-            holder.foodPortrait.setImageBitmap(bitmap);
+            if(savedRecipe.getImage() != null){
+                InputStream inputStream  = new ByteArrayInputStream(savedRecipe.getImage());
+                Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+                holder.foodPortrait.setImageBitmap(bitmap);
+            }
+            else
+                holder.foodPortrait.setImageResource(R.drawable.ic_error);
 
-            inputStream = new ByteArrayInputStream(savedUser.getImage());
-            bitmap = BitmapFactory.decodeStream(inputStream);
-            holder.userAvatar.setImageBitmap(bitmap);
+            if(savedUser.getImage() != null){
+                InputStream inputStream = new ByteArrayInputStream(savedUser.getImage());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                holder.userAvatar.setImageBitmap(bitmap);
+            }
+            else
+                holder.userAvatar.setImageResource(R.drawable.ic_error);
 
             holder.recipeRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,7 +123,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
                     builder.setCancelable(true);
                     builder.setTitle("Delete");
-                    builder.setMessage("Delete \"" +currentRecipe.getRecipe().getRecipeName()+"\" ?");
+                    builder.setMessage("Delete \"" +currentRecipe.getRecipe().getRecipeName()+"\" from device?");
                     builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @SuppressLint("ResourceAsColor")
                         @Override
