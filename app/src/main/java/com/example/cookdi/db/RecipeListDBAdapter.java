@@ -123,7 +123,9 @@ public class RecipeListDBAdapter {
     public static ArrayList<SavedRecipe> getAllRecipes() {
         ArrayList<SavedRecipe> recipeModelList = new ArrayList<>();
         SQLiteDatabase db = mDatabaseManager.getReadableDatabase();
-
+        if(db == null){
+            return null;
+        }
         String[] projection = {
                 RecipeListDBAdapter.COLUMN_ID,
                 RecipeListDBAdapter.COLUMN_NAME,

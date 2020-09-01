@@ -157,7 +157,11 @@ public class RecipeStepActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
                         recipeDetailSteps = response.body();
-                        setAdapter();
+                        if(recipeDetailSteps != null){
+                            setAdapter();
+                        }
+
+
                     }
 
                     @Override
