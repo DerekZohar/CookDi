@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
@@ -36,7 +37,7 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass. Use the {@link HomeFragment#newInstance}
  * factory method to create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +47,8 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<RecipeDetail> recipeHomeList;
     private final int ITEMS_LIMIT = 10;
@@ -95,9 +98,18 @@ public class HomeFragment extends Fragment {
         } else {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.home_fragment, container, false);
+            mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutHomeFragment);
+            mSwipeRefreshLayout.setOnRefreshListener(this);
             list = (RecyclerView) view.findViewById(R.id.rviewHomeRecipes);
             getHomeData();
             fragmentView = view;
+
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    getHomeData();
+                }
+            });
             return view;
         }
     }
@@ -146,6 +158,7 @@ public class HomeFragment extends Fragment {
                     public void onFailure(Call<List<RecipeDetail>> call, Throwable t) {
                     }
                 });
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void setRecipeHomeAdapter() {
@@ -190,5 +203,11 @@ public class HomeFragment extends Fragment {
                 getHomeData();
             }
         }, 2000);
+    }
+
+    @Override
+    public void onRefresh() {
+        getHomeData();
+        page -= 1;
     }
 }

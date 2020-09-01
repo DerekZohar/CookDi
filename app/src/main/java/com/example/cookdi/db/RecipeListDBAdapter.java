@@ -5,10 +5,12 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteBlobTooBigException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.entities.Recipe;
 import com.example.cookdi.retrofit2.entities.SavedRecipe;
 import com.example.cookdi.retrofit2.entities.SavedUser;
@@ -67,9 +69,11 @@ public class RecipeListDBAdapter {
             Target target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    if(bitmap.getHeight() >= 1500 || bitmap.getWidth() >= 1500)
+                        bitmap = bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.7), (int)(bitmap.getHeight()*0.7), true);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                    contentValues.put(RecipeListDBAdapter.COLUMN_IMG, bos.toByteArray());
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
+                   contentValues.put(RecipeListDBAdapter.COLUMN_IMG, bos.toByteArray());
                 }
 
                 @Override
@@ -82,7 +86,8 @@ public class RecipeListDBAdapter {
 
                 }
             };
-            Picasso.get().load(recipe.getImageUrl()).into(target);
+            if(!TextHelper.isTextEmpty(recipe.getImageUrl()))
+                Picasso.get().load(recipe.getImageUrl()).into(target);
 
 
             long res = database.insert(RecipeListDBAdapter.TABLE_NAME, null, contentValues);
@@ -114,6 +119,18 @@ public class RecipeListDBAdapter {
         return result;
     }
 
+    public static boolean isRecipeSaved(int recipeId) {
+        SQLiteDatabase db = mDatabaseManager.getReadableDatabase();
+        boolean result = false;
+        String strSQL = "SELECT "+ RecipeListDBAdapter.COLUMN_NAME+ " FROM "+ RecipeListDBAdapter.TABLE_NAME + " WHERE "+RecipeListDBAdapter.COLUMN_ID+" = "+ recipeId;
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(strSQL,null);;
+        if (cursor.moveToFirst()) {
+            result = true;
+        }
+        //databaseManager.closeDatabase();
+        return result;
+    }
+
     public long getRowsRecipe() {
         SQLiteDatabase db = mDatabaseManager.getReadableDatabase();
 
@@ -132,7 +149,7 @@ public class RecipeListDBAdapter {
                 RecipeListDBAdapter.COLUMN_RATING,
                 RecipeListDBAdapter.COLUMN_TIME
         };
-        Cursor cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         if (cursor.moveToFirst()) {
             do {
                 SavedRecipe recipe = new SavedRecipe();
@@ -145,7 +162,6 @@ public class RecipeListDBAdapter {
 
                 recipeModelList.add(recipe);
             } while (cursor.moveToNext());
-
         }
         //databaseManager.closeDatabase();
         return recipeModelList;

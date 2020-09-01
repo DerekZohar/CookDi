@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
@@ -39,7 +40,7 @@ import retrofit2.Response;
  * Use the {@link SavedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SavedFragment extends Fragment {
+public class SavedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +50,8 @@ public class SavedFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<RecipeDetail> recipeSavedList;
     private final int ITEMS_LIMIT = 10;
@@ -95,8 +98,17 @@ public class SavedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.saved_fragment, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutSavedFragment);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         list = (RecyclerView) view.findViewById(R.id.rviewSavedRecipes);
         getSavedData();
+
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                getSavedData();
+            }
+        });
         return view;
     }
 
@@ -118,6 +130,7 @@ public class SavedFragment extends Fragment {
         }
 
         setRecipeSavedAdapter();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void setRecipeSavedAdapter() {
@@ -170,5 +183,10 @@ public class SavedFragment extends Fragment {
                 isItemLoading = false;
             }
         }, 2000);
+    }
+
+    @Override
+    public void onRefresh() {
+        getSavedData();
     }
 }

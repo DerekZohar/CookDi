@@ -1,5 +1,6 @@
 package com.example.cookdi.FavoriteFragment.RecipeAdapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,8 +23,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 
 import com.example.cookdi.R;
+import com.example.cookdi.db.IngredientDBAdapter;
+import com.example.cookdi.db.RecipeListDBAdapter;
+import com.example.cookdi.db.RecipeStepDBAdapter;
+import com.example.cookdi.db.UserListDBAdapter;
+import com.example.cookdi.detail.DetailActivity;
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
+import com.example.cookdi.retrofit2.entities.Ingredient;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
+import com.example.cookdi.retrofit2.entities.RecipeDetailSteps;
+import com.example.cookdi.retrofit2.entities.RecipeStep;
 import com.example.cookdi.sharepref.SharePref;
 import com.squareup.picasso.Picasso;
 
@@ -81,12 +91,88 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
             holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
 
-            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
-                    .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            if(!TextHelper.isTextEmpty(currentRecipe.getRecipe().getImageUrl()))
+                Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
+                        .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            if(!TextHelper.isTextEmpty(currentRecipe.getChef().getAvatar()))
             Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error)
                     .placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
 
             holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
+
+            if(RecipeListDBAdapter.isRecipeSaved(currentRecipe.getRecipe().getRecipeId()))
+                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmarked);
+            else {
+                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmark);
+            }
+            holder.recipeSaved.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (RecipeListDBAdapter.isRecipeSaved(currentRecipe.getRecipe().getRecipeId())) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                        builder.setCancelable(true);
+                        builder.setTitle("Delete");
+                        builder.setMessage("Delete \"" +currentRecipe.getRecipe().getRecipeName()+"\" from device?");
+                        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @SuppressLint("ResourceAsColor")
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //db sqlite update
+                                RecipeListDBAdapter.deleteById(currentRecipe.getRecipe().getRecipeId());
+                                notifyDataSetChanged();
+                                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmark);
+                            }
+                        });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
+                        builder.setCancelable(true);
+                        builder.setTitle("Save");
+                        builder.setMessage(
+                                "Saving \"" + currentRecipe.getRecipe().getRecipeName() + "\" recipe to your device?");
+                        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                            @SuppressLint("ResourceAsColor")
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                // button color changed
+                                holder.recipeSaved.setBackgroundResource(R.drawable.ic_bookmarked);
+
+                                // db sqlite update
+                                RecipeListDBAdapter.insertRecipe(currentRecipe.getRecipe());
+                                UserListDBAdapter.insertUser(currentRecipe.getChef());
+                                ServiceManager.getInstance().getRecipeService().getRecipeSteps(currentRecipe.getRecipe().getRecipeId(), currentRecipe.getChef().getId()).enqueue(new Callback<RecipeDetailSteps>() {
+                                    @Override
+                                    public void onResponse(Call<RecipeDetailSteps> call, Response<RecipeDetailSteps> response) {
+                                        ArrayList<RecipeStep> recipeSteps = response.body().getSteps();
+                                        RecipeStepDBAdapter.insertRecipeSteps(recipeSteps);
+
+                                        ArrayList<Ingredient> ingredients = response.body().getIngredients();
+                                        IngredientDBAdapter.insertIngredients(ingredients, currentRecipe.getRecipe().getRecipeId());
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<RecipeDetailSteps> call, Throwable t) {
+                                    }
+                                });
+                            }
+                        });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+            });
 
             holder.recipeFavorited.setOnClickListener(new View.OnClickListener() {
                 @Override
