@@ -24,6 +24,7 @@ import com.example.cookdi.HomeFragment.RecipeAdapter.RecipeHomeAdapter;
 
 import com.example.cookdi.R;
 import com.example.cookdi.detail.DetailActivity;
+import com.example.cookdi.helpers.TextHelper;
 import com.example.cookdi.retrofit2.ServiceManager;
 import com.example.cookdi.retrofit2.entities.RecipeDetail;
 import com.example.cookdi.sharepref.SharePref;
@@ -85,10 +86,19 @@ public class RecipeFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.recipeName.setText(currentRecipe.getRecipe().getRecipeName());
             holder.recipeTime.setText(convertTime(currentRecipe.getRecipe().getTime()));
 
-            Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
-                    .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
-            Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error)
-                    .placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+            if(!TextHelper.isTextEmpty(currentRecipe.getRecipe().getImageUrl())){
+                Picasso.get().load(currentRecipe.getRecipe().getImageUrl()).error(R.drawable.ic_error)
+                        .placeholder(R.drawable.ic_placeholder).into(holder.foodPortrait);
+            }
+            else
+                Picasso.get().load(R.drawable.ic_placeholder).error(R.drawable.ic_error).into(holder.foodPortrait);
+
+            if(!TextHelper.isTextEmpty(currentRecipe.getChef().getAvatar())){
+                Picasso.get().load(currentRecipe.getChef().getAvatar()).error(R.drawable.ic_error)
+                        .placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
+            }
+            else
+                Picasso.get().load(R.drawable.ic_placeholder).error(R.drawable.ic_error).placeholder(R.drawable.ic_placeholder).into(holder.userAvatar);
 
             holder.recipeRating.setRating((float) currentRecipe.getRecipe().getRating());
 
