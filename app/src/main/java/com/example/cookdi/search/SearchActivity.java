@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -137,16 +136,18 @@ public class SearchActivity extends AppCompatActivity {
                             }
                         }
 
-                        if(response.code() == 403)
-                            Toast.makeText(getApplicationContext(), "Không tìm thấy công thức trùng khớp", Toast.LENGTH_SHORT).show();
-                        else if (response.body() == null) {
-                            recipeList.remove(recipeList.size() - 1);
-                            int scrollPosition = recipeList.size();
-                            recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-                            recyclerViewAdapter.notifyDataSetChanged();
-                            isItemLoading = false;
+                        if (response.code() == 403) {
+                            if (recipeList == null)
+                                Toast.makeText(getApplicationContext(), "Không tìm thấy công thức trùng khớp", Toast.LENGTH_SHORT).show();
+                            else {
+                                recipeList.remove(recipeList.size() - 1);
+                                int scrollPosition = recipeList.size();
+                                recyclerViewAdapter.notifyItemRemoved(scrollPosition);
+                                recyclerViewAdapter.notifyDataSetChanged();
+                                isItemLoading = false;
 
-                            recyclerView.clearOnScrollListeners();
+                                recyclerView.clearOnScrollListeners();
+                            }
 
                         } else {
                             page += 1;
